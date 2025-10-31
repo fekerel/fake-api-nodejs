@@ -6,6 +6,8 @@ import { JSONFile } from 'lowdb/node';
 import { Server } from 'socket.io';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import generateSwaggerDocs from './utils/swagger-generator.js';
 
 import { CONFIG } from './config.js';
 import { isAuthenticated } from './utils/jwt-authenticate.js';
@@ -29,6 +31,9 @@ const router = jsonServer.router(CONFIG.databaseFile);
 const middlewares = jsonServer.defaults();
 const port = process.env.PORT || CONFIG.defaultPort;
 const server = http.createServer(app);
+
+const swaggerSpec = generateSwaggerDocs();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Init socket io server
 const io = new Server(server, {
