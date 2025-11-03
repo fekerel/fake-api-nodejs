@@ -73,6 +73,45 @@ function generateSwaggerDocs() {
               }
             }
           }
+        },
+        put: {
+          summary: `Update ${collection} by id`,
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'integer' }
+            }
+          ],
+          requestBody: {
+            content: {
+              'application/json': {
+                schema: { $ref: `#/components/schemas/${collection}` }
+              }
+            }
+          },
+          responses: {
+            '200': {
+              description: `${collection} updated successfully`
+            }
+          }
+        },
+        delete: {
+          summary: `Delete ${collection} by id`,
+          parameters: [
+            {
+              in: 'path',
+              name: 'id',
+              required: true,
+              schema: { type: 'integer' }
+            }
+          ],
+          responses: {
+            '200': {
+              description: `${collection} deleted successfully`
+            }
+          }
         }
       };
     }
