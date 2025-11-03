@@ -6,7 +6,7 @@
   "exports": "./server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "nodemon server.js --ignore \"database.json\"",
     "seed": "node ./seeds/generateData.js"
   },
   "repository": {
