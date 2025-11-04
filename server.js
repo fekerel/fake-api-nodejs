@@ -52,7 +52,7 @@ if (fs.existsSync(handlersDir)) {
   }
 }
 
-const swaggerSpec = generateSwaggerDocs();
+const swaggerSpec = await generateSwaggerDocs();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Init socket io server
