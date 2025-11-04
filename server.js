@@ -1,3 +1,6 @@
+import fs from 'fs';
+import { join } from 'path';
+import { pathToFileURL } from 'url';
 import { graphqlHTTP } from 'express-graphql';
 import http from 'http';
 import jsonServer from 'json-server';
@@ -31,6 +34,23 @@ const router = jsonServer.router(CONFIG.databaseFile);
 const middlewares = jsonServer.defaults();
 const port = process.env.PORT || CONFIG.defaultPort;
 const server = http.createServer(app);
+
+// load route handlers without passing db explicitly
+const handlersDir = join(process.cwd(), 'routes');
+if (fs.existsSync(handlersDir)) {
+  const files = fs.readdirSync(handlersDir).filter((f) => f.endsWith('.js'));
+  for (const file of files) {
+    try {
+      const mod = await import(pathToFileURL(join(handlersDir, file)).href);
+      if (mod && typeof mod.default === 'function') {
+        // pass only app and router (handlers can use router.db or req.app.locals.db)
+        mod.default(app, router);
+      }
+    } catch (err) {
+      console.error('Failed to load route', file, err);
+    }
+  }
+}
 
 const swaggerSpec = generateSwaggerDocs();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
