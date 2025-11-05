@@ -1,0 +1,1436 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "user+1762340249494325@example.com",
+            "password": "lv*tXOf8I1kC",
+            "firstName": "TestFNN=GyJ",
+            "lastName": "TestLNAfo+y",
+            "role": "superadmin",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "ExampleCity",
+                "country": "TestCountry",
+                "zipCode": "12345"
+            },
+            "phone": "+13557500549",
+            "status": "active",
+            "createdAt": 1762340249541,
+            "modifiedAt": 1762340249541
+        },
+        {
+            "id": 2,
+            "email": "user+1762340255203922@example.com",
+            "password": "RZrKL6c+HE5)",
+            "firstName": "TestFN_Pki8",
+            "lastName": "TestLNhBj@_",
+            "role": "admin",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "12345"
+            },
+            "phone": "+15275522030",
+            "status": "pending",
+            "createdAt": 1762340255234,
+            "modifiedAt": 1762340255234
+        },
+        {
+            "id": 3,
+            "email": "user+1762340261450953@example.com",
+            "password": "tlcv1oEIkvfn",
+            "firstName": "TestFNpEx6F",
+            "lastName": "TestLNI5(&b",
+            "role": "warehouse",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "SampleCity",
+                "country": "DemoCountry",
+                "zipCode": "12345"
+            },
+            "phone": "+11467478217",
+            "status": "active",
+            "createdAt": 1762340261485,
+            "modifiedAt": 1762340261485
+        },
+        {
+            "id": 4,
+            "email": "user+1762340267301943@example.com",
+            "password": "n$Z@UeM_HlJj",
+            "firstName": "TestFN@Hl&z",
+            "lastName": "TestLNn6TLV",
+            "role": "warehouse",
+            "address": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+12626466498",
+            "status": "banned",
+            "createdAt": 1762340267350,
+            "modifiedAt": 1762340267350
+        },
+        {
+            "id": 5,
+            "email": "user+1762340272988154@example.com",
+            "password": "PsY_oi-(yC)^",
+            "firstName": "TestFNyRJ0O",
+            "lastName": "TestLNPp3BQ",
+            "role": "buyer",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "ExampleCity",
+                "country": "SampleCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+12601583350",
+            "status": "inactive",
+            "createdAt": 1762340273024,
+            "modifiedAt": 1762340273024
+        },
+        {
+            "id": 6,
+            "email": "user+1762340278767270@example.com",
+            "password": "KR_P5gyIaNK=",
+            "firstName": "TestFN4mXIt",
+            "lastName": "TestLN=MaLd",
+            "role": "support",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "TestCountry",
+                "zipCode": "44556"
+            },
+            "phone": "+12553319366",
+            "status": "inactive",
+            "createdAt": 1762340278801,
+            "modifiedAt": 1762340278801
+        },
+        {
+            "id": 7,
+            "email": "user+1762340284674668@example.com",
+            "password": "4t%#@$UQ%xJ4",
+            "firstName": "TestFN&g2QB",
+            "lastName": "TestLNgd@e7",
+            "role": "superadmin",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+16525520934",
+            "status": "inactive",
+            "createdAt": 1762340284720,
+            "modifiedAt": 1762340284720
+        },
+        {
+            "id": 8,
+            "email": "user+1762340290476605@example.com",
+            "password": "BZ$_kEJYCCg8",
+            "firstName": "TestFNlN3LJ",
+            "lastName": "TestLN(3%bB",
+            "role": "seller",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "DemoCity",
+                "country": "ExampleCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+12452327404",
+            "status": "banned",
+            "createdAt": 1762340290511,
+            "modifiedAt": 1762340290511
+        },
+        {
+            "id": 9,
+            "email": "user+1762340296440598@example.com",
+            "password": "xa#O14MdUJqH",
+            "firstName": "TestFNDTMIH",
+            "lastName": "TestLN8tiDg",
+            "role": "superadmin",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "SampleCity",
+                "country": "MockCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+13812810504",
+            "status": "banned",
+            "createdAt": 1762340296488,
+            "modifiedAt": 1762340296488
+        },
+        {
+            "id": 10,
+            "email": "user+1762340302293787@example.com",
+            "password": "-92ecSr%D3wo",
+            "firstName": "TestFNdacWQ",
+            "lastName": "TestLN2AB54",
+            "role": "superadmin",
+            "address": {
+                "street": "789 Demo Blvd",
+                "city": "SampleCity",
+                "country": "ExampleCountry",
+                "zipCode": "12345"
+            },
+            "phone": "+14224539625",
+            "status": "pending",
+            "createdAt": 1762340302341,
+            "modifiedAt": 1762340302341
+        },
+        {
+            "id": 11,
+            "email": "user+1762341769650974@example.com",
+            "password": "4J=G-S+YZ*7E",
+            "firstName": "TestFNgGceK",
+            "lastName": "TestLNF8Vv8",
+            "role": "support",
+            "address": {
+                "street": "123 Test St",
+                "city": "TestCity",
+                "country": "ExampleCountry",
+                "zipCode": "44556"
+            },
+            "phone": "+18923171975",
+            "status": "inactive",
+            "createdAt": 1762341769650,
+            "modifiedAt": 1762341769650
+        },
+        {
+            "id": 12,
+            "email": "user+1762341776771636@example.com",
+            "password": "RviVnXj2#^)$",
+            "firstName": "TestFNBNL%h",
+            "lastName": "TestLNVwm-j",
+            "role": "manager",
+            "address": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "ExampleCountry",
+                "zipCode": "67890"
+            },
+            "phone": "+16245791871",
+            "status": "inactive",
+            "createdAt": 1762341776786,
+            "modifiedAt": 1762341776786
+        },
+        {
+            "id": 13,
+            "email": "user+1762341783478481@example.com",
+            "password": "7=qI-IzkOFzo",
+            "firstName": "TestFN79nFR",
+            "lastName": "TestLNXW%34",
+            "role": "seller",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "DemoCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+19348200012",
+            "status": "inactive",
+            "createdAt": 1762341783489,
+            "modifiedAt": 1762341783489
+        },
+        {
+            "id": 14,
+            "email": "user+1762341790130357@example.com",
+            "password": "S1x3m&&0!n#X",
+            "firstName": "TestFNeTl_@",
+            "lastName": "TestLN3bb5(",
+            "role": "support",
+            "address": {
+                "street": "123 Test St",
+                "city": "ExampleCity",
+                "country": "TestCountry",
+                "zipCode": "12345"
+            },
+            "phone": "+16316032765",
+            "status": "banned",
+            "createdAt": 1762341790133,
+            "modifiedAt": 1762341790133
+        },
+        {
+            "id": 15,
+            "email": "user+1762341797944650@example.com",
+            "password": "Hb=tYWgh#-J5",
+            "firstName": "TestFNxU-G#",
+            "lastName": "TestLN2WZ($",
+            "role": "buyer",
+            "address": {
+                "street": "789 Demo Blvd",
+                "city": "MockCity",
+                "country": "ExampleCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+11843989654",
+            "status": "active",
+            "createdAt": 1762341797959,
+            "modifiedAt": 1762341797959
+        },
+        {
+            "id": 16,
+            "email": "user+1762341804654456@example.com",
+            "password": "rC%gwI#_3J-r",
+            "firstName": "TestFNk@G()",
+            "lastName": "TestLNZzQK$",
+            "role": "seller",
+            "address": {
+                "street": "789 Demo Blvd",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+11693609307",
+            "status": "pending",
+            "createdAt": 1762341804667,
+            "modifiedAt": 1762341804667
+        },
+        {
+            "id": 17,
+            "email": "user+1762341811863546@example.com",
+            "password": ")Prg5lRE(!bO",
+            "firstName": "TestFN&)lrx",
+            "lastName": "TestLN9f-XD",
+            "role": "support",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "TestCity",
+                "country": "DemoCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+18182352979",
+            "status": "pending",
+            "createdAt": 1762341811875,
+            "modifiedAt": 1762341811875
+        },
+        {
+            "id": 18,
+            "email": "user+1762341819456063@example.com",
+            "password": "i7f3&_mD12@J",
+            "firstName": "TestFNH4ygK",
+            "lastName": "TestLNlmYBK",
+            "role": "superadmin",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "TestCity",
+                "country": "ExampleCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+16276238097",
+            "status": "active",
+            "createdAt": 1762341819470,
+            "modifiedAt": 1762341819470
+        },
+        {
+            "id": 19,
+            "email": "user+1762341826103304@example.com",
+            "password": "M@QMvm67OVzB",
+            "firstName": "TestFN1xYVX",
+            "lastName": "TestLNwIGao",
+            "role": "manager",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+11753219721",
+            "status": "pending",
+            "createdAt": 1762341826116,
+            "modifiedAt": 1762341826116
+        },
+        {
+            "id": 20,
+            "email": "user+1762341833345274@example.com",
+            "password": "z&M7gnonFD5=",
+            "firstName": "TestFNw-2Cw",
+            "lastName": "TestLN@5qOz",
+            "role": "support",
+            "address": {
+                "street": "789 Demo Blvd",
+                "city": "SampleCity",
+                "country": "TestCountry",
+                "zipCode": "44556"
+            },
+            "phone": "+13855291693",
+            "status": "inactive",
+            "createdAt": 1762341833356,
+            "modifiedAt": 1762341833356
+        },
+        {
+            "id": 21,
+            "email": "user+1762341840194732@example.com",
+            "password": "IloG1e%4D#@8",
+            "firstName": "TestFNJ2Vl1",
+            "lastName": "TestLN-eH$1",
+            "role": "warehouse",
+            "address": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "11223"
+            },
+            "phone": "+11845363780",
+            "status": "pending",
+            "createdAt": 1762341840200,
+            "modifiedAt": 1762341840200
+        },
+        {
+            "id": 22,
+            "email": "user+1762341847680758@example.com",
+            "password": "#oDe$eH!#wvd",
+            "firstName": "TestFNP59S4",
+            "lastName": "TestLN_vCKC",
+            "role": "superadmin",
+            "address": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+13809542523",
+            "status": "pending",
+            "createdAt": 1762341847693,
+            "modifiedAt": 1762341847693
+        },
+        {
+            "id": 23,
+            "email": "user+1762341854490709@example.com",
+            "password": "iQ83wLXKeE_z",
+            "firstName": "TestFNm_jJj",
+            "lastName": "TestLNr69P5",
+            "role": "manager",
+            "address": {
+                "street": "123 Test St",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "77889"
+            },
+            "phone": "+18130361371",
+            "status": "active",
+            "createdAt": 1762341854504,
+            "modifiedAt": 1762341854504
+        },
+        {
+            "id": 24,
+            "email": "user+1762341861347180@example.com",
+            "password": "-Lu8r^*%$lSS",
+            "firstName": "TestFNHoDa$",
+            "lastName": "TestLNXjf(p",
+            "role": "admin",
+            "address": {
+                "street": "101112 Test Rd",
+                "city": "MockCity",
+                "country": "DemoCountry",
+                "zipCode": "44556"
+            },
+            "phone": "+17801617636",
+            "status": "inactive",
+            "createdAt": 1762341861361,
+            "modifiedAt": 1762341861361
+        },
+        {
+            "id": 25,
+            "email": "user+1762341868059888@example.com",
+            "password": "jx#p#8&BAg&C",
+            "firstName": "TestFNk0g)V",
+            "lastName": "TestLNRLP$1",
+            "role": "manager",
+            "address": {
+                "street": "123 Test St",
+                "city": "ExampleCity",
+                "country": "TestCountry",
+                "zipCode": "44556"
+            },
+            "phone": "+14634847742",
+            "status": "banned",
+            "createdAt": 1762341868072,
+            "modifiedAt": 1762341868072
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Et & Tavuk & Balık api-test-2025-11-05-13-58-40-010-315",
+            "description": "api-test-2025-11-05-13-58-40-011-672 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340320041,
+            "modifiedAt": 1762340320041
+        },
+        {
+            "id": 2,
+            "name": "Süt & Kahvaltılık api-test-2025-11-05-13-58-46-068-195",
+            "description": "api-test-2025-11-05-13-58-46-070-575 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340326106,
+            "modifiedAt": 1762340326106
+        },
+        {
+            "id": 3,
+            "name": "Atıştırmalık api-test-2025-11-05-13-58-51-807-729",
+            "description": "api-test-2025-11-05-13-58-51-809-50 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340331854,
+            "modifiedAt": 1762340331854
+        },
+        {
+            "id": 4,
+            "name": "Et & Tavuk & Balık api-test-2025-11-05-13-58-57-642-189",
+            "description": "api-test-2025-11-05-13-58-57-644-27 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340337692,
+            "modifiedAt": 1762340337692
+        },
+        {
+            "id": 5,
+            "name": "Ev & Mutfak api-test-2025-11-05-13-59-03-540-78",
+            "description": "api-test-2025-11-05-13-59-03-542-365 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340343581,
+            "modifiedAt": 1762340343581
+        },
+        {
+            "id": 6,
+            "name": "Atıştırmalık api-test-2025-11-05-13-59-09-288-887",
+            "description": "api-test-2025-11-05-13-59-09-290-662 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340349335,
+            "modifiedAt": 1762340349335
+        },
+        {
+            "id": 7,
+            "name": "Ev & Mutfak api-test-2025-11-05-13-59-15-520-176",
+            "description": "api-test-2025-11-05-13-59-15-522-820 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340355564,
+            "modifiedAt": 1762340355564
+        },
+        {
+            "id": 8,
+            "name": "Süt & Kahvaltılık api-test-2025-11-05-13-59-21-291-835",
+            "description": "api-test-2025-11-05-13-59-21-293-737 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340361329,
+            "modifiedAt": 1762340361329
+        },
+        {
+            "id": 9,
+            "name": "İçecek api-test-2025-11-05-13-59-27-227-689",
+            "description": "api-test-2025-11-05-13-59-27-230-407 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340367265,
+            "modifiedAt": 1762340367265
+        },
+        {
+            "id": 10,
+            "name": "Süt & Kahvaltılık api-test-2025-11-05-13-59-33-026-273",
+            "description": "api-test-2025-11-05-13-59-33-028-466 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762340373062,
+            "modifiedAt": 1762340373062
+        },
+        {
+            "id": 11,
+            "name": "Kişisel Bakım api-test-2025-11-05-14-16-52-832-991",
+            "description": "api-test-2025-11-05-14-16-52-834-316 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341412864,
+            "modifiedAt": 1762341412864
+        },
+        {
+            "id": 12,
+            "name": "Meyve & Sebze api-test-2025-11-05-14-22-48-918-826",
+            "description": "api-test-2025-11-05-14-22-48-920-278 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341768967,
+            "modifiedAt": 1762341768967
+        },
+        {
+            "id": 13,
+            "name": "İçecek api-test-2025-11-05-14-22-56-093-275",
+            "description": "api-test-2025-11-05-14-22-56-095-811 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341776139,
+            "modifiedAt": 1762341776139
+        },
+        {
+            "id": 14,
+            "name": "Süt & Kahvaltılık api-test-2025-11-05-14-23-02-792-621",
+            "description": "api-test-2025-11-05-14-23-02-794-881 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341782834,
+            "modifiedAt": 1762341782834
+        },
+        {
+            "id": 15,
+            "name": "Süt & Kahvaltılık api-test-2025-11-05-14-23-09-431-271",
+            "description": "api-test-2025-11-05-14-23-09-433-579 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341789470,
+            "modifiedAt": 1762341789470
+        },
+        {
+            "id": 16,
+            "name": "İçecek api-test-2025-11-05-14-23-17-253-976",
+            "description": "api-test-2025-11-05-14-23-17-255-464 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341797304,
+            "modifiedAt": 1762341797304
+        },
+        {
+            "id": 17,
+            "name": "İçecek api-test-2025-11-05-14-23-23-923-672",
+            "description": "api-test-2025-11-05-14-23-23-925-299 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341803973,
+            "modifiedAt": 1762341803973
+        },
+        {
+            "id": 18,
+            "name": "Et & Tavuk & Balık api-test-2025-11-05-14-23-31-097-459",
+            "description": "api-test-2025-11-05-14-23-31-099-131 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341811147,
+            "modifiedAt": 1762341811147
+        },
+        {
+            "id": 19,
+            "name": "Temizlik Ürünleri api-test-2025-11-05-14-23-38-785-965",
+            "description": "api-test-2025-11-05-14-23-38-787-241 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341818836,
+            "modifiedAt": 1762341818836
+        },
+        {
+            "id": 20,
+            "name": "Et & Tavuk & Balık api-test-2025-11-05-14-23-45-407-745",
+            "description": "api-test-2025-11-05-14-23-45-409-108 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341825458,
+            "modifiedAt": 1762341825458
+        },
+        {
+            "id": 21,
+            "name": "Atıştırmalık api-test-2025-11-05-14-23-52-608-612",
+            "description": "api-test-2025-11-05-14-23-52-610-546 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341832656,
+            "modifiedAt": 1762341832656
+        },
+        {
+            "id": 22,
+            "name": "İçecek api-test-2025-11-05-14-23-59-434-233",
+            "description": "api-test-2025-11-05-14-23-59-436-718 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341839477,
+            "modifiedAt": 1762341839477
+        },
+        {
+            "id": 23,
+            "name": "Temizlik Ürünleri api-test-2025-11-05-14-24-06-994-994",
+            "description": "api-test-2025-11-05-14-24-06-996-812 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341847045,
+            "modifiedAt": 1762341847045
+        },
+        {
+            "id": 24,
+            "name": "Meyve & Sebze api-test-2025-11-05-14-24-13-774-917",
+            "description": "api-test-2025-11-05-14-24-13-776-864 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341853825,
+            "modifiedAt": 1762341853825
+        },
+        {
+            "id": 25,
+            "name": "Et & Tavuk & Balık api-test-2025-11-05-14-24-20-647-609",
+            "description": "api-test-2025-11-05-14-24-20-650-791 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341860697,
+            "modifiedAt": 1762341860697
+        },
+        {
+            "id": 26,
+            "name": "Temizlik Ürünleri api-test-2025-11-05-14-24-27-385-142",
+            "description": "api-test-2025-11-05-14-24-27-387-202 açıklaması",
+            "parentId": null,
+            "status": "active",
+            "createdAt": 1762341867437,
+            "modifiedAt": 1762341867437
+        }
+    ],
+    "products": [
+        {
+            "sellerId": 10,
+            "categoryId": 4,
+            "name": "api-test 05/11/2025 14:23",
+            "description": "API-TEST-2025-11-05-13-59-52-413",
+            "price": 4.59,
+            "stock": 107,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-13-59-52-245",
+                    "color": "black",
+                    "size": "XL",
+                    "price": 92.97,
+                    "stock": 369
+                },
+                {
+                    "id": "API-TEST-2025-11-05-13-59-52-110",
+                    "color": "black",
+                    "size": "L",
+                    "price": 77.7,
+                    "stock": 73
+                }
+            ],
+            "tags": [
+                "exclusive",
+                "premium"
+            ],
+            "status": "inactive",
+            "id": 1,
+            "createdAt": 1762340392110,
+            "modifiedAt": 1762341811698
+        },
+        {
+            "sellerId": 9,
+            "categoryId": 9,
+            "name": "api-test 05/11/2025 14:24",
+            "description": "API-TEST-2025-11-05-13-59-57-247",
+            "price": 81.15,
+            "stock": 737,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-13-59-57-486",
+                    "color": "orange",
+                    "size": "L",
+                    "price": 17.07,
+                    "stock": 895
+                },
+                {
+                    "id": "API-TEST-2025-11-05-13-59-57-46",
+                    "color": "black",
+                    "size": "L",
+                    "price": 57.69,
+                    "stock": 658
+                }
+            ],
+            "tags": [
+                "limited",
+                "limited"
+            ],
+            "status": "active",
+            "id": 2,
+            "createdAt": 1762340397876,
+            "modifiedAt": 1762341867926
+        },
+        {
+            "sellerId": 2,
+            "categoryId": 2,
+            "name": "api-test 05/11/2025 14:24",
+            "description": "API-TEST-2025-11-05-14-00-03-976",
+            "price": 33.18,
+            "stock": 540,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-00-03-889",
+                    "color": "orange",
+                    "size": "S",
+                    "price": 43.54,
+                    "stock": 145
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-00-03-278",
+                    "color": "pink",
+                    "size": "XS",
+                    "price": 35.55,
+                    "stock": 40
+                }
+            ],
+            "tags": [
+                "recommended",
+                "exclusive"
+            ],
+            "status": "inactive",
+            "id": 3,
+            "createdAt": 1762340403916,
+            "modifiedAt": 1762341861211
+        },
+        {
+            "sellerId": 2,
+            "categoryId": 8,
+            "name": "api-test 05/11/2025 14:22",
+            "description": "API-TEST-2025-11-05-14-00-22-642",
+            "price": 43.19,
+            "stock": 758,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-00-22-754",
+                    "color": "red",
+                    "size": "XL",
+                    "price": 56.66,
+                    "stock": 939
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-00-22-468",
+                    "color": "red",
+                    "size": "L",
+                    "price": 94.28,
+                    "stock": 535
+                }
+            ],
+            "tags": [
+                "recommended",
+                "limited"
+            ],
+            "status": "active",
+            "id": 6,
+            "createdAt": 1762340422150,
+            "modifiedAt": 1762341776683
+        },
+        {
+            "sellerId": 2,
+            "categoryId": 7,
+            "name": "api-test 05/11/2025 14:00",
+            "description": "API-TEST-2025-11-05-14-00-28-149",
+            "price": 94.62,
+            "stock": 627,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-00-28-109",
+                    "color": "red",
+                    "size": "M",
+                    "price": 82.56,
+                    "stock": 99
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-00-28-593",
+                    "color": "black",
+                    "size": "XS",
+                    "price": 45.63,
+                    "stock": 492
+                }
+            ],
+            "tags": [
+                "limited",
+                "bestseller"
+            ],
+            "status": "inactive",
+            "id": 7,
+            "createdAt": 1762340428062,
+            "modifiedAt": 1762340428062
+        },
+        {
+            "sellerId": 12,
+            "categoryId": 3,
+            "name": "api-test 05/11/2025 14:23",
+            "description": "API-TEST-2025-11-05-14-23-24-660",
+            "price": 0.71,
+            "stock": 222,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-23-24-967",
+                    "color": "pink",
+                    "size": "L",
+                    "price": 74.08,
+                    "stock": 527
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-23-24-593",
+                    "color": "grey",
+                    "size": "XXL",
+                    "price": 41.11,
+                    "stock": 512
+                }
+            ],
+            "tags": [
+                "featured",
+                "bestseller"
+            ],
+            "status": "inactive",
+            "id": 16,
+            "createdAt": 1762341804367,
+            "modifiedAt": 1762341804367
+        },
+        {
+            "sellerId": 9,
+            "categoryId": 4,
+            "name": "api-test 05/11/2025 14:23",
+            "description": "API-TEST-2025-11-05-14-23-31-375",
+            "price": 19,
+            "stock": 911,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-23-31-298",
+                    "color": "orange",
+                    "size": "M",
+                    "price": 31.22,
+                    "stock": 17
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-23-31-23",
+                    "color": "orange",
+                    "size": "S",
+                    "price": 77.4,
+                    "stock": 999
+                }
+            ],
+            "tags": [
+                "bestseller",
+                "premium"
+            ],
+            "status": "active",
+            "id": 17,
+            "createdAt": 1762341811592,
+            "modifiedAt": 1762341811592
+        },
+        {
+            "sellerId": 4,
+            "categoryId": 18,
+            "name": "api-test 05/11/2025 14:23",
+            "description": "API-TEST-2025-11-05-14-23-39-923",
+            "price": 45.36,
+            "stock": 682,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-23-39-204",
+                    "color": "black",
+                    "size": "L",
+                    "price": 27.59,
+                    "stock": 58
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-23-39-494",
+                    "color": "red",
+                    "size": "L",
+                    "price": 3.44,
+                    "stock": 197
+                }
+            ],
+            "tags": [
+                "recommended",
+                "limited"
+            ],
+            "status": "active",
+            "id": 18,
+            "createdAt": 1762341819188,
+            "modifiedAt": 1762341833221
+        },
+        {
+            "sellerId": 8,
+            "categoryId": 7,
+            "name": "api-test 05/11/2025 14:24",
+            "description": "API-TEST-2025-11-05-14-24-14-761",
+            "price": 50.8,
+            "stock": 612,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-24-14-168",
+                    "color": "yellow",
+                    "size": "XS",
+                    "price": 36.32,
+                    "stock": 238
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-24-14-804",
+                    "color": "orange",
+                    "size": "M",
+                    "price": 51.15,
+                    "stock": 528
+                }
+            ],
+            "tags": [
+                "premium",
+                "limited"
+            ],
+            "status": "active",
+            "id": 23,
+            "createdAt": 1762341854226,
+            "modifiedAt": 1762341854335
+        },
+        {
+            "sellerId": 4,
+            "categoryId": 17,
+            "name": "api-test 05/11/2025 14:24",
+            "description": "API-TEST-2025-11-05-14-24-21-413",
+            "price": 64.15,
+            "stock": 192,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-24-21-494",
+                    "color": "orange",
+                    "size": "L",
+                    "price": 74.61,
+                    "stock": 935
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-24-21-869",
+                    "color": "black",
+                    "size": "L",
+                    "price": 17.07,
+                    "stock": 17
+                }
+            ],
+            "tags": [
+                "recommended",
+                "featured"
+            ],
+            "status": "inactive",
+            "id": 24,
+            "createdAt": 1762341861080,
+            "modifiedAt": 1762341861080
+        },
+        {
+            "sellerId": 16,
+            "categoryId": 19,
+            "name": "api-test 05/11/2025 14:24",
+            "description": "API-TEST-2025-11-05-14-24-27-148",
+            "price": 10.37,
+            "stock": 291,
+            "variants": [
+                {
+                    "id": "API-TEST-2025-11-05-14-24-27-865",
+                    "color": "orange",
+                    "size": "XXL",
+                    "price": 69.92,
+                    "stock": 795
+                },
+                {
+                    "id": "API-TEST-2025-11-05-14-24-27-206",
+                    "color": "grey",
+                    "size": "L",
+                    "price": 84.69,
+                    "stock": 982
+                }
+            ],
+            "tags": [
+                "premium",
+                "featured"
+            ],
+            "status": "inactive",
+            "id": 25,
+            "createdAt": 1762341867790,
+            "modifiedAt": 1762341867790
+        }
+    ],
+    "orders": [
+        {
+            "userId": 4,
+            "items": [
+                {
+                    "productId": 4,
+                    "variantId": "API-TEST-2025-11-05-14-00-09-873",
+                    "quantity": 1,
+                    "price": 32
+                }
+            ],
+            "totalAmount": 14.645352575251458,
+            "shippingAddress": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "cancelled"
+            },
+            "status": "failed",
+            "id": 1,
+            "createdAt": 1762340545301,
+            "modifiedAt": 1762340545301
+        },
+        {
+            "userId": 2,
+            "items": [
+                {
+                    "productId": 5,
+                    "variantId": "api-test-2025-11-05-14-23-52-861-680",
+                    "quantity": 1,
+                    "price": 59.38
+                }
+            ],
+            "totalAmount": 1.9117338605379341,
+            "shippingAddress": {
+                "street": "101112 Test Rd",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "12345"
+            },
+            "payment": {
+                "method": "paypal",
+                "status": "shipped"
+            },
+            "status": "delivered",
+            "id": 2,
+            "createdAt": 1762340551701,
+            "modifiedAt": 1762341832872
+        },
+        {
+            "userId": 1,
+            "items": [
+                {
+                    "productId": 1,
+                    "variantId": "API-TEST-2025-11-05-13-59-52-245",
+                    "quantity": 1,
+                    "price": 4.59
+                }
+            ],
+            "totalAmount": 37.557588258709785,
+            "shippingAddress": {
+                "street": "131415 Sample Ln",
+                "city": "ExampleCity",
+                "country": "TestCountry",
+                "zipCode": "12345"
+            },
+            "payment": {
+                "method": "bank_transfer",
+                "status": "shipped"
+            },
+            "status": "delivered",
+            "id": 9,
+            "createdAt": 1762340592955,
+            "modifiedAt": 1762340592955
+        },
+        {
+            "userId": 7,
+            "items": [
+                {
+                    "productId": 7,
+                    "variantId": "API-TEST-2025-11-05-14-00-28-109",
+                    "quantity": 1,
+                    "price": 94.62
+                }
+            ],
+            "totalAmount": 37.6844493521695,
+            "shippingAddress": {
+                "street": "131415 Sample Ln",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "paypal",
+                "status": "cancelled"
+            },
+            "status": "cancelled",
+            "id": 13,
+            "createdAt": 1762340852043,
+            "modifiedAt": 1762340852043
+        },
+        {
+            "userId": 2,
+            "items": [
+                {
+                    "productId": 7,
+                    "variantId": "API-TEST-2025-11-05-14-00-28-109",
+                    "quantity": 1,
+                    "price": 94.62
+                }
+            ],
+            "totalAmount": 19.109126071808944,
+            "shippingAddress": {
+                "street": "101112 Test Rd",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "12345"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "pending"
+            },
+            "status": "cancelled",
+            "id": 14,
+            "createdAt": 1762340859235,
+            "modifiedAt": 1762340859235
+        },
+        {
+            "userId": 8,
+            "items": [
+                {
+                    "productId": 6,
+                    "variantId": "api-test-2025-11-05-14-23-39-028-362",
+                    "quantity": 1,
+                    "price": 43.19
+                }
+            ],
+            "totalAmount": 21.933361601692525,
+            "shippingAddress": {
+                "street": "101112 Test Rd",
+                "city": "DemoCity",
+                "country": "ExampleCountry",
+                "zipCode": "77889"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "processing"
+            },
+            "status": "failed",
+            "id": 15,
+            "createdAt": 1762341141125,
+            "modifiedAt": 1762341819045
+        },
+        {
+            "userId": 4,
+            "items": [
+                {
+                    "productId": 1,
+                    "variantId": "api-test-2025-11-05-14-24-27-626-504",
+                    "quantity": 1,
+                    "price": 4.59
+                }
+            ],
+            "totalAmount": 12.231989204381577,
+            "shippingAddress": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "bank_transfer",
+                "status": "pending"
+            },
+            "status": "returned",
+            "id": 19,
+            "createdAt": 1762341789550,
+            "modifiedAt": 1762341867639
+        },
+        {
+            "userId": 12,
+            "items": [
+                {
+                    "productId": 3,
+                    "variantId": "API-TEST-2025-11-05-14-00-03-889",
+                    "quantity": 1,
+                    "price": 33.18
+                }
+            ],
+            "totalAmount": 41.22363766530957,
+            "shippingAddress": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "ExampleCountry",
+                "zipCode": "67890"
+            },
+            "payment": {
+                "method": "bank_transfer",
+                "status": "cancelled"
+            },
+            "status": "failed",
+            "id": 20,
+            "createdAt": 1762341797414,
+            "modifiedAt": 1762341797414
+        },
+        {
+            "userId": 18,
+            "items": [
+                {
+                    "productId": 12,
+                    "variantId": "api-test-2025-11-05-14-24-20-913-476",
+                    "quantity": 1,
+                    "price": 95.34
+                }
+            ],
+            "totalAmount": 70.17289671238633,
+            "shippingAddress": {
+                "street": "131415 Sample Ln",
+                "city": "TestCity",
+                "country": "ExampleCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "paypal",
+                "status": "pending"
+            },
+            "status": "failed",
+            "id": 23,
+            "createdAt": 1762341825564,
+            "modifiedAt": 1762341860927
+        },
+        {
+            "userId": 4,
+            "items": [
+                {
+                    "productId": 7,
+                    "variantId": "API-TEST-2025-11-05-14-00-28-109",
+                    "quantity": 1,
+                    "price": 94.62
+                }
+            ],
+            "totalAmount": 44.00950060379238,
+            "shippingAddress": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "MockCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "paypal",
+                "status": "processing"
+            },
+            "status": "delivered",
+            "id": 24,
+            "createdAt": 1762341832762,
+            "modifiedAt": 1762341832762
+        },
+        {
+            "userId": 15,
+            "items": [
+                {
+                    "productId": 16,
+                    "variantId": "API-TEST-2025-11-05-14-23-24-967",
+                    "quantity": 1,
+                    "price": 0.71
+                }
+            ],
+            "totalAmount": 65.68994157727292,
+            "shippingAddress": {
+                "street": "789 Demo Blvd",
+                "city": "MockCity",
+                "country": "ExampleCountry",
+                "zipCode": "77889"
+            },
+            "payment": {
+                "method": "bank_transfer",
+                "status": "pending"
+            },
+            "status": "failed",
+            "id": 25,
+            "createdAt": 1762341839630,
+            "modifiedAt": 1762341839630
+        },
+        {
+            "userId": 11,
+            "items": [
+                {
+                    "productId": 21,
+                    "variantId": "API-TEST-2025-11-05-14-23-59-882",
+                    "quantity": 1,
+                    "price": 75.39
+                }
+            ],
+            "totalAmount": 2.340914578189368,
+            "shippingAddress": {
+                "street": "123 Test St",
+                "city": "TestCity",
+                "country": "ExampleCountry",
+                "zipCode": "44556"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "shipped"
+            },
+            "status": "cancelled",
+            "id": 26,
+            "createdAt": 1762341847131,
+            "modifiedAt": 1762341847131
+        },
+        {
+            "userId": 21,
+            "items": [
+                {
+                    "productId": 12,
+                    "variantId": "api-test-2025-11-05-14-24-14-044-878",
+                    "quantity": 1,
+                    "price": 95.34
+                }
+            ],
+            "totalAmount": 51.88710898471631,
+            "shippingAddress": {
+                "street": "456 Sample Ave",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "11223"
+            },
+            "payment": {
+                "method": "paypal",
+                "status": "pending"
+            },
+            "status": "cancelled",
+            "id": 27,
+            "createdAt": 1762341853941,
+            "modifiedAt": 1762341854058
+        },
+        {
+            "userId": 14,
+            "items": [
+                {
+                    "productId": 17,
+                    "variantId": "API-TEST-2025-11-05-14-23-31-298",
+                    "quantity": 1,
+                    "price": 19
+                }
+            ],
+            "totalAmount": 59.88293861614482,
+            "shippingAddress": {
+                "street": "123 Test St",
+                "city": "ExampleCity",
+                "country": "TestCountry",
+                "zipCode": "12345"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "delivered"
+            },
+            "status": "cancelled",
+            "id": 28,
+            "createdAt": 1762341860803,
+            "modifiedAt": 1762341860803
+        },
+        {
+            "userId": 23,
+            "items": [
+                {
+                    "productId": 22,
+                    "variantId": "API-TEST-2025-11-05-14-24-07-530",
+                    "quantity": 1,
+                    "price": 49.53
+                }
+            ],
+            "totalAmount": 90.82915041196713,
+            "shippingAddress": {
+                "street": "123 Test St",
+                "city": "DemoCity",
+                "country": "SampleCountry",
+                "zipCode": "77889"
+            },
+            "payment": {
+                "method": "credit_card",
+                "status": "pending"
+            },
+            "status": "returned",
+            "id": 29,
+            "createdAt": 1762341867530,
+            "modifiedAt": 1762341867530
+        }
+    ]
+}
