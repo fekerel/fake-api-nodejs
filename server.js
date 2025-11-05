@@ -88,6 +88,50 @@ app.use(middlewares);
 // Handle POST, PUT and PATCH request
 app.use(jsonServer.bodyParser);
 
+// Bekleyen reset varsa tüm istekleri reset bitene kadar beklet
+let resettingPromise = null;
+app.use(async (req, res, next) => {
+  if (resettingPromise) {
+    try { await resettingPromise; } catch (_) {}
+  }
+  next();
+});
+
+const fsp = fs.promises;
+
+// DB'yi backup'tan yükle
+async function resetDbFromBackup() {
+  const backupPath = join(process.cwd(), 'backup-database.json');
+  const raw = await fsp.readFile(backupPath, 'utf8');
+  const nextState = JSON.parse(raw);
+
+  // 1) json-server router (lowdb)
+  router.db.setState(nextState);
+  await router.db.write();
+
+  // 2) GraphQL ve diğer yerlerde kullanılan Low örneği
+  db.data = nextState;
+  await db.write();
+}
+
+// Reset endpoint
+app.post('/_admin/reset-db', async (req, res) => {
+  try {
+    if (!resettingPromise) {
+      resettingPromise = (async () => {
+        await resetDbFromBackup();
+      })();
+    }
+    await resettingPromise;
+    resettingPromise = null;
+    res.status(204).end();
+  } catch (err) {
+    resettingPromise = null;
+    console.error('DB reset failed:', err);
+    res.status(500).json({ error: 'reset_failed' });
+  }
+});
+
 // Save createdAt and updatedAt automatically
 app.use((req, res, next) => {
   const currentTime = Date.now();
