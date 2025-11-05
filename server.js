@@ -88,6 +88,67 @@ app.use(middlewares);
 // Handle POST, PUT and PATCH request
 app.use(jsonServer.bodyParser);
 
+// Bekleyen reset varsa tüm istekleri reset bitene kadar beklet
+let resettingPromise = null;
+app.use(async (req, res, next) => {
+  if (resettingPromise) {
+    try { await resettingPromise; } catch (_) {}
+  }
+  next();
+});
+
+const fsp = fs.promises;
+
+async function safeWriteDb() {
+  for (let i = 0; i < 5; i++) {
+    try {
+      await router.db.write(); // sadece router.db diske yazar
+      return;
+    } catch (e) {
+      if (e && e.code === 'EPERM') {
+        await new Promise(r => setTimeout(r, 100 * (i + 1)));
+        continue;
+      }
+      throw e;
+    }
+  }
+  await router.db.write();
+}
+
+// DB'yi backup'tan yükle
+async function resetDbFromBackup() {
+  const backupPath = join(process.cwd(), 'backup-database.json');
+  const raw = await fsp.readFile(backupPath, 'utf8');
+  const nextState = JSON.parse(raw);
+
+  // 1) json-server (router) belleğini güncelle
+  router.db.setState(nextState);
+
+  // 2) GraphQL'in kullandığı Low örneğini sadece bellekte eşitle
+  db.data = router.db.getState();
+
+  // 3) Diske TEK SEFER yaz
+  await safeWriteDb();
+}
+
+// Reset endpoint
+app.post('/_admin/reset-db', async (req, res) => {
+  try {
+    if (!resettingPromise) {
+      resettingPromise = (async () => {
+        await resetDbFromBackup();
+      })();
+    }
+    await resettingPromise;
+    resettingPromise = null;
+    res.status(204).end();
+  } catch (err) {
+    resettingPromise = null;
+    console.error('DB reset failed:', err);
+    res.status(500).json({ error: 'reset_failed' });
+  }
+});
+
 // Save createdAt and updatedAt automatically
 app.use((req, res, next) => {
   const currentTime = Date.now();
