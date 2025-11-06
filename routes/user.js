@@ -1,6 +1,8 @@
 export default (app, router) => {
     const db = router.db
 
+    //Elle buraya yazılacak
+
     app.get('/users/:id/total-spent', (req, res) => {
         const userId = Number(req.params.id);
         if (!Number.isFinite(userId)) return res.status(400).json({ error: 'invalid id' });
@@ -13,7 +15,7 @@ export default (app, router) => {
         res.json({ userId, ordersCount: orders.length, total: Number(total.toFixed(2)) });
     });
 };
-
+//Sw
 export const openapi = {
     paths: {
         "/users/{id}/total-spent": {
