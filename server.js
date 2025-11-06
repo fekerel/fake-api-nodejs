@@ -117,7 +117,7 @@ async function safeWriteDb() {
 
 // DB'yi backup'tan yükle
 async function resetDbFromBackup() {
-  const backupPath = join(process.cwd(), 'backup-database.json');
+  const backupPath = join(process.cwd(), 'yedekDatabase.json');
   const raw = await fsp.readFile(backupPath, 'utf8');
   const nextState = JSON.parse(raw);
 
