@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js --ignore \"database.json\"",
-    "seed": "node ./seeds/generateData.js"
+    "seed": "node ./scripts/seed.mjs",
+    "seed:demo": "node ./scripts/seed.mjs users=10 categories=5 products=20 orders=15 reviews=30 mode=regenerate",
+    "types:gen": "node ./tools/generate-schema-types.mjs"
   },
   "repository": {
     "type": "git",

@@ -1,76 +1,69 @@
 import { readFileSync, readdirSync, existsSync } from 'fs';
-import { join, extname } from 'path';
+import { join } from 'path';
 import { pathToFileURL } from 'url';
+import { entitySchemas } from '../schema/entities.mjs';
+import { filterConfig } from '../schema/filter-config.mjs';
 
 export default async function generateSwaggerDocs() {
-  // Read database.json
-  const db = JSON.parse(readFileSync(join(process.cwd(), 'database.json'), 'utf8'));
-  
   const paths = {};
   const schemas = {};
 
-  // Generate paths and schemas for each collection
-  Object.entries(db).forEach(([collection, data]) => {
-    if (Array.isArray(data) && data.length > 0) {
-      // Generate schema from first item
-      schemas[collection] = {
-        type: 'object',
-        properties: generateProperties(data[0])
-      };
+  // Generate paths and schemas from entities
+  Object.entries(entitySchemas).forEach(([collection, entitySpec]) => {
+    schemas[collection] = entityToOpenApiSchema(entitySpec);
 
-      // Generate CRUD endpoints
-      paths[`/${collection}`] = {
-        get: {
-          summary: `Get all ${collection}`,
-          parameters: generateQueryParams(data[0]),
-          responses: {
-            '200': {
-              description: `List of ${collection}`,
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'array',
-                    items: { $ref: `#/components/schemas/${collection}` }
-                  }
+    // Generate CRUD endpoints
+    paths[`/${collection}`] = {
+      get: {
+        summary: `Get all ${collection}`,
+        parameters: generateQueryParamsFromSchema(collection, entitySpec),
+        responses: {
+          '200': {
+            description: `List of ${collection}`,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: { $ref: `#/components/schemas/${collection}` }
                 }
               }
             }
           }
-        },
-        post: {
-          summary: `Create new ${collection}`,
-          requestBody: {
-            content: {
-              'application/json': {
-                schema: { $ref: `#/components/schemas/${collection}` }
-              }
+        }
+      },
+      post: {
+        summary: `Create new ${collection}`,
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: { $ref: `#/components/schemas/${collection}` }
             }
-          },
-          responses: {
-            '201': { description: 'Created successfully' }
           }
+        },
+        responses: {
+          '201': { description: 'Created successfully' }
         }
-      };
+      }
+    };
 
-      paths[`/${collection}/{id}`] = {
-        get: {
-          summary: `Get ${collection} by id`,
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-          responses: { '200': { description: `${collection} found`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } } }
-        },
-        put: {
-          summary: `Update ${collection} by id`,
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-          requestBody: { content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } },
-          responses: { '200': { description: `${collection} updated successfully` } }
-        },
-        delete: {
-          summary: `Delete ${collection} by id`,
-          parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-          responses: { '200': { description: `${collection} deleted successfully` } }
-        }
-      };
-    }
+    paths[`/${collection}/{id}`] = {
+      get: {
+        summary: `Get ${collection} by id`,
+        parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+        responses: { '200': { description: `${collection} found`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } } }
+      },
+      put: {
+        summary: `Update ${collection} by id`,
+        parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+        requestBody: { content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } },
+        responses: { '200': { description: `${collection} updated successfully` } }
+      },
+      delete: {
+        summary: `Delete ${collection} by id`,
+        parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
+        responses: { '200': { description: `${collection} deleted successfully` } }
+      }
+    };
   });
 
   // load route docs and merge (route docs take precedence)
@@ -84,6 +77,63 @@ export default async function generateSwaggerDocs() {
     paths: finalPaths,
     components: { schemas: finalSchemas }
   };
+}
+
+// Convert entities spec -> OpenAPI Schema
+function entityToOpenApiSchema(entitySpec) {
+  const properties = {};
+  const required = [];
+
+  for (const [name, spec] of Object.entries(entitySpec || {})) {
+    const prop = fieldToSchema(spec);
+    properties[name] = prop;
+    if (!spec?.nullable) required.push(name);
+    if (spec?.primary) prop.readOnly = true;
+  }
+
+  return {
+    type: 'object',
+    properties,
+    required: required.length ? required : undefined
+  };
+}
+
+function fieldToSchema(spec) {
+  if (!spec) return {};
+  if (spec.type === 'object') {
+    const nestedProps = {};
+    const req = [];
+    for (const [k, fs] of Object.entries(spec.fields || {})) {
+      nestedProps[k] = fieldToSchema(fs);
+      if (!fs?.nullable) req.push(k);
+    }
+    return { type: 'object', properties: nestedProps, required: req.length ? req : undefined };
+  }
+  if (spec.type === 'array') {
+    const items = fieldToSchema(spec.of);
+    const out = { type: 'array', items };
+    if (typeof spec.min === 'number') out.minItems = spec.min;
+    if (typeof spec.max === 'number') out.maxItems = spec.max;
+    return out;
+  }
+  // Expose enums as plain strings so clients can send values outside the listed set.
+  // Keep a hint in description and an x-enum-values vendor extension for tooling.
+  if (spec.type === 'enum') {
+    const out = { type: 'string' };
+    if (Array.isArray(spec.values) && spec.values.length) {
+      out.description = `Accepted values (not restricted): ${spec.values.join(', ')}`;
+      out['x-enum-values'] = spec.values;
+    }
+    return out;
+  }
+  if (spec.type === 'timestamp') return { type: 'integer', format: 'int64', description: 'Unix timestamp (ms)' };
+  const base = { type: spec.type || 'string' };
+  if (spec.relation) {
+    base.description = `relation -> ${spec.relation.entity}.${spec.relation.field}`;
+    base['x-relation'] = spec.relation;
+  }
+  if (spec.nullable) base.nullable = true;
+  return base;
 }
 
 function mergeOpenApi(target, src) {
@@ -119,14 +169,11 @@ async function loadRouteDocs() {
     try {
       if (f.endsWith('.js')) {
         const mod = await import(pathToFileURL(full).href);
-        // support named export `export const openapi = {...}`
         if (mod && mod.openapi) mergeOpenApi(docs, mod.openapi);
-        // support default export with openapi property: export default (app)=>{}; export default.openapi = {...}
         if (mod && mod.default && mod.default.openapi) mergeOpenApi(docs, mod.default.openapi);
       } else if (f.endsWith('.openapi.json')) {
         const raw = readFileSync(full, 'utf8');
-        const parsed = JSON.parse(raw);
-        mergeOpenApi(docs, parsed);
+        mergeOpenApi(docs, JSON.parse(raw));
       }
     } catch (err) {
       console.error('swagger-generator: failed to load route doc', f, err.message);
@@ -135,115 +182,87 @@ async function loadRouteDocs() {
   return docs;
 }
 
-function detectType(value) {
-  if (typeof value === 'number') return { type: Number.isInteger(value) ? 'integer' : 'number' };
-  if (typeof value === 'boolean') return { type: 'boolean' };
-  if (typeof value === 'string') {
-    // ISO date-time
-    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value) && !isNaN(Date.parse(value))) return { type: 'string', format: 'date-time' };
-    // simple date
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return { type: 'string', format: 'date' };
-    // email
-    if (/^[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(value)) return { type: 'string', format: 'email' };
-    return { type: 'string' };
+// Query params from entity schema + filterConfig (fallback to reasonable defaults)
+function flattenFields(spec, prefix = '') {
+  const out = [];
+  for (const [key, fs] of Object.entries(spec || {})) {
+    const name = prefix ? `${prefix}.${key}` : key;
+    if (fs?.type === 'object' && fs.fields) out.push(...flattenFields(fs.fields, name));
+    else out.push({ name, spec: fs });
   }
+  return out;
+}
+
+function paramSchemaForField(spec) {
+  if (!spec) return { type: 'string' };
+  // For query params, expose enums as plain strings so any value can be filtered,
+  // but keep an example and vendor extension for hints.
+  if (spec.type === 'enum') {
+    const out = { type: 'string' };
+    if (Array.isArray(spec.values) && spec.values.length) {
+      out['x-enum-values'] = spec.values;
+    }
+    return out;
+  }
+  if (spec.type === 'timestamp') return { type: 'integer', format: 'int64' };
+  if (spec.type === 'integer') return { type: 'integer' };
+  if (spec.type === 'number') return { type: 'number' };
+  if (spec.type === 'boolean') return { type: 'boolean' };
   return { type: 'string' };
 }
 
-function generateProperties(obj) {
-  const properties = {};
-
-  Object.entries(obj || {}).forEach(([key, value]) => {
-    // null -> nullable
-    if (value === null) {
-      properties[key] = { nullable: true, example: null };
-      return;
-    }
-
-    // arrays
-    if (Array.isArray(value)) {
-      let itemsSchema = { type: 'string' };
-      if (value.length > 0) {
-        const first = value.find(v => v !== null && v !== undefined);
-        if (first !== undefined) {
-          if (Array.isArray(first)) {
-            itemsSchema = { type: 'array', items: { type: typeof (first[0]) || 'string' } };
-          } else if (typeof first === 'object' && first !== null) {
-            itemsSchema = { type: 'object', properties: generateProperties(first) };
-          } else {
-            const d = detectType(first);
-            itemsSchema = Object.assign({}, d);
-          }
-        }
-      }
-      properties[key] = { type: 'array', items: itemsSchema, example: value };
-      return;
-    }
-
-    // nested object
-    if (typeof value === 'object' && value !== null) {
-      properties[key] = { type: 'object', properties: generateProperties(value), example: value };
-      return;
-    }
-
-    // primitive
-    const det = detectType(value);
-    const schema = { type: det.type };
-    if (det.format) schema.format = det.format;
-    schema.example = value;
-    properties[key] = schema;
-  });
-
-  return properties;
+function defaultOpsForField(spec) {
+  switch (spec?.type) {
+    case 'string': return ['eq', 'like'];
+    case 'enum': return ['eq'];
+    case 'integer':
+    case 'number':
+    case 'timestamp': return ['eq', 'gte', 'lte'];
+    case 'boolean': return ['eq'];
+    default: return [];
+  }
 }
 
-function generateQueryParams(obj) {
+function resolveOpsForField(entityName, fieldPath, spec) {
+  const cfg = filterConfig?.[entityName]?.[fieldPath];
+  if (Array.isArray(cfg) && cfg.length) return cfg;
+  return defaultOpsForField(spec);
+}
+
+function generateQueryParamsFromSchema(entityName, entitySpec) {
   const params = [
-    {
-      in: 'query',
-      name: '_sort',
-      schema: { type: 'string' },
-      description: 'Sort by field'
-    },
-    {
-      in: 'query',
-      name: '_order',
-      schema: { type: 'string', enum: ['asc', 'desc'] },
-      description: 'Sort order'
-    },
-    {
-      in: 'query',
-      name: '_page',
-      schema: { type: 'integer' },
-      description: 'Page number'
-    },
-    {
-      in: 'query',
-      name: '_limit',
-      schema: { type: 'integer' },
-      description: 'Items per page'
-    }
+    { in: 'query', name: 'q', schema: { type: 'string' }, description: 'Full-text search' },
+    { in: 'query', name: '_sort', schema: { type: 'string' }, description: 'Sort by field' },
+    { in: 'query', name: '_order', schema: { type: 'string', enum: ['asc', 'desc'] }, description: 'Sort order' },
+    { in: 'query', name: '_page', schema: { type: 'integer' }, description: 'Page number' },
+    { in: 'query', name: '_limit', schema: { type: 'integer' }, description: 'Items per page' }
   ];
 
-  // Add field-specific filters
-  Object.entries(obj).forEach(([key, value]) => {
-    if (typeof value === 'number') {
-      params.push(
-        {
-          in: 'query',
-          name: `${key}_gte`,
-          schema: { type: 'number' },
-          description: `Minimum ${key}`
-        },
-        {
-          in: 'query',
-          name: `${key}_lte`,
-          schema: { type: 'number' },
-          description: `Maximum ${key}`
-        }
-      );
+  const flat = flattenFields(entitySpec);
+  for (const { name, spec } of flat) {
+    if (!spec || spec.type === 'object' || spec.type === 'array') continue;
+    const ops = resolveOpsForField(entityName, name, spec);
+    if (!ops.length) continue;
+
+    const baseSchema = paramSchemaForField(spec);
+    for (const op of ops) {
+      if (op === 'eq') {
+        const suffix = spec.type === 'enum' && Array.isArray(spec.values) && spec.values.length
+          ? ` (e.g. ${spec.values.join(' | ')})`
+          : '';
+        params.push({ in: 'query', name, schema: baseSchema, description: `Filter ${name} by equality${suffix}` });
+      } else if (op === 'like' && spec.type === 'string') {
+        const suffix = spec.type === 'enum' && Array.isArray(spec.values) && spec.values.length
+          ? ` (e.g. ${spec.values.join(' | ')})`
+          : '';
+        params.push({ in: 'query', name: `${name}_like`, schema: { type: 'string' }, description: `Substring/regex match on ${name}${suffix}` });
+      } else if (op === 'gte' && (spec.type === 'integer' || spec.type === 'number' || spec.type === 'timestamp')) {
+        params.push({ in: 'query', name: `${name}_gte`, schema: baseSchema, description: `Minimum ${name}` });
+      } else if (op === 'lte' && (spec.type === 'integer' || spec.type === 'number' || spec.type === 'timestamp')) {
+        params.push({ in: 'query', name: `${name}_lte`, schema: baseSchema, description: `Maximum ${name}` });
+      }
     }
-  });
+  }
 
   return params;
 }
