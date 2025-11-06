@@ -1,37 +1,8 @@
-# Fake API NodeJS
+# Upstream README (original project)
 
-This fork tailors the project to our current setup: OpenAPI is generated from a single entities schema, and Swagger examples are produced by the same record generator used for seeding.
+This file preserves the README from the original repository you forked. It documents the generic JSON Server + Node.js template and its default features. Your project’s tailored README lives at the repo root in `README.md`.
 
-- Entities as source of truth: `schema/entities.mjs`
-- OpenAPI generator: `utils/swagger-generator.js`
-- Generator-based Swagger examples (no DB dependency)
-- Type-guided filter config: `schema/filter-config.mjs` (+ `tools/generate-schema-types.mjs` → `types/schema-types.d.ts`)
-- Query ops per field: eq, like, gte, lte; `_like` is a case-insensitive regex/substring
-- Enums documented as strings (values listed, not restricted)
-- PUT/DELETE document 404 responses
-
-Quick start:
-
-```bash
-npm install --legacy-peer-deps
-npm run dev
-# optional
-npm run seed:demo
-```
-
-### Seeding (demo)
-
-```bash
-npm run seed:demo
-```
-
-- Belirli koleksiyonları sıfırdan üretir: users=10, categories=5, products=20, orders=15, reviews=30.
-- mode=regenerate: sadece bu koleksiyonlar temizlenip yeniden oluşturulur; diğerleri korunur.
-- Kayıtlar `schema/generator.mjs` ile üretilir ve `database.json` dosyasına yazılır.
-
-Swagger UI: http://localhost:8000/api-docs  •  OpenAPI JSON: http://localhost:8000/openapi.json
-
-Upstream README is preserved at `docs/README.upstream.md`. The original content continues below for reference.
+The original content follows below, unchanged.
 
 ---
 
