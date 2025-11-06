@@ -3,6 +3,7 @@ import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { entitySchemas } from '../schema/entities.mjs';
 import { filterConfig } from '../schema/filter-config.mjs';
+import { generateRecord, buildHelpers } from '../schema/generator.mjs';
 
 export default async function generateSwaggerDocs() {
   const paths = {};
@@ -11,6 +12,7 @@ export default async function generateSwaggerDocs() {
   // Generate paths and schemas from entities
   Object.entries(entitySchemas).forEach(([collection, entitySpec]) => {
     schemas[collection] = entityToOpenApiSchema(entitySpec);
+    const { requestExample, itemExample, listExample } = buildExamples(collection, entitySpec);
 
     // Generate CRUD endpoints
     paths[`/${collection}`] = {
@@ -25,7 +27,8 @@ export default async function generateSwaggerDocs() {
                 schema: {
                   type: 'array',
                   items: { $ref: `#/components/schemas/${collection}` }
-                }
+                },
+                example: listExample
               }
             }
           }
@@ -36,12 +39,21 @@ export default async function generateSwaggerDocs() {
         requestBody: {
           content: {
             'application/json': {
-              schema: { $ref: `#/components/schemas/${collection}` }
+              schema: { $ref: `#/components/schemas/${collection}` },
+              example: requestExample
             }
           }
         },
         responses: {
-          '201': { description: 'Created successfully' }
+          '201': {
+            description: 'Created successfully',
+            content: {
+              'application/json': {
+                schema: { $ref: `#/components/schemas/${collection}` },
+                example: itemExample
+              }
+            }
+          }
         }
       }
     };
@@ -50,18 +62,24 @@ export default async function generateSwaggerDocs() {
       get: {
         summary: `Get ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-        responses: { '200': { description: `${collection} found`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } } }
+        responses: { '200': { description: `${collection} found`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` }, example: itemExample } } } }
       },
       put: {
         summary: `Update ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-        requestBody: { content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` } } } },
-        responses: { '200': { description: `${collection} updated successfully` } }
+        requestBody: { content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` }, example: requestExample } } },
+        responses: {
+          '200': { description: `${collection} updated successfully`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` }, example: itemExample } } },
+          '404': { description: 'Not found' }
+        }
       },
       delete: {
         summary: `Delete ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
-        responses: { '200': { description: `${collection} deleted successfully` } }
+        responses: {
+          '200': { description: `${collection} deleted successfully` },
+          '404': { description: 'Not found' }
+        }
       }
     };
   });
@@ -265,4 +283,28 @@ function generateQueryParamsFromSchema(entityName, entitySpec) {
   }
 
   return params;
+}
+
+// --- Examples via generator only ------------------------------------------
+function stripPrimaryFields(entitySpec, obj) {
+  const primaries = new Set(Object.entries(entitySpec || {})
+    .filter(([, s]) => s && s.primary)
+    .map(([k]) => k));
+  const out = {};
+  for (const [k, v] of Object.entries(obj || {})) {
+    if (primaries.has(k)) continue;
+    out[k] = v;
+  }
+  return out;
+}
+
+function buildExamples(collection, entitySpec) {
+  // generator-only: do not read database.json; just synthesize objects
+  const db = {};
+  const helpers = buildHelpers(db);
+  const generated = generateRecord(collection, db, helpers) || {};
+  const requestExample = stripPrimaryFields(entitySpec, generated);
+  const itemExample = { id: 1, ...requestExample };
+  const listExample = [itemExample];
+  return { requestExample, itemExample, listExample };
 }
