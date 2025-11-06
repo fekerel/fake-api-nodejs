@@ -55,6 +55,10 @@ if (fs.existsSync(handlersDir)) {
 const swaggerSpec = await generateSwaggerDocs();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.get('/openapi.json', (req, res) => {
+  res.json(swaggerSpec);
+});
+
 // Init socket io server
 const io = new Server(server, {
   cors: { origin: '*' },
