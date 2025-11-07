@@ -32,6 +32,8 @@ await db.read();
 const app = jsonServer.create();
 const router = jsonServer.router(CONFIG.databaseFile);
 const middlewares = jsonServer.defaults();
+// Parse JSON bodies early so route modules loaded below receive parsed req.body
+app.use(jsonServer.bodyParser);
 const port = process.env.PORT || CONFIG.defaultPort;
 const server = http.createServer(app);
 
@@ -89,8 +91,7 @@ app.use('/graphql', graphqlHTTP({ schema, rootValue: setupRootValue(db), graphiq
 // Set default middlewares (logger, static, cors and no-cache)
 app.use(middlewares);
 
-// Handle POST, PUT and PATCH request
-app.use(jsonServer.bodyParser);
+// Body parser moved earlier (above route handlers)
 
 // Bekleyen reset varsa tüm istekleri reset bitene kadar beklet
 let resettingPromise = null;
