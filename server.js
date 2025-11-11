@@ -4,6 +4,7 @@ import { pathToFileURL } from 'url';
 import { graphqlHTTP } from 'express-graphql';
 import http from 'http';
 import jsonServer from 'json-server';
+import morgan from 'morgan';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 import { Server } from 'socket.io';
@@ -31,9 +32,10 @@ await db.read();
 
 const app = jsonServer.create();
 const router = jsonServer.router(CONFIG.databaseFile);
-const middlewares = jsonServer.defaults();
+const middlewares = jsonServer.defaults({ logger: false });
 // Parse JSON bodies early so route modules loaded below receive parsed req.body
 app.use(jsonServer.bodyParser);
+app.use(morgan('dev'));
 const port = process.env.PORT || CONFIG.defaultPort;
 const server = http.createServer(app);
 
