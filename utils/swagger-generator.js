@@ -286,13 +286,17 @@ function generateQueryParamsFromSchema(entityName, entitySpec) {
 }
 
 // --- Examples via generator only ------------------------------------------
+// Strip fields that clients should not send on create/update: primary keys + server managed timestamps.
 function stripPrimaryFields(entitySpec, obj) {
-  const primaries = new Set(Object.entries(entitySpec || {})
-    .filter(([, s]) => s && s.primary)
-    .map(([k]) => k));
+  const primaries = new Set(
+    Object.entries(entitySpec || {})
+      .filter(([, s]) => s && s.primary)
+      .map(([k]) => k)
+  );
+  const serverManaged = new Set(['createdAt', 'modifiedAt']);
   const out = {};
   for (const [k, v] of Object.entries(obj || {})) {
-    if (primaries.has(k)) continue;
+    if (primaries.has(k) || serverManaged.has(k)) continue;
     out[k] = v;
   }
   return out;
@@ -303,8 +307,9 @@ function buildExamples(collection, entitySpec) {
   const db = {};
   const helpers = buildHelpers(db);
   const generated = generateRecord(collection, db, helpers) || {};
-  const requestExample = stripPrimaryFields(entitySpec, generated);
-  const itemExample = { id: 1, ...requestExample };
+  const requestExample = stripPrimaryFields(entitySpec, generated); // exclude id, createdAt, modifiedAt from request body example
+  // Response item example should include server managed fields
+  const itemExample = { ...generated, id: 1 };
   const listExample = [itemExample];
   return { requestExample, itemExample, listExample };
 }
