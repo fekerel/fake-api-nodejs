@@ -165,53 +165,226 @@ export default (app, router) => {
 };
 
 export const openapi = {
-    paths: {
-        "/orders/filter": {
-            get: {
-                summary: "Filter orders with variable parameters",
-                parameters: [
-                    { in: "query", name: "orderId", schema: { type: "integer" }, description: "Get single order by ID" },
-                    { in: "query", name: "userId", schema: { type: "integer" }, description: "Filter by user ID" },
-                    { in: "query", name: "status", schema: { type: "string" }, description: "Filter by status" },
-                    { in: "query", name: "startDate", schema: { type: "integer", format: "int64" }, description: "Start date timestamp" },
-                    { in: "query", name: "endDate", schema: { type: "integer", format: "int64" }, description: "End date timestamp" }
-                ],
-                responses: {
-                    "200": {
-                        description: "Orders based on filter parameters",
-                        content: {
-                            "application/json": {
-                                schema: { $ref: "#/components/schemas/OrderFilterResult" }
-                            }
-                        }
-                    },
-                    "400": { description: "invalid parameters" },
-                    "404": { description: "order or user not found" }
-                }
-            }
-        }
-    },
-    components: {
-        schemas: {
-            OrderFilterResult: {
-                oneOf: [
-                    {
-                        type: "object",
-                        properties: {
-                            type: { type: "string", enum: ["single_order"] },
-                            order: { type: "object" }
-                        }
-                    },
-                    {
-                        type: "object",
-                        properties: {
-                            type: { type: "string", enum: ["user_orders", "status_orders", "user_status_orders", "date_range_orders", "all_orders"] },
-                            totalOrders: { type: "integer" },
-                            orders: { type: "array", items: { type: "object" } }
-                        }
+  paths: {
+    "/orders/filter": {
+      get: {
+        summary: "Filter orders with variable parameters",
+        parameters: [
+          { in: "query", name: "orderId", schema: { type: "integer" }, description: "Get single order by ID (only this returns a single_order result)" },
+          { in: "query", name: "userId", schema: { type: "integer" }, description: "Filter by user ID" },
+          { in: "query", name: "status", schema: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] }, description: "Filter by order status" },
+          { in: "query", name: "startDate", schema: { type: "integer", format: "int64" }, description: "Start date (timestamp ms)" },
+          { in: "query", name: "endDate", schema: { type: "integer", format: "int64" }, description: "End date (timestamp ms)" }
+        ],
+        responses: {
+          "200": {
+            description: "Orders based on filter parameters",
+            content: {
+              "application/json": {
+                schema: {
+                  oneOf: [
+                    { $ref: "#/components/schemas/SingleOrderResult" },
+                    { $ref: "#/components/schemas/UserOrdersResult" },
+                    { $ref: "#/components/schemas/StatusOrdersResult" },
+                    { $ref: "#/components/schemas/UserStatusOrdersResult" },
+                    { $ref: "#/components/schemas/DateRangeOrdersResult" },
+                    { $ref: "#/components/schemas/AllOrdersResult" }
+                  ],
+                  discriminator: {
+                    propertyName: "type",
+                    mapping: {
+                      single_order: "#/components/schemas/SingleOrderResult",
+                      user_orders: "#/components/schemas/UserOrdersResult",
+                      status_orders: "#/components/schemas/StatusOrdersResult",
+                      user_status_orders: "#/components/schemas/UserStatusOrdersResult",
+                      date_range_orders: "#/components/schemas/DateRangeOrdersResult",
+                      all_orders: "#/components/schemas/AllOrdersResult"
                     }
-                ]
+                  }
+                }
+              }
             }
+          },
+          "400": { description: "invalid parameters" },
+          "404": { description: "order or user not found" }
         }
+      }
     }
+  },
+  components: {
+    schemas: {
+      // Shared pieces
+      OrderItem: {
+        type: "object",
+        properties: {
+          productId: { type: "integer" },
+          variantId: { type: "string" },
+          quantity: { type: "integer" },
+          price: { type: "number" }
+        },
+        required: ["productId","variantId","quantity","price"]
+      },
+      Payment: {
+        type: "object",
+        properties: {
+          method: { type: "string", enum: ["credit_card","paypal","bank_transfer"] },
+          status: { type: "string", enum: ["pending","processing","shipped","delivered","cancelled"] }
+        },
+        required: ["method","status"]
+      },
+      // For single order detail
+      OrderDetail: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          userId: { type: "integer" },
+          userName: { type: "string" },
+          totalAmount: { type: "number" },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          payment: { $ref: "#/components/schemas/Payment", nullable: true },
+          items: { type: "array", items: { $ref: "#/components/schemas/OrderItem" } },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","userId","userName","totalAmount","status","items","createdAt"]
+      },
+      // Summaries used in list results (vary by scenario)
+      UserOrderSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          totalAmount: { type: "number" },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","totalAmount","status","createdAt"]
+      },
+      StatusOrderSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          userId: { type: "integer" },
+          totalAmount: { type: "number" },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","userId","totalAmount","createdAt"]
+      },
+      UserStatusOrderSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          totalAmount: { type: "number" },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","totalAmount","createdAt"]
+      },
+      DateRangeOrderSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          userId: { type: "integer" },
+          totalAmount: { type: "number" },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","userId","totalAmount","status","createdAt"]
+      },
+      AllOrdersSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          userId: { type: "integer" },
+          totalAmount: { type: "number" },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          createdAt: { type: "integer", format: "int64" }
+        },
+        required: ["id","userId","totalAmount","status","createdAt"]
+      },
+      // Results by scenario
+      SingleOrderResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["single_order"] },
+          order: { $ref: "#/components/schemas/OrderDetail" }
+        },
+        required: ["type","order"]
+      },
+      UserOrdersResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["user_orders"] },
+          userId: { type: "integer" },
+          userName: { type: "string" },
+          totalOrders: { type: "integer" },
+          totalSpent: { type: "number" },
+          orders: { type: "array", items: { $ref: "#/components/schemas/UserOrderSummary" } }
+        },
+        required: ["type","userId","userName","totalOrders","totalSpent","orders"]
+      },
+      StatusOrdersResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["status_orders"] },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          totalOrders: { type: "integer" },
+          totalAmount: { type: "number" },
+          orders: { type: "array", items: { $ref: "#/components/schemas/StatusOrderSummary" } }
+        },
+        required: ["type","status","totalOrders","totalAmount","orders"]
+      },
+      UserStatusOrdersResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["user_status_orders"] },
+          userId: { type: "integer" },
+          userName: { type: "string" },
+          status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"] },
+          totalOrders: { type: "integer" },
+          totalAmount: { type: "number" },
+          orders: { type: "array", items: { $ref: "#/components/schemas/UserStatusOrderSummary" } }
+        },
+        required: ["type","userId","userName","status","totalOrders","totalAmount","orders"]
+      },
+      DateRangeOrdersResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["date_range_orders"] },
+          filters: {
+            type: "object",
+            properties: {
+              userId: { type: "integer", nullable: true },
+              status: { type: "string", enum: ["pending","failed","cancelled","returned","delivered"], nullable: true },
+              startDate: { type: "integer", format: "int64", nullable: true },
+              endDate: { type: "integer", format: "int64", nullable: true }
+            },
+            required: ["userId","status","startDate","endDate"]
+          },
+          totalOrders: { type: "integer" },
+          totalAmount: { type: "number" },
+          orders: { type: "array", items: { $ref: "#/components/schemas/DateRangeOrderSummary" } }
+        },
+        required: ["type","filters","totalOrders","totalAmount","orders"]
+      },
+      AllOrdersResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["all_orders"] },
+          totalOrders: { type: "integer" },
+          totalAmount: { type: "number" },
+          orders: { type: "array", items: { $ref: "#/components/schemas/AllOrdersSummary" } }
+        },
+        required: ["type","totalOrders","totalAmount","orders"]
+      },
+      // union kept for backward compat if referenced elsewhere
+      OrderFilterResult: {
+        oneOf: [
+          { $ref: "#/components/schemas/SingleOrderResult" },
+          { $ref: "#/components/schemas/UserOrdersResult" },
+          { $ref: "#/components/schemas/StatusOrdersResult" },
+          { $ref: "#/components/schemas/UserStatusOrdersResult" },
+          { $ref: "#/components/schemas/DateRangeOrdersResult" },
+          { $ref: "#/components/schemas/AllOrdersResult" }
+        ]
+      }
+    }
+  }
 };
