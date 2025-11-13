@@ -224,55 +224,258 @@ export default (app, router) => {
 };
 
 export const openapi = {
-    paths: {
-        "/statistics/category-product": {
-            get: {
-                summary: "Get statistics for categories and products with variable parameters",
-                parameters: [
-                    { in: "query", name: "categoryId", schema: { type: "integer" }, description: "Filter by category ID" },
-                    { in: "query", name: "status", schema: { type: "string", enum: ["active", "inactive"] }, description: "Filter by status" },
-                    { in: "query", name: "includeProducts", schema: { type: "boolean" }, description: "Include products in response" },
-                    { in: "query", name: "includeSales", schema: { type: "boolean" }, description: "Include sales statistics" }
-                ],
-                responses: {
-                    "200": {
-                        description: "Statistics based on parameters",
-                        content: {
-                            "application/json": {
-                                schema: { $ref: "#/components/schemas/CategoryProductStatistics" }
-                            }
-                        }
-                    },
-                    "400": { description: "invalid parameters" },
-                    "404": { description: "category not found" }
-                }
-            }
-        }
-    },
-    components: {
-        schemas: {
-            CategoryProductStatistics: {
-                oneOf: [
-                    {
-                        type: "object",
-                        properties: {
-                            type: { type: "string", enum: ["category_stats", "category_with_products", "category_sales_stats", "category_full_stats", "category_status_products"] },
-                            category: { type: "object" },
-                            products: { type: "array", items: { type: "object" } },
-                            sales: { type: "object" },
-                            statistics: { type: "object" }
-                        }
-                    },
-                    {
-                        type: "object",
-                        properties: {
-                            type: { type: "string", enum: ["status_statistics", "general_statistics"] },
-                            status: { type: "string" },
-                            statistics: { type: "object" }
-                        }
+  paths: {
+    "/statistics/category-product": {
+      get: {
+        summary: "Get statistics for categories and products with variable parameters",
+        parameters: [
+          { in: "query", name: "categoryId", schema: { type: "integer" }, description: "Filter by category ID" },
+          { in: "query", name: "status", schema: { type: "string", enum: ["active", "inactive"] }, description: "Filter by status" },
+          { in: "query", name: "includeProducts", schema: { type: "boolean" }, description: "Include products in response (true/false)" },
+          { in: "query", name: "includeSales", schema: { type: "boolean" }, description: "Include sales statistics (true/false)" }
+        ],
+        responses: {
+          "200": {
+            description: "Statistics based on parameters",
+            content: {
+              "application/json": {
+                schema: {
+                  oneOf: [
+                    { $ref: "#/components/schemas/CategoryStatsResult" },
+                    { $ref: "#/components/schemas/CategoryWithProductsResult" },
+                    { $ref: "#/components/schemas/CategorySalesStatsResult" },
+                    { $ref: "#/components/schemas/CategoryFullStatsResult" },
+                    { $ref: "#/components/schemas/StatusStatisticsResult" },
+                    { $ref: "#/components/schemas/CategoryStatusProductsResult" },
+                    { $ref: "#/components/schemas/GeneralStatisticsResult" }
+                  ],
+                  discriminator: {
+                    propertyName: "type",
+                    mapping: {
+                      category_stats: "#/components/schemas/CategoryStatsResult",
+                      category_with_products: "#/components/schemas/CategoryWithProductsResult",
+                      category_sales_stats: "#/components/schemas/CategorySalesStatsResult",
+                      category_full_stats: "#/components/schemas/CategoryFullStatsResult",
+                      status_statistics: "#/components/schemas/StatusStatisticsResult",
+                      category_status_products: "#/components/schemas/CategoryStatusProductsResult",
+                      general_statistics: "#/components/schemas/GeneralStatisticsResult"
                     }
-                ]
+                  }
+                }
+              }
             }
+          },
+          "400": {
+            description: "invalid parameters",
+            content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } }
+          },
+          "404": {
+            description: "category not found",
+            content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } }
+          }
         }
+      }
     }
+  },
+  components: {
+    schemas: {
+      // Shared pieces
+      CategoryRef: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          name: { type: "string" }
+        },
+        required: ["id", "name"]
+      },
+      CategoryFullRef: {
+        allOf: [
+          { $ref: "#/components/schemas/CategoryRef" },
+          {
+            type: "object",
+            properties: {
+              description: { type: "string", nullable: true },
+              status: { type: "string", enum: ["active", "inactive"] }
+            },
+            required: ["status"]
+          }
+        ]
+      },
+      ProductSummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          name: { type: "string" },
+          price: { type: "number" },
+          stock: { type: "integer" },
+          status: { type: "string", enum: ["active", "inactive"] }
+        },
+        required: ["id", "name", "price", "stock", "status"]
+      },
+      ProductMinimal: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          name: { type: "string" },
+          price: { type: "number" },
+          stock: { type: "integer" }
+        },
+        required: ["id", "name", "price", "stock"]
+      },
+      SalesStats: {
+        type: "object",
+        properties: {
+          totalSales: { type: "integer" },
+          totalRevenue: { type: "number" },
+          orderCount: { type: "integer" },
+          averageOrderValue: { type: "number" }
+        },
+        required: ["totalSales", "totalRevenue", "orderCount", "averageOrderValue"]
+      },
+      CategoryCountStats: {
+        type: "object",
+        properties: {
+          totalProducts: { type: "integer" },
+          activeProducts: { type: "integer" },
+          inactiveProducts: { type: "integer" }
+        },
+        required: ["totalProducts", "activeProducts", "inactiveProducts"]
+      },
+      CategoryCountStatsShort: {
+        type: "object",
+        properties: {
+          totalProducts: { type: "integer" },
+          activeProducts: { type: "integer" }
+        },
+        required: ["totalProducts", "activeProducts"]
+      },
+      StatusCategorySummary: {
+        type: "object",
+        properties: {
+          id: { type: "integer" },
+          name: { type: "string" },
+          productCount: { type: "integer" }
+        },
+        required: ["id", "name", "productCount"]
+      },
+      GlobalStats: {
+        type: "object",
+        properties: {
+          totalCategories: { type: "integer" },
+          totalProducts: { type: "integer" },
+          activeProducts: { type: "integer" },
+          inactiveProducts: { type: "integer" },
+          totalOrders: { type: "integer" }
+        },
+        required: ["totalCategories", "totalProducts", "activeProducts", "inactiveProducts", "totalOrders"]
+      },
+      Error: {
+        type: "object",
+        properties: { error: { type: "string" } },
+        required: ["error"]
+      },
+
+      // Result variants by scenario (matches handler)
+      CategoryStatsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["category_stats"] },
+          category: { $ref: "#/components/schemas/CategoryFullRef" },
+          statistics: { $ref: "#/components/schemas/CategoryCountStats" }
+        },
+        required: ["type", "category", "statistics"]
+      },
+      CategoryWithProductsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["category_with_products"] },
+          category: { $ref: "#/components/schemas/CategoryFullRef" },
+          products: { type: "array", items: { $ref: "#/components/schemas/ProductSummary" } },
+          totalProducts: { type: "integer" }
+        },
+        required: ["type", "category", "products", "totalProducts"]
+      },
+      CategorySalesStatsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["category_sales_stats"] },
+          category: { $ref: "#/components/schemas/CategoryRef" },
+          sales: { $ref: "#/components/schemas/SalesStats" }
+        },
+        required: ["type", "category", "sales"]
+      },
+      CategoryFullStatsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["category_full_stats"] },
+          category: { $ref: "#/components/schemas/CategoryFullRef" },
+          products: { type: "array", items: { $ref: "#/components/schemas/ProductSummary" } },
+          sales: { $ref: "#/components/schemas/SalesStats" },
+          statistics: { $ref: "#/components/schemas/CategoryCountStatsShort" }
+        },
+        required: ["type", "category", "products", "sales", "statistics"]
+      },
+      StatusStatisticsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["status_statistics"] },
+          status: { type: "string", enum: ["active", "inactive"] },
+          statistics: {
+            type: "object",
+            properties: {
+              totalCategories: { type: "integer" },
+              totalProducts: { type: "integer" },
+              categories: { type: "array", items: { $ref: "#/components/schemas/StatusCategorySummary" } }
+            },
+            required: ["totalCategories", "totalProducts", "categories"]
+          }
+        },
+        required: ["type", "status", "statistics"]
+      },
+      CategoryStatusProductsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["category_status_products"] },
+          category: { $ref: "#/components/schemas/CategoryRef" },
+          status: { type: "string", enum: ["active", "inactive"] },
+          totalProducts: { type: "integer" },
+          products: { type: "array", items: { $ref: "#/components/schemas/ProductMinimal" } }
+        },
+        required: ["type", "category", "status", "totalProducts", "products"]
+      },
+      GeneralStatisticsResult: {
+        type: "object",
+        properties: {
+          type: { type: "string", enum: ["general_statistics"] },
+          statistics: { $ref: "#/components/schemas/GlobalStats" }
+        },
+        required: ["type", "statistics"]
+      },
+
+      // Union (if referenced elsewhere)
+      CategoryProductStatistics: {
+        oneOf: [
+          { $ref: "#/components/schemas/CategoryStatsResult" },
+          { $ref: "#/components/schemas/CategoryWithProductsResult" },
+          { $ref: "#/components/schemas/CategorySalesStatsResult" },
+          { $ref: "#/components/schemas/CategoryFullStatsResult" },
+          { $ref: "#/components/schemas/StatusStatisticsResult" },
+          { $ref: "#/components/schemas/CategoryStatusProductsResult" },
+          { $ref: "#/components/schemas/GeneralStatisticsResult" }
+        ],
+        discriminator: {
+          propertyName: "type",
+          mapping: {
+            category_stats: "#/components/schemas/CategoryStatsResult",
+            category_with_products: "#/components/schemas/CategoryWithProductsResult",
+            category_sales_stats: "#/components/schemas/CategorySalesStatsResult",
+            category_full_stats: "#/components/schemas/CategoryFullStatsResult",
+            status_statistics: "#/components/schemas/StatusStatisticsResult",
+            category_status_products: "#/components/schemas/CategoryStatusProductsResult",
+            general_statistics: "#/components/schemas/GeneralStatisticsResult"
+          }
+        }
+      }
+    }
+  }
 };
