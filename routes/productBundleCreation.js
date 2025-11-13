@@ -181,10 +181,47 @@ export const openapi = {
     },
     components: {
         schemas: {
+            // Bundle içine giren ürün kalemi
+            BundleItem: {
+                type: "object",
+                properties: {
+                    productId: { type: "integer", example: 1 },
+                    productName: { type: "string", example: "Phone X" },
+                    quantity: { type: "integer", example: 2 },
+                    unitPrice: { type: "number", example: 499.99 },
+                    totalPrice: { type: "number", example: 999.98 }
+                },
+                required: ["productId","productName","quantity","unitPrice","totalPrice"]
+            },
+            // Oluşturulan bundle nesnesi
+            Bundle: {
+                type: "object",
+                properties: {
+                    id: { type: "integer", example: 101 },
+                    name: { type: "string", example: "Summer Bundle" },
+                    description: { type: "string", nullable: true, example: "Bundle of 3 products" },
+                    type: { type: "string", enum: ["bundle"] },
+                    products: { type: "array", items: { $ref: "#/components/schemas/BundleItem" } },
+                    originalPrice: { type: "number", example: 149.97 },
+                    price: { type: "number", example: 129.99 },
+                    discount: { type: "number", example: 19.98 },
+                    discountPercent: { type: "number", example: 13.34 },
+                    status: { type: "string", enum: ["active", "inactive"], example: "active" },
+                    stock: { type: "integer", example: 20 },
+                    createdAt: { type: "integer", format: "int64", example: 1738368000000 },
+                    updatedAt: { type: "integer", format: "int64", example: 1738368000000 }
+                },
+                required: [
+                    "id","name","type","products",
+                    "originalPrice","price","discount","discountPercent",
+                    "status","stock","createdAt","updatedAt"
+                ]
+            },
+            // ...existing code...
             BundleCreationResponse: {
                 type: "object",
                 properties: {
-                    bundle: { type: "object" },
+                    bundle: { $ref: "#/components/schemas/Bundle" },
                     summary: {
                         type: "object",
                         properties: {
@@ -193,10 +230,12 @@ export const openapi = {
                             bundlePrice: { type: "number" },
                             savings: { type: "number" },
                             savingsPercent: { type: "number" }
-                        }
+                        },
+                        required: ["totalProducts","originalPrice","bundlePrice","savings","savingsPercent"]
                     },
                     warnings: { type: "array", items: { type: "string" } }
-                }
+                },
+                required: ["bundle", "summary"]
             }
         }
     }
