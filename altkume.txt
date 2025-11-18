@@ -1,0 +1,8 @@
+- /products tüm temel crud metodlar => 5 tane endpoint
+- /products/bulk-update : hatalar çeşitli : farklı case'ler var
+- /categories/{id}/sales-stats : basit tek tip : query param'daki id ile responsetaki categoryId aynı mı bakılmalı
+- /categories/performance-comparison : numberOfCategories query param'ı var bununla ilgili bir kontrol yapılabilir ve sort işleminin seçilen metoda göre doğru yapılıp yapılmadığı belki kontrol edilebilir
+- /orders/filter : type kontrolü, type'a göre schema kontrolü, verilen id response'ta da geliyorsa onların eşitlik kontrolü
+- /users/{id}/total-spent : mevcut olmayan id yi path param olarak gir. kendin başka yoldan hesapla aynı mı diye bak.
+- /products/{id}/reviews-summary : verilen alınan id aynı mı
+- DELETE /reviews/{id} : deleteten sonra aynı id ile get at 404 almayı bekle (swaggerda yazan statusu almayı bekle)
