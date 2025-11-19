@@ -238,7 +238,7 @@
       "id": 14,
       "email": "user+1762341790130357@example.com",
       "password": "S1x3m&&0!n#X",
-      "firstName": "UpdatedFNdNA@7",
+      "firstName": "TestFNeTl_@",
       "lastName": "TestLN3bb5(",
       "role": "support",
       "address": {
@@ -250,7 +250,7 @@
       "phone": "+16316032765",
       "status": "banned",
       "createdAt": 1762341790133,
-      "modifiedAt": 1763533169525
+      "modifiedAt": 1762341790133
     },
     {
       "id": 15,
@@ -1189,6 +1189,24 @@
       "modifiedAt": 1762518623769
     },
     {
+      "id": 67,
+      "email": "user+1762518623666053@example.com",
+      "password": "FuI1Jx$a_SJ1",
+      "firstName": "TestFNjDn9O",
+      "lastName": "TestLNXy++B",
+      "role": "seller",
+      "address": {
+        "street": "101112 Test Rd",
+        "city": "DemoCity",
+        "country": "TestCountry",
+        "zipCode": "67890"
+      },
+      "phone": "+17937788562",
+      "status": "pending",
+      "createdAt": 1762518623770,
+      "modifiedAt": 1762518623770
+    },
+    {
       "id": 68,
       "email": "user+1762518623666472@example.com",
       "password": "NfF64+G=U*Fe",
@@ -1331,24 +1349,6 @@
       "status": "active",
       "createdAt": 1762518623773,
       "modifiedAt": 1762518623773
-    },
-    {
-      "id": 76,
-      "email": "user+1763533169364845@example.com",
-      "password": ")mVIA%xc27c(",
-      "firstName": "TestFNmoF18",
-      "lastName": "TestLN1d3O1",
-      "role": "manager",
-      "address": {
-        "street": "789 Demo Blvd",
-        "city": "MockCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "phone": "+14421994354",
-      "status": "inactive",
-      "createdAt": 1763533169361,
-      "modifiedAt": 1763533169361
     }
   ],
   "categories": [
@@ -6288,6 +6288,15 @@
       "id": 67
     },
     {
+      "productId": 7,
+      "userId": 67,
+      "rating": 3,
+      "comment": "API-TEST-2025-11-07-16-13-11-85 review comment",
+      "createdAt": 1762521191571,
+      "modifiedAt": 1762521191571,
+      "id": 68
+    },
+    {
       "productId": 33,
       "userId": 26,
       "rating": 3,
@@ -6394,6 +6403,15 @@
       "createdAt": 1762521192270,
       "modifiedAt": 1762521192270,
       "id": 80
+    },
+    {
+      "productId": 61,
+      "userId": 67,
+      "rating": 1,
+      "comment": "API-TEST-2025-11-07-16-13-12-149 review comment",
+      "createdAt": 1762521192272,
+      "modifiedAt": 1762521192272,
+      "id": 81
     },
     {
       "productId": 59,
@@ -6522,6 +6540,15 @@
       "id": 95
     },
     {
+      "productId": 45,
+      "userId": 67,
+      "rating": 2,
+      "comment": "API-TEST-2025-11-07-16-13-12-599 review comment",
+      "createdAt": 1762521192330,
+      "modifiedAt": 1762521192330,
+      "id": 96
+    },
+    {
       "productId": 32,
       "userId": 65,
       "rating": 3,
@@ -6538,6 +6565,15 @@
       "createdAt": 1762521192334,
       "modifiedAt": 1762521192334,
       "id": 98
+    },
+    {
+      "productId": 58,
+      "userId": 67,
+      "rating": 3,
+      "comment": "API-TEST-2025-11-07-16-13-12-75 review comment",
+      "createdAt": 1762521192336,
+      "modifiedAt": 1762521192336,
+      "id": 99
     },
     {
       "productId": 61,
