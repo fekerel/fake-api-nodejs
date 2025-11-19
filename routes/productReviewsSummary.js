@@ -57,6 +57,7 @@ export const openapi = {
     paths: {
         "/products/{id}/reviews-summary": {
             get: {
+                isSelect:true,
                 summary: "Get product reviews summary",
                 parameters: [
                     { in: "path", name: "id", required: true, schema: { type: "integer" }, example: 1 }

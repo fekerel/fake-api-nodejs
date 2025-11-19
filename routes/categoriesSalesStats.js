@@ -70,6 +70,7 @@ export const openapi = {
     paths: {
         "/categories/{id}/sales-stats": {
             get: {
+                isSelect:true,
                 summary: "Get category sales statistics",
                 parameters: [
                     { in: "path", name: "id", required: true, schema: { type: "integer" }, example: 1 }

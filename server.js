@@ -11,7 +11,7 @@ import { Server } from 'socket.io';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import generateSwaggerDocs from './utils/swagger-generator.js';
+import generateSwaggerDocs, { filterIsSelectOnly } from './utils/swagger-generator.js';
 
 import { CONFIG } from './config.js';
 import { isAuthenticated } from './utils/jwt-authenticate.js';
@@ -57,11 +57,70 @@ if (fs.existsSync(handlersDir)) {
 }
 
 const swaggerSpec = await generateSwaggerDocs();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const filteredSpec = filterIsSelectOnly(swaggerSpec);
 
+// Debug: Log path counts
+console.log(`Total paths in swaggerSpec: ${Object.keys(swaggerSpec.paths || {}).length}`);
+console.log(`Total paths in filteredSpec: ${Object.keys(filteredSpec.paths || {}).length}`);
+console.log(`Sample paths in swaggerSpec:`, Object.keys(swaggerSpec.paths || {}).slice(0, 10));
+console.log(`Sample paths in filteredSpec:`, Object.keys(filteredSpec.paths || {}).slice(0, 10));
+
+// OpenAPI JSON for all endpoints (must be before Swagger UI routes)
 app.get('/openapi.json', (req, res) => {
   res.json(swaggerSpec);
 });
+
+// OpenAPI JSON for isSelect:true endpoints only (must be before /isSelect Swagger UI)
+app.get('/isSelect/openapi.json', (req, res) => {
+  res.json(filteredSpec);
+});
+
+// Helper function to create a clean copy of spec without isSelect flags
+function createCleanSpec(originalSpec) {
+  const cleanSpec = JSON.parse(JSON.stringify(originalSpec));
+  // Remove isSelect flags from all paths and methods
+  Object.keys(cleanSpec.paths || {}).forEach(path => {
+    const pathObj = cleanSpec.paths[path];
+    // Remove isSelect from path level
+    if (pathObj.isSelect !== undefined) {
+      delete pathObj.isSelect;
+    }
+    // Remove isSelect from method level
+    Object.keys(pathObj).forEach(method => {
+      if (['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method.toLowerCase())) {
+        if (pathObj[method] && pathObj[method].isSelect !== undefined) {
+          delete pathObj[method].isSelect;
+        }
+      }
+    });
+  });
+  return cleanSpec;
+}
+
+// Swagger UI for all endpoints - use clean spec copy and force URL loading
+const cleanSwaggerSpec = createCleanSpec(swaggerSpec);
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', (req, res, next) => {
+  // Force Swagger UI to load from /openapi.json by using null spec
+  const swaggerUiHandler = swaggerUi.setup(null, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'API Documentation - All Endpoints',
+    swaggerOptions: {
+      url: '/openapi.json',
+      persistAuthorization: false,
+      tryItOutEnabled: true
+    }
+  });
+  swaggerUiHandler(req, res, next);
+});
+
+// Swagger UI for isSelect:true endpoints only
+const cleanFilteredSpec = createCleanSpec(filteredSpec);
+app.use('/isSelect', swaggerUi.serve);
+app.get('/isSelect', swaggerUi.setup(cleanFilteredSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'API Documentation - isSelect Only'
+}));
 
 // Init socket io server
 const io = new Server(server, {

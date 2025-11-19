@@ -165,9 +165,11 @@ export default (app, router) => {
 };
 
 export const openapi = {
+  
   paths: {
     "/orders/filter": {
       get: {
+        isSelect:true,
         summary: "Filter orders with variable parameters",
         parameters: [
           { in: "query", name: "orderId", schema: { type: "integer" }, description: "Get single order by ID (only this returns a single_order result)" },

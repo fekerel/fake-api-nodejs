@@ -201,9 +201,11 @@ export default (app, router) => {
 };
 
 export const openapi = {
+
   paths: {
     "/products/bulk-update": {
       post: {
+        isSelect:true,
         summary: "Bulk update product stock (supports update | subtract)",
         requestBody: {
           required: true,

@@ -238,7 +238,7 @@
       "id": 14,
       "email": "user+1762341790130357@example.com",
       "password": "S1x3m&&0!n#X",
-      "firstName": "TestFNeTl_@",
+      "firstName": "UpdatedFNdNA@7",
       "lastName": "TestLN3bb5(",
       "role": "support",
       "address": {
@@ -250,7 +250,7 @@
       "phone": "+16316032765",
       "status": "banned",
       "createdAt": 1762341790133,
-      "modifiedAt": 1762341790133
+      "modifiedAt": 1763533169525
     },
     {
       "id": 15,
@@ -1189,24 +1189,6 @@
       "modifiedAt": 1762518623769
     },
     {
-      "id": 67,
-      "email": "user+1762518623666053@example.com",
-      "password": "FuI1Jx$a_SJ1",
-      "firstName": "TestFNjDn9O",
-      "lastName": "TestLNXy++B",
-      "role": "seller",
-      "address": {
-        "street": "101112 Test Rd",
-        "city": "DemoCity",
-        "country": "TestCountry",
-        "zipCode": "67890"
-      },
-      "phone": "+17937788562",
-      "status": "pending",
-      "createdAt": 1762518623770,
-      "modifiedAt": 1762518623770
-    },
-    {
       "id": 68,
       "email": "user+1762518623666472@example.com",
       "password": "NfF64+G=U*Fe",
@@ -1349,6 +1331,24 @@
       "status": "active",
       "createdAt": 1762518623773,
       "modifiedAt": 1762518623773
+    },
+    {
+      "id": 76,
+      "email": "user+1763533169364845@example.com",
+      "password": ")mVIA%xc27c(",
+      "firstName": "TestFNmoF18",
+      "lastName": "TestLN1d3O1",
+      "role": "manager",
+      "address": {
+        "street": "789 Demo Blvd",
+        "city": "MockCity",
+        "country": "ExampleCountry",
+        "zipCode": "12345"
+      },
+      "phone": "+14421994354",
+      "status": "inactive",
+      "createdAt": 1763533169361,
+      "modifiedAt": 1763533169361
     }
   ],
   "categories": [
@@ -2236,7 +2236,7 @@
       "name": "api-test 05/11/2025 14:23",
       "description": "API-TEST-2025-11-05-14-23-31-375",
       "price": 19,
-      "stock": 908,
+      "stock": 911,
       "variants": [
         {
           "id": "API-TEST-2025-11-05-14-23-31-298",
@@ -2845,7 +2845,7 @@
       "name": "api-test 07/11/2025 15:30",
       "description": "API-TEST-2025-11-07-15-30-24-916",
       "price": 14.16,
-      "stock": 206,
+      "stock": 207,
       "variants": [
         {
           "id": "API-TEST-2025-11-07-15-30-24-414",
@@ -3037,7 +3037,7 @@
       "name": "api-test 07/11/2025 15:30",
       "description": "API-TEST-2025-11-07-15-30-24-900",
       "price": 26.01,
-      "stock": 790,
+      "stock": 791,
       "variants": [
         {
           "id": "API-TEST-2025-11-07-15-30-24-256",
@@ -3837,7 +3837,7 @@
       "name": "api-test 07/11/2025 15:30",
       "description": "API-TEST-2025-11-07-15-30-24-257",
       "price": 82.91,
-      "stock": 38,
+      "stock": 736,
       "variants": [
         {
           "id": "API-TEST-2025-11-07-15-30-24-384",
@@ -3860,8 +3860,7 @@
       ],
       "status": "inactive",
       "createdAt": 1762518624756,
-      "modifiedAt": 1762518624756,
-      "updatedAt": 1762841114180
+      "modifiedAt": 1762518624756
     },
     {
       "id": 72,
@@ -3990,110 +3989,89 @@
       "status": "active",
       "createdAt": 1762518624757,
       "modifiedAt": 1762518624757
-    },
-    {
-      "id": 62,
-      "name": "Bundle 317",
-      "description": "Bundle of 4 products",
-      "type": "bundle",
-      "products": [
-        {
-          "productId": 24,
-          "productName": "api-test 05/11/2025 14:24",
-          "quantity": 2,
-          "unitPrice": 64.15,
-          "totalPrice": 128.3
-        },
-        {
-          "productId": 49,
-          "productName": "api-test 07/11/2025 15:30",
-          "quantity": 1,
-          "unitPrice": 61.94,
-          "totalPrice": 61.94
-        },
-        {
-          "productId": 7,
-          "productName": "api-test 05/11/2025 14:00",
-          "quantity": 1,
-          "unitPrice": 94.62,
-          "totalPrice": 94.62
-        },
-        {
-          "productId": 53,
-          "productName": "api-test 07/11/2025 15:30",
-          "quantity": 2,
-          "unitPrice": 43.98,
-          "totalPrice": 87.96
-        }
-      ],
-      "originalPrice": 372.82,
-      "price": 257.25,
-      "discount": 115.57,
-      "discountPercent": 31,
-      "status": "active",
-      "stock": 96,
-      "createdAt": 1762841114247,
-      "updatedAt": 1762841114247
     }
   ],
   "orders": [
     {
-      "id": 77,
-      "userId": 25,
+      "userId": 4,
       "items": [
         {
-          "productId": 40,
-          "variantId": "API-TEST-2025-11-07-15-30-24-414",
+          "productId": 4,
+          "variantId": "API-TEST-2025-11-05-14-00-09-873",
           "quantity": 1,
-          "price": 14.16
+          "price": 32
         }
       ],
-      "totalAmount": 82.94443638281133,
+      "totalAmount": 14.645352575251458,
       "shippingAddress": {
-        "street": "123 Test St",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "44556"
+        "street": "456 Sample Ave",
+        "city": "DemoCity",
+        "country": "MockCountry",
+        "zipCode": "11223"
       },
       "payment": {
         "method": "credit_card",
-        "status": "delivered"
+        "status": "cancelled"
       },
-      "status": "processing",
-      "createdAt": 1762518625351,
-      "modifiedAt": 1762518625351,
-      "paymentStatus": "pending",
-      "updatedAt": 1762841114303
+      "status": "failed",
+      "id": 1,
+      "createdAt": 1762340545301,
+      "modifiedAt": 1762340545301
     },
     {
-      "id": 78,
-      "userId": 54,
+      "userId": 2,
       "items": [
         {
-          "productId": 17,
-          "variantId": "API-TEST-2025-11-05-14-23-31-298",
+          "productId": 5,
+          "variantId": "api-test-2025-11-05-14-23-52-861-680",
           "quantity": 1,
-          "price": 19
+          "price": 59.38
         }
       ],
-      "totalAmount": 67.82517907910723,
+      "totalAmount": 1.9117338605379341,
       "shippingAddress": {
-        "street": "123 Test St",
+        "street": "101112 Test Rd",
         "city": "DemoCity",
-        "country": "MockCountry",
+        "country": "SampleCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "shipped"
+      },
+      "status": "delivered",
+      "id": 2,
+      "createdAt": 1762340551701,
+      "modifiedAt": 1762341832872
+    },
+    {
+      "userId": 1,
+      "items": [
+        {
+          "productId": 1,
+          "variantId": "API-TEST-2025-11-05-13-59-52-245",
+          "quantity": 1,
+          "price": 4.59
+        }
+      ],
+      "totalAmount": 37.557588258709785,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "ExampleCity",
+        "country": "TestCountry",
         "zipCode": "12345"
       },
       "payment": {
         "method": "bank_transfer",
-        "status": "delivered"
+        "status": "shipped"
       },
-      "status": "returned",
-      "createdAt": 1762518625351,
-      "modifiedAt": 1762518625351
+      "status": "delivered",
+      "id": 9,
+      "createdAt": 1762340592955,
+      "modifiedAt": 1762340592955
     },
     {
-      "id": 79,
-      "userId": 29,
+      "userId": 7,
       "items": [
         {
           "productId": 7,
@@ -4102,137 +4080,59 @@
           "price": 94.62
         }
       ],
-      "totalAmount": 58.86695604562608,
+      "totalAmount": 37.6844493521695,
       "shippingAddress": {
         "street": "131415 Sample Ln",
-        "city": "MockCity",
-        "country": "ExampleCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "pending"
-      },
-      "status": "failed",
-      "createdAt": 1762518625351,
-      "modifiedAt": 1762518625351
-    },
-    {
-      "id": 76,
-      "userId": 70,
-      "items": [
-        {
-          "productId": 62,
-          "variantId": "API-TEST-2025-11-07-15-30-24-864",
-          "quantity": 1,
-          "price": 47.31
-        }
-      ],
-      "totalAmount": 9.40056806764893,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
+        "city": "DemoCity",
+        "country": "MockCountry",
+        "zipCode": "11223"
       },
       "payment": {
         "method": "paypal",
         "status": "cancelled"
       },
-      "status": "returned",
-      "createdAt": 1762518625349,
-      "modifiedAt": 1762518625349
-    },
-    {
-      "id": 75,
-      "userId": 11,
-      "items": [
-        {
-          "productId": 73,
-          "variantId": "API-TEST-2025-11-07-15-30-24-79",
-          "quantity": 1,
-          "price": 48.37
-        }
-      ],
-      "totalAmount": 12.155204668344076,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "TestCity",
-        "country": "ExampleCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "processing"
-      },
-      "status": "delivered",
-      "createdAt": 1762518625348,
-      "modifiedAt": 1762518625348
-    },
-    {
-      "id": 73,
-      "userId": 72,
-      "items": [
-        {
-          "productId": 58,
-          "variantId": "API-TEST-2025-11-07-15-30-24-163",
-          "quantity": 1,
-          "price": 46.44
-        }
-      ],
-      "totalAmount": 97.28092712159395,
-      "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "processing"
-      },
       "status": "cancelled",
-      "createdAt": 1762518625347,
-      "modifiedAt": 1762518625347
+      "id": 13,
+      "createdAt": 1762340852043,
+      "modifiedAt": 1762340852043
     },
     {
-      "id": 74,
-      "userId": 63,
+      "userId": 2,
       "items": [
         {
-          "productId": 75,
-          "variantId": "API-TEST-2025-11-07-15-30-24-377",
+          "productId": 7,
+          "variantId": "API-TEST-2025-11-05-14-00-28-109",
           "quantity": 1,
-          "price": 46.39
+          "price": 94.62
         }
       ],
-      "totalAmount": 57.03943465866399,
+      "totalAmount": 19.109126071808944,
       "shippingAddress": {
         "street": "101112 Test Rd",
-        "city": "ExampleCity",
-        "country": "DemoCountry",
-        "zipCode": "67890"
+        "city": "DemoCity",
+        "country": "SampleCountry",
+        "zipCode": "12345"
       },
       "payment": {
-        "method": "paypal",
-        "status": "processing"
+        "method": "credit_card",
+        "status": "pending"
       },
-      "status": "delivered",
-      "createdAt": 1762518625347,
-      "modifiedAt": 1762518625347
+      "status": "cancelled",
+      "id": 14,
+      "createdAt": 1762340859235,
+      "modifiedAt": 1762340859235
     },
     {
-      "id": 72,
       "userId": 8,
       "items": [
         {
-          "productId": 63,
-          "variantId": "API-TEST-2025-11-07-15-30-24-857",
+          "productId": 6,
+          "variantId": "api-test-2025-11-05-14-23-39-028-362",
           "quantity": 1,
-          "price": 1.41
+          "price": 43.19
         }
       ],
-      "totalAmount": 92.40210014815666,
+      "totalAmount": 21.933361601692525,
       "shippingAddress": {
         "street": "101112 Test Rd",
         "city": "DemoCity",
@@ -4240,42 +4140,42 @@
         "zipCode": "77889"
       },
       "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
+        "method": "credit_card",
+        "status": "processing"
       },
-      "status": "cancelled",
-      "createdAt": 1762518625346,
-      "modifiedAt": 1762518625346
+      "status": "failed",
+      "id": 15,
+      "createdAt": 1762341141125,
+      "modifiedAt": 1762341819045
     },
     {
-      "id": 69,
-      "userId": 28,
+      "userId": 4,
       "items": [
         {
-          "productId": 52,
-          "variantId": "API-TEST-2025-11-07-15-30-24-789",
+          "productId": 1,
+          "variantId": "api-test-2025-11-05-14-24-27-626-504",
           "quantity": 1,
-          "price": 79.35
+          "price": 4.59
         }
       ],
-      "totalAmount": 11.532649502272374,
+      "totalAmount": 12.231989204381577,
       "shippingAddress": {
-        "street": "123 Test St",
-        "city": "TestCity",
-        "country": "SampleCountry",
-        "zipCode": "67890"
+        "street": "456 Sample Ave",
+        "city": "DemoCity",
+        "country": "MockCountry",
+        "zipCode": "11223"
       },
       "payment": {
-        "method": "paypal",
-        "status": "delivered"
+        "method": "bank_transfer",
+        "status": "pending"
       },
-      "status": "cancelled",
-      "createdAt": 1762518625272,
-      "modifiedAt": 1762518625272
+      "status": "returned",
+      "id": 19,
+      "createdAt": 1762341789550,
+      "modifiedAt": 1762341867639
     },
     {
-      "id": 70,
-      "userId": 9,
+      "userId": 12,
       "items": [
         {
           "productId": 3,
@@ -4284,33 +4184,85 @@
           "price": 33.18
         }
       ],
-      "totalAmount": 25.312916242781668,
+      "totalAmount": 41.22363766530957,
       "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "SampleCity",
-        "country": "MockCountry",
-        "zipCode": "77889"
+        "street": "456 Sample Ave",
+        "city": "DemoCity",
+        "country": "ExampleCountry",
+        "zipCode": "67890"
       },
       "payment": {
-        "method": "credit_card",
-        "status": "processing"
+        "method": "bank_transfer",
+        "status": "cancelled"
       },
-      "status": "cancelled",
-      "createdAt": 1762518625272,
-      "modifiedAt": 1762518625272
+      "status": "failed",
+      "id": 20,
+      "createdAt": 1762341797414,
+      "modifiedAt": 1762341797414
     },
     {
-      "id": 71,
+      "userId": 18,
+      "items": [
+        {
+          "productId": 12,
+          "variantId": "api-test-2025-11-05-14-24-20-913-476",
+          "quantity": 1,
+          "price": 95.34
+        }
+      ],
+      "totalAmount": 70.17289671238633,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "TestCity",
+        "country": "ExampleCountry",
+        "zipCode": "11223"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "pending"
+      },
+      "status": "failed",
+      "id": 23,
+      "createdAt": 1762341825564,
+      "modifiedAt": 1762341860927
+    },
+    {
+      "userId": 4,
+      "items": [
+        {
+          "productId": 7,
+          "variantId": "API-TEST-2025-11-05-14-00-28-109",
+          "quantity": 1,
+          "price": 94.62
+        }
+      ],
+      "totalAmount": 44.00950060379238,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
+        "city": "DemoCity",
+        "country": "MockCountry",
+        "zipCode": "11223"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "delivered",
+      "id": 24,
+      "createdAt": 1762341832762,
+      "modifiedAt": 1762341832762
+    },
+    {
       "userId": 15,
       "items": [
         {
-          "productId": 55,
-          "variantId": "API-TEST-2025-11-07-15-30-24-228",
+          "productId": 16,
+          "variantId": "API-TEST-2025-11-05-14-23-24-967",
           "quantity": 1,
-          "price": 45.86
+          "price": 0.71
         }
       ],
-      "totalAmount": 41.98026071498538,
+      "totalAmount": 65.68994157727292,
       "shippingAddress": {
         "street": "789 Demo Blvd",
         "city": "MockCity",
@@ -4318,103 +4270,51 @@
         "zipCode": "77889"
       },
       "payment": {
+        "method": "bank_transfer",
+        "status": "pending"
+      },
+      "status": "failed",
+      "id": 25,
+      "createdAt": 1762341839630,
+      "modifiedAt": 1762341839630
+    },
+    {
+      "userId": 11,
+      "items": [
+        {
+          "productId": 21,
+          "variantId": "API-TEST-2025-11-05-14-23-59-882",
+          "quantity": 1,
+          "price": 75.39
+        }
+      ],
+      "totalAmount": 2.340914578189368,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "TestCity",
+        "country": "ExampleCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
         "method": "credit_card",
         "status": "shipped"
       },
       "status": "cancelled",
-      "createdAt": 1762518625272,
-      "modifiedAt": 1762518625272
+      "id": 26,
+      "createdAt": 1762341847131,
+      "modifiedAt": 1762341847131
     },
     {
-      "id": 67,
-      "userId": 66,
-      "items": [
-        {
-          "productId": 34,
-          "variantId": "API-TEST-2025-11-07-15-30-24-966",
-          "quantity": 1,
-          "price": 1.47
-        }
-      ],
-      "totalAmount": 6.860982872990173,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "DemoCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "cancelled"
-      },
-      "status": "failed",
-      "createdAt": 1762518625271,
-      "modifiedAt": 1762518625271
-    },
-    {
-      "id": 68,
-      "userId": 1,
-      "items": [
-        {
-          "productId": 54,
-          "variantId": "API-TEST-2025-11-07-15-30-24-451",
-          "quantity": 1,
-          "price": 59.46
-        }
-      ],
-      "totalAmount": 26.504408844107964,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "delivered"
-      },
-      "status": "returned",
-      "createdAt": 1762518625271,
-      "modifiedAt": 1762518625271
-    },
-    {
-      "id": 64,
-      "userId": 74,
-      "items": [
-        {
-          "productId": 26,
-          "variantId": "API-TEST-2025-11-07-15-30-24-829",
-          "quantity": 1,
-          "price": 85.14
-        }
-      ],
-      "totalAmount": 90.55666231866006,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "MockCity",
-        "country": "DemoCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "cancelled"
-      },
-      "status": "returned",
-      "createdAt": 1762518625270,
-      "modifiedAt": 1762518625270
-    },
-    {
-      "id": 65,
       "userId": 21,
       "items": [
         {
-          "productId": 62,
-          "variantId": "API-TEST-2025-11-07-15-30-24-864",
+          "productId": 12,
+          "variantId": "api-test-2025-11-05-14-24-14-044-878",
           "quantity": 1,
-          "price": 47.31
+          "price": 95.34
         }
       ],
-      "totalAmount": 34.2713530513753,
+      "totalAmount": 51.88710898471631,
       "shippingAddress": {
         "street": "456 Sample Ave",
         "city": "DemoCity",
@@ -4422,536 +4322,16 @@
         "zipCode": "11223"
       },
       "payment": {
-        "method": "credit_card",
-        "status": "shipped"
-      },
-      "status": "delivered",
-      "createdAt": 1762518625270,
-      "modifiedAt": 1762518625270
-    },
-    {
-      "id": 66,
-      "userId": 61,
-      "items": [
-        {
-          "productId": 41,
-          "variantId": "API-TEST-2025-11-07-15-30-24-187",
-          "quantity": 1,
-          "price": 29.33
-        }
-      ],
-      "totalAmount": 71.24571284640773,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "ExampleCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625270,
-      "modifiedAt": 1762518625270
-    },
-    {
-      "id": 63,
-      "userId": 59,
-      "items": [
-        {
-          "productId": 43,
-          "variantId": "API-TEST-2025-11-07-15-30-24-747",
-          "quantity": 1,
-          "price": 57.29
-        }
-      ],
-      "totalAmount": 73.45990287216313,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "ExampleCity",
-        "country": "DemoCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625269,
-      "modifiedAt": 1762518625269
-    },
-    {
-      "id": 61,
-      "userId": 72,
-      "items": [
-        {
-          "productId": 41,
-          "variantId": "API-TEST-2025-11-07-15-30-24-187",
-          "quantity": 1,
-          "price": 29.33
-        }
-      ],
-      "totalAmount": 36.28006976907907,
-      "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "cancelled"
-      },
-      "status": "returned",
-      "createdAt": 1762518625266,
-      "modifiedAt": 1762518625266
-    },
-    {
-      "id": 62,
-      "userId": 62,
-      "items": [
-        {
-          "productId": 65,
-          "variantId": "API-TEST-2025-11-07-15-30-24-262",
-          "quantity": 1,
-          "price": 65.06
-        }
-      ],
-      "totalAmount": 50.646663236208546,
-      "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "67890"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625266,
-      "modifiedAt": 1762518625266
-    },
-    {
-      "id": 60,
-      "userId": 30,
-      "items": [
-        {
-          "productId": 51,
-          "variantId": "API-TEST-2025-11-07-15-30-24-68",
-          "quantity": 1,
-          "price": 58.76
-        }
-      ],
-      "totalAmount": 90.08154604644494,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "cancelled"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625265,
-      "modifiedAt": 1762518625265
-    },
-    {
-      "id": 59,
-      "userId": 23,
-      "items": [
-        {
-          "productId": 70,
-          "variantId": "API-TEST-2025-11-07-15-30-24-134",
-          "quantity": 1,
-          "price": 38.51
-        }
-      ],
-      "totalAmount": 73.16066051027286,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "SampleCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "pending"
-      },
-      "status": "delivered",
-      "createdAt": 1762518625262,
-      "modifiedAt": 1762518625262
-    },
-    {
-      "id": 56,
-      "userId": 42,
-      "items": [
-        {
-          "productId": 61,
-          "variantId": "API-TEST-2025-11-07-15-30-24-941",
-          "quantity": 1,
-          "price": 58.71
-        }
-      ],
-      "totalAmount": 46.065568797961,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "SampleCity",
-        "country": "SampleCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "delivered"
-      },
-      "status": "failed",
-      "createdAt": 1762518625261,
-      "modifiedAt": 1762518625261
-    },
-    {
-      "id": 57,
-      "userId": 65,
-      "items": [
-        {
-          "productId": 2,
-          "variantId": "API-TEST-2025-11-05-13-59-57-486",
-          "quantity": 1,
-          "price": 81.15
-        }
-      ],
-      "totalAmount": 27.04507377859504,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "MockCity",
-        "country": "DemoCountry",
-        "zipCode": "67890"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "returned",
-      "createdAt": 1762518625261,
-      "modifiedAt": 1762518625261
-    },
-    {
-      "id": 58,
-      "userId": 44,
-      "items": [
-        {
-          "productId": 72,
-          "variantId": "API-TEST-2025-11-07-15-30-24-895",
-          "quantity": 1,
-          "price": 10.14
-        }
-      ],
-      "totalAmount": 33.11502785090177,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "TestCity",
-        "country": "MockCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "pending"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625261,
-      "modifiedAt": 1762518625261
-    },
-    {
-      "id": 55,
-      "userId": 70,
-      "items": [
-        {
-          "productId": 51,
-          "variantId": "API-TEST-2025-11-07-15-30-24-68",
-          "quantity": 1,
-          "price": 58.76
-        }
-      ],
-      "totalAmount": 29.643286901496026,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "shipped"
-      },
-      "status": "failed",
-      "createdAt": 1762518625258,
-      "modifiedAt": 1762518625258
-    },
-    {
-      "id": 53,
-      "userId": 13,
-      "items": [
-        {
-          "productId": 49,
-          "variantId": "API-TEST-2025-11-07-15-30-24-353",
-          "quantity": 1,
-          "price": 61.94
-        }
-      ],
-      "totalAmount": 33.28602290669973,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "cancelled"
-      },
-      "status": "failed",
-      "createdAt": 1762518625257,
-      "modifiedAt": 1762518625257
-    },
-    {
-      "id": 54,
-      "userId": 38,
-      "items": [
-        {
-          "productId": 48,
-          "variantId": "API-TEST-2025-11-07-15-30-24-134",
-          "quantity": 1,
-          "price": 97.36
-        }
-      ],
-      "totalAmount": 94.49755140352336,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "ExampleCity",
-        "country": "TestCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625257,
-      "modifiedAt": 1762518625257
-    },
-    {
-      "id": 52,
-      "userId": 30,
-      "items": [
-        {
-          "productId": 28,
-          "variantId": "API-TEST-2025-11-07-15-30-24-674",
-          "quantity": 1,
-          "price": 16.53
-        }
-      ],
-      "totalAmount": 12.62497459865699,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625254,
-      "modifiedAt": 1762518625254
-    },
-    {
-      "id": 50,
-      "userId": 30,
-      "items": [
-        {
-          "productId": 55,
-          "variantId": "API-TEST-2025-11-07-15-30-24-228",
-          "quantity": 1,
-          "price": 45.86
-        }
-      ],
-      "totalAmount": 81.24445132632172,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "TestCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "processing"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625143,
-      "modifiedAt": 1762518625143
-    },
-    {
-      "id": 51,
-      "userId": 73,
-      "items": [
-        {
-          "productId": 6,
-          "variantId": "API-TEST-2025-11-05-14-00-22-754",
-          "quantity": 1,
-          "price": 43.19
-        }
-      ],
-      "totalAmount": 72.19741907075785,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625143,
-      "modifiedAt": 1762518625143
-    },
-    {
-      "id": 47,
-      "userId": 40,
-      "items": [
-        {
-          "productId": 35,
-          "variantId": "API-TEST-2025-11-07-15-30-24-950",
-          "quantity": 1,
-          "price": 79.93
-        }
-      ],
-      "totalAmount": 11.941545126695473,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "MockCity",
-        "country": "MockCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625142,
-      "modifiedAt": 1762518625142
-    },
-    {
-      "id": 48,
-      "userId": 27,
-      "items": [
-        {
-          "productId": 44,
-          "variantId": "API-TEST-2025-11-07-15-30-24-831",
-          "quantity": 1,
-          "price": 54.51
-        }
-      ],
-      "totalAmount": 8.814721641569111,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "SampleCity",
-        "country": "ExampleCountry",
-        "zipCode": "11223"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "returned",
-      "createdAt": 1762518625142,
-      "modifiedAt": 1762518625142
-    },
-    {
-      "id": 49,
-      "userId": 10,
-      "items": [
-        {
-          "productId": 32,
-          "variantId": "API-TEST-2025-11-07-15-30-24-52",
-          "quantity": 1,
-          "price": 8.56
-        }
-      ],
-      "totalAmount": 93.25588578254444,
-      "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "SampleCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "cancelled"
-      },
-      "status": "failed",
-      "createdAt": 1762518625142,
-      "modifiedAt": 1762518625142
-    },
-    {
-      "id": 44,
-      "userId": 69,
-      "items": [
-        {
-          "productId": 67,
-          "variantId": "API-TEST-2025-11-07-15-30-24-217",
-          "quantity": 1,
-          "price": 63
-        }
-      ],
-      "totalAmount": 34.81706401366515,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "SampleCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
         "method": "paypal",
         "status": "pending"
       },
       "status": "cancelled",
-      "createdAt": 1762518625141,
-      "modifiedAt": 1762518625141
+      "id": 27,
+      "createdAt": 1762341853941,
+      "modifiedAt": 1762341854058
     },
     {
-      "id": 45,
-      "userId": 73,
-      "items": [
-        {
-          "productId": 50,
-          "variantId": "API-TEST-2025-11-07-15-30-24-489",
-          "quantity": 1,
-          "price": 93.24
-        }
-      ],
-      "totalAmount": 6.210955977964572,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "delivered"
-      },
-      "status": "delivered",
-      "createdAt": 1762518625141,
-      "modifiedAt": 1762518625141
-    },
-    {
-      "id": 46,
-      "userId": 40,
+      "userId": 14,
       "items": [
         {
           "productId": 17,
@@ -4960,176 +4340,177 @@
           "price": 19
         }
       ],
-      "totalAmount": 12.980189351085558,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "MockCity",
-        "country": "MockCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "delivered"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625141,
-      "modifiedAt": 1762518625141
-    },
-    {
-      "id": 42,
-      "userId": 8,
-      "items": [
-        {
-          "productId": 32,
-          "variantId": "API-TEST-2025-11-07-15-30-24-52",
-          "quantity": 1,
-          "price": 8.56
-        }
-      ],
-      "totalAmount": 10.115527525223866,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "DemoCity",
-        "country": "ExampleCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "pending"
-      },
-      "status": "returned",
-      "createdAt": 1762518625140,
-      "modifiedAt": 1762518625140
-    },
-    {
-      "id": 43,
-      "userId": 56,
-      "items": [
-        {
-          "productId": 2,
-          "variantId": "API-TEST-2025-11-05-13-59-57-486",
-          "quantity": 1,
-          "price": 81.15
-        }
-      ],
-      "totalAmount": 53.1055522570973,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "TestCity",
-        "country": "SampleCountry",
-        "zipCode": "67890"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "pending"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625140,
-      "modifiedAt": 1762518625140
-    },
-    {
-      "id": 40,
-      "userId": 11,
-      "items": [
-        {
-          "productId": 47,
-          "variantId": "API-TEST-2025-11-07-15-30-24-877",
-          "quantity": 1,
-          "price": 53.66
-        }
-      ],
-      "totalAmount": 81.97460092635278,
+      "totalAmount": 59.88293861614482,
       "shippingAddress": {
         "street": "123 Test St",
-        "city": "TestCity",
-        "country": "ExampleCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
-        "method": "paypal",
-        "status": "shipped"
-      },
-      "status": "returned",
-      "createdAt": 1762518625139,
-      "modifiedAt": 1762518625139
-    },
-    {
-      "id": 41,
-      "userId": 72,
-      "items": [
-        {
-          "productId": 69,
-          "variantId": "API-TEST-2025-11-07-15-30-24-142",
-          "quantity": 1,
-          "price": 24.09
-        }
-      ],
-      "totalAmount": 64.01287994812958,
-      "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "DemoCity",
-        "country": "DemoCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625139,
-      "modifiedAt": 1762518625139
-    },
-    {
-      "id": 38,
-      "userId": 70,
-      "items": [
-        {
-          "productId": 67,
-          "variantId": "API-TEST-2025-11-07-15-30-24-217",
-          "quantity": 1,
-          "price": 63
-        }
-      ],
-      "totalAmount": 33.62156002880021,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
         "city": "ExampleCity",
         "country": "TestCountry",
         "zipCode": "12345"
       },
       "payment": {
         "method": "credit_card",
-        "status": "processing"
+        "status": "delivered"
       },
-      "status": "delivered",
-      "createdAt": 1762518625104,
-      "modifiedAt": 1762518625104
+      "status": "cancelled",
+      "id": 28,
+      "createdAt": 1762341860803,
+      "modifiedAt": 1762341860803
     },
     {
-      "id": 39,
-      "userId": 36,
+      "userId": 23,
       "items": [
         {
-          "productId": 64,
-          "variantId": "API-TEST-2025-11-07-15-30-24-839",
+          "productId": 22,
+          "variantId": "API-TEST-2025-11-05-14-24-07-530",
           "quantity": 1,
-          "price": 92.53
+          "price": 49.53
         }
       ],
-      "totalAmount": 87.51870969539803,
+      "totalAmount": 90.82915041196713,
       "shippingAddress": {
         "street": "123 Test St",
-        "city": "ExampleCity",
-        "country": "ExampleCountry",
-        "zipCode": "67890"
+        "city": "DemoCity",
+        "country": "SampleCountry",
+        "zipCode": "77889"
       },
       "payment": {
         "method": "credit_card",
+        "status": "pending"
+      },
+      "status": "returned",
+      "id": 29,
+      "createdAt": 1762341867530,
+      "modifiedAt": 1762341867530
+    },
+    {
+      "id": 30,
+      "userId": 31,
+      "items": [
+        {
+          "productId": 59,
+          "variantId": "API-TEST-2025-11-07-15-30-24-663",
+          "quantity": 1,
+          "price": 24.76
+        }
+      ],
+      "totalAmount": 13.727826380943675,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "DemoCity",
+        "country": "ExampleCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625081,
+      "modifiedAt": 1762518625081
+    },
+    {
+      "id": 31,
+      "userId": 21,
+      "items": [
+        {
+          "productId": 6,
+          "variantId": "API-TEST-2025-11-05-14-00-22-754",
+          "quantity": 1,
+          "price": 43.19
+        }
+      ],
+      "totalAmount": 44.83323539586237,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
+        "city": "DemoCity",
+        "country": "SampleCountry",
+        "zipCode": "11223"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "cancelled"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625081,
+      "modifiedAt": 1762518625081
+    },
+    {
+      "id": 32,
+      "userId": 29,
+      "items": [
+        {
+          "productId": 30,
+          "variantId": "API-TEST-2025-11-07-15-30-24-335",
+          "quantity": 1,
+          "price": 32.98
+        }
+      ],
+      "totalAmount": 7.767440386623603,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "MockCity",
+        "country": "ExampleCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "bank_transfer",
         "status": "shipped"
       },
-      "status": "failed",
-      "createdAt": 1762518625104,
-      "modifiedAt": 1762518625104
+      "status": "delivered",
+      "createdAt": 1762518625082,
+      "modifiedAt": 1762518625082
+    },
+    {
+      "id": 33,
+      "userId": 14,
+      "items": [
+        {
+          "productId": 1,
+          "variantId": "API-TEST-2025-11-05-13-59-52-245",
+          "quantity": 1,
+          "price": 4.59
+        }
+      ],
+      "totalAmount": 93.59722131821945,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "ExampleCity",
+        "country": "TestCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "delivered"
+      },
+      "status": "delivered",
+      "createdAt": 1762518625085,
+      "modifiedAt": 1762518625085
+    },
+    {
+      "id": 34,
+      "userId": 48,
+      "items": [
+        {
+          "productId": 50,
+          "variantId": "API-TEST-2025-11-07-15-30-24-489",
+          "quantity": 1,
+          "price": 93.24
+        }
+      ],
+      "totalAmount": 67.65372566108563,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "TestCity",
+        "country": "SampleCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625085,
+      "modifiedAt": 1762518625085
     },
     {
       "id": 35,
@@ -5210,34 +4591,190 @@
       "modifiedAt": 1762518625103
     },
     {
-      "id": 33,
-      "userId": 14,
+      "id": 38,
+      "userId": 70,
       "items": [
         {
-          "productId": 1,
-          "variantId": "API-TEST-2025-11-05-13-59-52-245",
+          "productId": 67,
+          "variantId": "API-TEST-2025-11-07-15-30-24-217",
           "quantity": 1,
-          "price": 4.59
+          "price": 63
         }
       ],
-      "totalAmount": 93.59722131821945,
+      "totalAmount": 33.62156002880021,
       "shippingAddress": {
-        "street": "123 Test St",
+        "street": "456 Sample Ave",
         "city": "ExampleCity",
         "country": "TestCountry",
         "zipCode": "12345"
       },
       "payment": {
-        "method": "bank_transfer",
-        "status": "delivered"
+        "method": "credit_card",
+        "status": "processing"
       },
       "status": "delivered",
-      "createdAt": 1762518625085,
-      "modifiedAt": 1762518625085
+      "createdAt": 1762518625104,
+      "modifiedAt": 1762518625104
     },
     {
-      "id": 34,
-      "userId": 48,
+      "id": 39,
+      "userId": 36,
+      "items": [
+        {
+          "productId": 64,
+          "variantId": "API-TEST-2025-11-07-15-30-24-839",
+          "quantity": 1,
+          "price": 92.53
+        }
+      ],
+      "totalAmount": 87.51870969539803,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "ExampleCity",
+        "country": "ExampleCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "shipped"
+      },
+      "status": "failed",
+      "createdAt": 1762518625104,
+      "modifiedAt": 1762518625104
+    },
+    {
+      "id": 40,
+      "userId": 11,
+      "items": [
+        {
+          "productId": 47,
+          "variantId": "API-TEST-2025-11-07-15-30-24-877",
+          "quantity": 1,
+          "price": 53.66
+        }
+      ],
+      "totalAmount": 81.97460092635278,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "TestCity",
+        "country": "ExampleCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "shipped"
+      },
+      "status": "returned",
+      "createdAt": 1762518625139,
+      "modifiedAt": 1762518625139
+    },
+    {
+      "id": 41,
+      "userId": 72,
+      "items": [
+        {
+          "productId": 69,
+          "variantId": "API-TEST-2025-11-07-15-30-24-142",
+          "quantity": 1,
+          "price": 24.09
+        }
+      ],
+      "totalAmount": 64.01287994812958,
+      "shippingAddress": {
+        "street": "789 Demo Blvd",
+        "city": "DemoCity",
+        "country": "DemoCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625139,
+      "modifiedAt": 1762518625139
+    },
+    {
+      "id": 42,
+      "userId": 8,
+      "items": [
+        {
+          "productId": 32,
+          "variantId": "API-TEST-2025-11-07-15-30-24-52",
+          "quantity": 1,
+          "price": 8.56
+        }
+      ],
+      "totalAmount": 10.115527525223866,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "DemoCity",
+        "country": "ExampleCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "pending"
+      },
+      "status": "returned",
+      "createdAt": 1762518625140,
+      "modifiedAt": 1762518625140
+    },
+    {
+      "id": 43,
+      "userId": 56,
+      "items": [
+        {
+          "productId": 2,
+          "variantId": "API-TEST-2025-11-05-13-59-57-486",
+          "quantity": 1,
+          "price": 81.15
+        }
+      ],
+      "totalAmount": 53.1055522570973,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
+        "city": "TestCity",
+        "country": "SampleCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "pending"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625140,
+      "modifiedAt": 1762518625140
+    },
+    {
+      "id": 44,
+      "userId": 69,
+      "items": [
+        {
+          "productId": 67,
+          "variantId": "API-TEST-2025-11-07-15-30-24-217",
+          "quantity": 1,
+          "price": 63
+        }
+      ],
+      "totalAmount": 34.81706401366515,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "SampleCity",
+        "country": "ExampleCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "pending"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625141,
+      "modifiedAt": 1762518625141
+    },
+    {
+      "id": 45,
+      "userId": 73,
       "items": [
         {
           "productId": 50,
@@ -5246,127 +4783,24 @@
           "price": 93.24
         }
       ],
-      "totalAmount": 67.65372566108563,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "TestCity",
-        "country": "SampleCountry",
-        "zipCode": "67890"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625085,
-      "modifiedAt": 1762518625085
-    },
-    {
-      "id": 32,
-      "userId": 29,
-      "items": [
-        {
-          "productId": 30,
-          "variantId": "API-TEST-2025-11-07-15-30-24-335",
-          "quantity": 1,
-          "price": 32.98
-        }
-      ],
-      "totalAmount": 7.767440386623603,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "MockCity",
-        "country": "ExampleCountry",
-        "zipCode": "77889"
-      },
-      "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "delivered",
-      "createdAt": 1762518625082,
-      "modifiedAt": 1762518625082
-    },
-    {
-      "id": 30,
-      "userId": 31,
-      "items": [
-        {
-          "productId": 59,
-          "variantId": "API-TEST-2025-11-07-15-30-24-663",
-          "quantity": 1,
-          "price": 24.76
-        }
-      ],
-      "totalAmount": 13.727826380943675,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "DemoCity",
-        "country": "ExampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "processing"
-      },
-      "status": "returned",
-      "createdAt": 1762518625081,
-      "modifiedAt": 1762518625081
-    },
-    {
-      "id": 31,
-      "userId": 21,
-      "items": [
-        {
-          "productId": 6,
-          "variantId": "API-TEST-2025-11-05-14-00-22-754",
-          "quantity": 1,
-          "price": 43.19
-        }
-      ],
-      "totalAmount": 44.83323539586237,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "DemoCity",
-        "country": "SampleCountry",
-        "zipCode": "11223"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "cancelled"
-      },
-      "status": "cancelled",
-      "createdAt": 1762518625081,
-      "modifiedAt": 1762518625081
-    },
-    {
-      "userId": 23,
-      "items": [
-        {
-          "productId": 22,
-          "variantId": "API-TEST-2025-11-05-14-24-07-530",
-          "quantity": 1,
-          "price": 49.53
-        }
-      ],
-      "totalAmount": 90.82915041196713,
+      "totalAmount": 6.210955977964572,
       "shippingAddress": {
         "street": "123 Test St",
         "city": "DemoCity",
-        "country": "SampleCountry",
-        "zipCode": "77889"
+        "country": "DemoCountry",
+        "zipCode": "44556"
       },
       "payment": {
-        "method": "credit_card",
-        "status": "pending"
+        "method": "bank_transfer",
+        "status": "delivered"
       },
-      "status": "returned",
-      "id": 29,
-      "createdAt": 1762341867530,
-      "modifiedAt": 1762341867530
+      "status": "delivered",
+      "createdAt": 1762518625141,
+      "modifiedAt": 1762518625141
     },
     {
-      "userId": 14,
+      "id": 46,
+      "userId": 40,
       "items": [
         {
           "productId": 17,
@@ -5375,33 +4809,501 @@
           "price": 19
         }
       ],
-      "totalAmount": 59.88293861614482,
+      "totalAmount": 12.980189351085558,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "MockCity",
+        "country": "MockCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "delivered"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625141,
+      "modifiedAt": 1762518625141
+    },
+    {
+      "id": 47,
+      "userId": 40,
+      "items": [
+        {
+          "productId": 35,
+          "variantId": "API-TEST-2025-11-07-15-30-24-950",
+          "quantity": 1,
+          "price": 79.93
+        }
+      ],
+      "totalAmount": 11.941545126695473,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "MockCity",
+        "country": "MockCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625142,
+      "modifiedAt": 1762518625142
+    },
+    {
+      "id": 48,
+      "userId": 27,
+      "items": [
+        {
+          "productId": 44,
+          "variantId": "API-TEST-2025-11-07-15-30-24-831",
+          "quantity": 1,
+          "price": 54.51
+        }
+      ],
+      "totalAmount": 8.814721641569111,
       "shippingAddress": {
         "street": "123 Test St",
+        "city": "SampleCity",
+        "country": "ExampleCountry",
+        "zipCode": "11223"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "shipped"
+      },
+      "status": "returned",
+      "createdAt": 1762518625142,
+      "modifiedAt": 1762518625142
+    },
+    {
+      "id": 49,
+      "userId": 10,
+      "items": [
+        {
+          "productId": 32,
+          "variantId": "API-TEST-2025-11-07-15-30-24-52",
+          "quantity": 1,
+          "price": 8.56
+        }
+      ],
+      "totalAmount": 93.25588578254444,
+      "shippingAddress": {
+        "street": "789 Demo Blvd",
+        "city": "SampleCity",
+        "country": "ExampleCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "cancelled"
+      },
+      "status": "failed",
+      "createdAt": 1762518625142,
+      "modifiedAt": 1762518625142
+    },
+    {
+      "id": 50,
+      "userId": 30,
+      "items": [
+        {
+          "productId": 55,
+          "variantId": "API-TEST-2025-11-07-15-30-24-228",
+          "quantity": 1,
+          "price": 45.86
+        }
+      ],
+      "totalAmount": 81.24445132632172,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "TestCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625143,
+      "modifiedAt": 1762518625143
+    },
+    {
+      "id": 51,
+      "userId": 73,
+      "items": [
+        {
+          "productId": 6,
+          "variantId": "API-TEST-2025-11-05-14-00-22-754",
+          "quantity": 1,
+          "price": 43.19
+        }
+      ],
+      "totalAmount": 72.19741907075785,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "DemoCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "shipped"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625143,
+      "modifiedAt": 1762518625143
+    },
+    {
+      "id": 52,
+      "userId": 30,
+      "items": [
+        {
+          "productId": 28,
+          "variantId": "API-TEST-2025-11-07-15-30-24-674",
+          "quantity": 1,
+          "price": 16.53
+        }
+      ],
+      "totalAmount": 12.62497459865699,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "TestCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625254,
+      "modifiedAt": 1762518625254
+    },
+    {
+      "id": 53,
+      "userId": 13,
+      "items": [
+        {
+          "productId": 49,
+          "variantId": "API-TEST-2025-11-07-15-30-24-353",
+          "quantity": 1,
+          "price": 61.94
+        }
+      ],
+      "totalAmount": 33.28602290669973,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "DemoCity",
+        "country": "DemoCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "cancelled"
+      },
+      "status": "failed",
+      "createdAt": 1762518625257,
+      "modifiedAt": 1762518625257
+    },
+    {
+      "id": 54,
+      "userId": 38,
+      "items": [
+        {
+          "productId": 48,
+          "variantId": "API-TEST-2025-11-07-15-30-24-134",
+          "quantity": 1,
+          "price": 97.36
+        }
+      ],
+      "totalAmount": 94.49755140352336,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "ExampleCity",
+        "country": "TestCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625257,
+      "modifiedAt": 1762518625257
+    },
+    {
+      "id": 55,
+      "userId": 70,
+      "items": [
+        {
+          "productId": 51,
+          "variantId": "API-TEST-2025-11-07-15-30-24-68",
+          "quantity": 1,
+          "price": 58.76
+        }
+      ],
+      "totalAmount": 29.643286901496026,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
         "city": "ExampleCity",
         "country": "TestCountry",
         "zipCode": "12345"
       },
       "payment": {
         "method": "credit_card",
-        "status": "delivered"
+        "status": "shipped"
       },
-      "status": "cancelled",
-      "id": 28,
-      "createdAt": 1762341860803,
-      "modifiedAt": 1762341860803
+      "status": "failed",
+      "createdAt": 1762518625258,
+      "modifiedAt": 1762518625258
     },
     {
+      "id": 56,
+      "userId": 42,
+      "items": [
+        {
+          "productId": 61,
+          "variantId": "API-TEST-2025-11-07-15-30-24-941",
+          "quantity": 1,
+          "price": 58.71
+        }
+      ],
+      "totalAmount": 46.065568797961,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "SampleCity",
+        "country": "SampleCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "delivered"
+      },
+      "status": "failed",
+      "createdAt": 1762518625261,
+      "modifiedAt": 1762518625261
+    },
+    {
+      "id": 57,
+      "userId": 65,
+      "items": [
+        {
+          "productId": 2,
+          "variantId": "API-TEST-2025-11-05-13-59-57-486",
+          "quantity": 1,
+          "price": 81.15
+        }
+      ],
+      "totalAmount": 27.04507377859504,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
+        "city": "MockCity",
+        "country": "DemoCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "shipped"
+      },
+      "status": "returned",
+      "createdAt": 1762518625261,
+      "modifiedAt": 1762518625261
+    },
+    {
+      "id": 58,
+      "userId": 44,
+      "items": [
+        {
+          "productId": 72,
+          "variantId": "API-TEST-2025-11-07-15-30-24-895",
+          "quantity": 1,
+          "price": 10.14
+        }
+      ],
+      "totalAmount": 33.11502785090177,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "TestCity",
+        "country": "MockCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "pending"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625261,
+      "modifiedAt": 1762518625261
+    },
+    {
+      "id": 59,
+      "userId": 23,
+      "items": [
+        {
+          "productId": 70,
+          "variantId": "API-TEST-2025-11-07-15-30-24-134",
+          "quantity": 1,
+          "price": 38.51
+        }
+      ],
+      "totalAmount": 73.16066051027286,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "SampleCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "pending"
+      },
+      "status": "delivered",
+      "createdAt": 1762518625262,
+      "modifiedAt": 1762518625262
+    },
+    {
+      "id": 60,
+      "userId": 30,
+      "items": [
+        {
+          "productId": 51,
+          "variantId": "API-TEST-2025-11-07-15-30-24-68",
+          "quantity": 1,
+          "price": 58.76
+        }
+      ],
+      "totalAmount": 90.08154604644494,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "TestCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "cancelled"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625265,
+      "modifiedAt": 1762518625265
+    },
+    {
+      "id": 61,
+      "userId": 72,
+      "items": [
+        {
+          "productId": 41,
+          "variantId": "API-TEST-2025-11-07-15-30-24-187",
+          "quantity": 1,
+          "price": 29.33
+        }
+      ],
+      "totalAmount": 36.28006976907907,
+      "shippingAddress": {
+        "street": "789 Demo Blvd",
+        "city": "DemoCity",
+        "country": "DemoCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "cancelled"
+      },
+      "status": "returned",
+      "createdAt": 1762518625266,
+      "modifiedAt": 1762518625266
+    },
+    {
+      "id": 62,
+      "userId": 62,
+      "items": [
+        {
+          "productId": 65,
+          "variantId": "API-TEST-2025-11-07-15-30-24-262",
+          "quantity": 1,
+          "price": 65.06
+        }
+      ],
+      "totalAmount": 50.646663236208546,
+      "shippingAddress": {
+        "street": "789 Demo Blvd",
+        "city": "ExampleCity",
+        "country": "TestCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "processing"
+      },
+      "status": "returned",
+      "createdAt": 1762518625266,
+      "modifiedAt": 1762518625266
+    },
+    {
+      "id": 63,
+      "userId": 59,
+      "items": [
+        {
+          "productId": 43,
+          "variantId": "API-TEST-2025-11-07-15-30-24-747",
+          "quantity": 1,
+          "price": 57.29
+        }
+      ],
+      "totalAmount": 73.45990287216313,
+      "shippingAddress": {
+        "street": "101112 Test Rd",
+        "city": "ExampleCity",
+        "country": "DemoCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "shipped"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625269,
+      "modifiedAt": 1762518625269
+    },
+    {
+      "id": 64,
+      "userId": 74,
+      "items": [
+        {
+          "productId": 26,
+          "variantId": "API-TEST-2025-11-07-15-30-24-829",
+          "quantity": 1,
+          "price": 85.14
+        }
+      ],
+      "totalAmount": 90.55666231866006,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
+        "city": "MockCity",
+        "country": "DemoCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "cancelled"
+      },
+      "status": "returned",
+      "createdAt": 1762518625270,
+      "modifiedAt": 1762518625270
+    },
+    {
+      "id": 65,
       "userId": 21,
       "items": [
         {
-          "productId": 12,
-          "variantId": "api-test-2025-11-05-14-24-14-044-878",
+          "productId": 62,
+          "variantId": "API-TEST-2025-11-07-15-30-24-864",
           "quantity": 1,
-          "price": 95.34
+          "price": 47.31
         }
       ],
-      "totalAmount": 51.88710898471631,
+      "totalAmount": 34.2713530513753,
       "shippingAddress": {
         "street": "456 Sample Ave",
         "city": "DemoCity",
@@ -5409,120 +5311,120 @@
         "zipCode": "11223"
       },
       "payment": {
-        "method": "paypal",
-        "status": "pending"
-      },
-      "status": "cancelled",
-      "id": 27,
-      "createdAt": 1762341853941,
-      "modifiedAt": 1762341854058
-    },
-    {
-      "userId": 11,
-      "items": [
-        {
-          "productId": 21,
-          "variantId": "API-TEST-2025-11-05-14-23-59-882",
-          "quantity": 1,
-          "price": 75.39
-        }
-      ],
-      "totalAmount": 2.340914578189368,
-      "shippingAddress": {
-        "street": "123 Test St",
-        "city": "TestCity",
-        "country": "ExampleCountry",
-        "zipCode": "44556"
-      },
-      "payment": {
         "method": "credit_card",
         "status": "shipped"
       },
-      "status": "cancelled",
-      "id": 26,
-      "createdAt": 1762341847131,
-      "modifiedAt": 1762341847131
+      "status": "delivered",
+      "createdAt": 1762518625270,
+      "modifiedAt": 1762518625270
     },
     {
-      "userId": 15,
+      "id": 66,
+      "userId": 61,
       "items": [
         {
-          "productId": 16,
-          "variantId": "API-TEST-2025-11-05-14-23-24-967",
+          "productId": 41,
+          "variantId": "API-TEST-2025-11-07-15-30-24-187",
           "quantity": 1,
-          "price": 0.71
+          "price": 29.33
         }
       ],
-      "totalAmount": 65.68994157727292,
+      "totalAmount": 71.24571284640773,
       "shippingAddress": {
-        "street": "789 Demo Blvd",
-        "city": "MockCity",
+        "street": "123 Test St",
+        "city": "ExampleCity",
         "country": "ExampleCountry",
-        "zipCode": "77889"
+        "zipCode": "12345"
       },
       "payment": {
         "method": "bank_transfer",
-        "status": "pending"
-      },
-      "status": "failed",
-      "id": 25,
-      "createdAt": 1762341839630,
-      "modifiedAt": 1762341839630
-    },
-    {
-      "userId": 4,
-      "items": [
-        {
-          "productId": 7,
-          "variantId": "API-TEST-2025-11-05-14-00-28-109",
-          "quantity": 1,
-          "price": 94.62
-        }
-      ],
-      "totalAmount": 44.00950060379238,
-      "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "DemoCity",
-        "country": "MockCountry",
-        "zipCode": "11223"
-      },
-      "payment": {
-        "method": "paypal",
         "status": "processing"
       },
-      "status": "delivered",
-      "id": 24,
-      "createdAt": 1762341832762,
-      "modifiedAt": 1762341832762
+      "status": "returned",
+      "createdAt": 1762518625270,
+      "modifiedAt": 1762518625270
     },
     {
-      "userId": 18,
+      "id": 67,
+      "userId": 66,
       "items": [
         {
-          "productId": 12,
-          "variantId": "api-test-2025-11-05-14-24-20-913-476",
+          "productId": 34,
+          "variantId": "API-TEST-2025-11-07-15-30-24-966",
           "quantity": 1,
-          "price": 95.34
+          "price": 1.47
         }
       ],
-      "totalAmount": 70.17289671238633,
+      "totalAmount": 6.860982872990173,
       "shippingAddress": {
         "street": "131415 Sample Ln",
-        "city": "TestCity",
+        "city": "DemoCity",
         "country": "ExampleCountry",
-        "zipCode": "11223"
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "cancelled"
+      },
+      "status": "failed",
+      "createdAt": 1762518625271,
+      "modifiedAt": 1762518625271
+    },
+    {
+      "id": 68,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 54,
+          "variantId": "API-TEST-2025-11-07-15-30-24-451",
+          "quantity": 1,
+          "price": 59.46
+        }
+      ],
+      "totalAmount": 26.504408844107964,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "ExampleCity",
+        "country": "TestCountry",
+        "zipCode": "12345"
       },
       "payment": {
         "method": "paypal",
-        "status": "pending"
+        "status": "delivered"
       },
-      "status": "failed",
-      "id": 23,
-      "createdAt": 1762341825564,
-      "modifiedAt": 1762341860927
+      "status": "returned",
+      "createdAt": 1762518625271,
+      "modifiedAt": 1762518625271
     },
     {
-      "userId": 12,
+      "id": 69,
+      "userId": 28,
+      "items": [
+        {
+          "productId": 52,
+          "variantId": "API-TEST-2025-11-07-15-30-24-789",
+          "quantity": 1,
+          "price": 79.35
+        }
+      ],
+      "totalAmount": 11.532649502272374,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "TestCity",
+        "country": "SampleCountry",
+        "zipCode": "67890"
+      },
+      "payment": {
+        "method": "paypal",
+        "status": "delivered"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625272,
+      "modifiedAt": 1762518625272
+    },
+    {
+      "id": 70,
+      "userId": 9,
       "items": [
         {
           "productId": 3,
@@ -5531,59 +5433,59 @@
           "price": 33.18
         }
       ],
-      "totalAmount": 41.22363766530957,
+      "totalAmount": 25.312916242781668,
       "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "DemoCity",
-        "country": "ExampleCountry",
-        "zipCode": "67890"
+        "street": "101112 Test Rd",
+        "city": "SampleCity",
+        "country": "MockCountry",
+        "zipCode": "77889"
       },
       "payment": {
-        "method": "bank_transfer",
-        "status": "cancelled"
+        "method": "credit_card",
+        "status": "processing"
       },
-      "status": "failed",
-      "id": 20,
-      "createdAt": 1762341797414,
-      "modifiedAt": 1762341797414
+      "status": "cancelled",
+      "createdAt": 1762518625272,
+      "modifiedAt": 1762518625272
     },
     {
-      "userId": 4,
+      "id": 71,
+      "userId": 15,
       "items": [
         {
-          "productId": 1,
-          "variantId": "api-test-2025-11-05-14-24-27-626-504",
+          "productId": 55,
+          "variantId": "API-TEST-2025-11-07-15-30-24-228",
           "quantity": 1,
-          "price": 4.59
+          "price": 45.86
         }
       ],
-      "totalAmount": 12.231989204381577,
+      "totalAmount": 41.98026071498538,
       "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "DemoCity",
-        "country": "MockCountry",
-        "zipCode": "11223"
+        "street": "789 Demo Blvd",
+        "city": "MockCity",
+        "country": "ExampleCountry",
+        "zipCode": "77889"
       },
       "payment": {
-        "method": "bank_transfer",
-        "status": "pending"
+        "method": "credit_card",
+        "status": "shipped"
       },
-      "status": "returned",
-      "id": 19,
-      "createdAt": 1762341789550,
-      "modifiedAt": 1762341867639
+      "status": "cancelled",
+      "createdAt": 1762518625272,
+      "modifiedAt": 1762518625272
     },
     {
+      "id": 72,
       "userId": 8,
       "items": [
         {
-          "productId": 6,
-          "variantId": "api-test-2025-11-05-14-23-39-028-362",
+          "productId": 63,
+          "variantId": "API-TEST-2025-11-07-15-30-24-857",
           "quantity": 1,
-          "price": 43.19
+          "price": 1.41
         }
       ],
-      "totalAmount": 21.933361601692525,
+      "totalAmount": 92.40210014815666,
       "shippingAddress": {
         "street": "101112 Test Rd",
         "city": "DemoCity",
@@ -5591,176 +5493,194 @@
         "zipCode": "77889"
       },
       "payment": {
+        "method": "bank_transfer",
+        "status": "shipped"
+      },
+      "status": "cancelled",
+      "createdAt": 1762518625346,
+      "modifiedAt": 1762518625346
+    },
+    {
+      "id": 73,
+      "userId": 72,
+      "items": [
+        {
+          "productId": 58,
+          "variantId": "API-TEST-2025-11-07-15-30-24-163",
+          "quantity": 1,
+          "price": 46.44
+        }
+      ],
+      "totalAmount": 97.28092712159395,
+      "shippingAddress": {
+        "street": "789 Demo Blvd",
+        "city": "DemoCity",
+        "country": "DemoCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
         "method": "credit_card",
         "status": "processing"
       },
-      "status": "failed",
-      "id": 15,
-      "createdAt": 1762341141125,
-      "modifiedAt": 1762341819045
+      "status": "cancelled",
+      "createdAt": 1762518625347,
+      "modifiedAt": 1762518625347
     },
     {
-      "userId": 2,
+      "id": 74,
+      "userId": 63,
       "items": [
         {
-          "productId": 7,
-          "variantId": "API-TEST-2025-11-05-14-00-28-109",
+          "productId": 75,
+          "variantId": "API-TEST-2025-11-07-15-30-24-377",
           "quantity": 1,
-          "price": 94.62
+          "price": 46.39
         }
       ],
-      "totalAmount": 19.109126071808944,
+      "totalAmount": 57.03943465866399,
       "shippingAddress": {
         "street": "101112 Test Rd",
-        "city": "DemoCity",
-        "country": "SampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
-        "method": "credit_card",
-        "status": "pending"
-      },
-      "status": "cancelled",
-      "id": 14,
-      "createdAt": 1762340859235,
-      "modifiedAt": 1762340859235
-    },
-    {
-      "userId": 7,
-      "items": [
-        {
-          "productId": 7,
-          "variantId": "API-TEST-2025-11-05-14-00-28-109",
-          "quantity": 1,
-          "price": 94.62
-        }
-      ],
-      "totalAmount": 37.6844493521695,
-      "shippingAddress": {
-        "street": "131415 Sample Ln",
-        "city": "DemoCity",
-        "country": "MockCountry",
-        "zipCode": "11223"
+        "city": "ExampleCity",
+        "country": "DemoCountry",
+        "zipCode": "67890"
       },
       "payment": {
         "method": "paypal",
-        "status": "cancelled"
+        "status": "processing"
       },
-      "status": "cancelled",
-      "id": 13,
-      "createdAt": 1762340852043,
-      "modifiedAt": 1762340852043
+      "status": "delivered",
+      "createdAt": 1762518625347,
+      "modifiedAt": 1762518625347
     },
     {
-      "userId": 1,
+      "id": 75,
+      "userId": 11,
       "items": [
         {
-          "productId": 1,
-          "variantId": "API-TEST-2025-11-05-13-59-52-245",
+          "productId": 73,
+          "variantId": "API-TEST-2025-11-07-15-30-24-79",
           "quantity": 1,
-          "price": 4.59
+          "price": 48.37
         }
       ],
-      "totalAmount": 37.557588258709785,
+      "totalAmount": 12.155204668344076,
       "shippingAddress": {
-        "street": "131415 Sample Ln",
+        "street": "123 Test St",
+        "city": "TestCity",
+        "country": "ExampleCountry",
+        "zipCode": "44556"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "processing"
+      },
+      "status": "delivered",
+      "createdAt": 1762518625348,
+      "modifiedAt": 1762518625348
+    },
+    {
+      "id": 76,
+      "userId": 70,
+      "items": [
+        {
+          "productId": 62,
+          "variantId": "API-TEST-2025-11-07-15-30-24-864",
+          "quantity": 1,
+          "price": 47.31
+        }
+      ],
+      "totalAmount": 9.40056806764893,
+      "shippingAddress": {
+        "street": "456 Sample Ave",
         "city": "ExampleCity",
         "country": "TestCountry",
         "zipCode": "12345"
       },
       "payment": {
-        "method": "bank_transfer",
-        "status": "shipped"
-      },
-      "status": "delivered",
-      "id": 9,
-      "createdAt": 1762340592955,
-      "modifiedAt": 1762340592955
-    },
-    {
-      "userId": 2,
-      "items": [
-        {
-          "productId": 5,
-          "variantId": "api-test-2025-11-05-14-23-52-861-680",
-          "quantity": 1,
-          "price": 59.38
-        }
-      ],
-      "totalAmount": 1.9117338605379341,
-      "shippingAddress": {
-        "street": "101112 Test Rd",
-        "city": "DemoCity",
-        "country": "SampleCountry",
-        "zipCode": "12345"
-      },
-      "payment": {
         "method": "paypal",
-        "status": "shipped"
+        "status": "cancelled"
       },
-      "status": "delivered",
-      "id": 2,
-      "createdAt": 1762340551701,
-      "modifiedAt": 1762341832872
+      "status": "returned",
+      "createdAt": 1762518625349,
+      "modifiedAt": 1762518625349
     },
     {
-      "userId": 4,
+      "id": 77,
+      "userId": 25,
       "items": [
         {
-          "productId": 4,
-          "variantId": "API-TEST-2025-11-05-14-00-09-873",
+          "productId": 40,
+          "variantId": "API-TEST-2025-11-07-15-30-24-414",
           "quantity": 1,
-          "price": 32
+          "price": 14.16
         }
       ],
-      "totalAmount": 14.645352575251458,
+      "totalAmount": 82.94443638281133,
       "shippingAddress": {
-        "street": "456 Sample Ave",
-        "city": "DemoCity",
-        "country": "MockCountry",
-        "zipCode": "11223"
+        "street": "123 Test St",
+        "city": "ExampleCity",
+        "country": "TestCountry",
+        "zipCode": "44556"
       },
       "payment": {
         "method": "credit_card",
-        "status": "cancelled"
+        "status": "delivered"
       },
-      "status": "failed",
-      "id": 1,
-      "createdAt": 1762340545301,
-      "modifiedAt": 1762340545301
+      "status": "cancelled",
+      "createdAt": 1762518625351,
+      "modifiedAt": 1762518625351
     },
     {
-      "id": 66,
-      "userId": 13,
+      "id": 78,
+      "userId": 54,
       "items": [
         {
-          "productId": 46,
-          "productName": "api-test 07/11/2025 15:30",
-          "quantity": 1,
-          "unitPrice": 26.01,
-          "totalPrice": 26.01
-        },
-        {
-          "productId": 71,
-          "productName": "api-test 07/11/2025 15:30",
-          "quantity": 3,
-          "unitPrice": 82.91,
-          "totalPrice": 248.73
-        },
-        {
           "productId": 17,
-          "productName": "api-test 05/11/2025 14:23",
-          "quantity": 3,
-          "unitPrice": 19,
-          "totalPrice": 57
+          "variantId": "API-TEST-2025-11-05-14-23-31-298",
+          "quantity": 1,
+          "price": 19
         }
       ],
-      "totalAmount": 331.74,
-      "status": "pending",
-      "shippingAddress": "Address 164",
-      "paymentMethod": "credit_card",
-      "createdAt": 1762841114150,
-      "updatedAt": 1762841114150
+      "totalAmount": 67.82517907910723,
+      "shippingAddress": {
+        "street": "123 Test St",
+        "city": "DemoCity",
+        "country": "MockCountry",
+        "zipCode": "12345"
+      },
+      "payment": {
+        "method": "bank_transfer",
+        "status": "delivered"
+      },
+      "status": "returned",
+      "createdAt": 1762518625351,
+      "modifiedAt": 1762518625351
+    },
+    {
+      "id": 79,
+      "userId": 29,
+      "items": [
+        {
+          "productId": 7,
+          "variantId": "API-TEST-2025-11-05-14-00-28-109",
+          "quantity": 1,
+          "price": 94.62
+        }
+      ],
+      "totalAmount": 58.86695604562608,
+      "shippingAddress": {
+        "street": "131415 Sample Ln",
+        "city": "MockCity",
+        "country": "ExampleCountry",
+        "zipCode": "77889"
+      },
+      "payment": {
+        "method": "credit_card",
+        "status": "pending"
+      },
+      "status": "failed",
+      "createdAt": 1762518625351,
+      "modifiedAt": 1762518625351
     }
   ],
   "reviews": [
@@ -6368,15 +6288,6 @@
       "id": 67
     },
     {
-      "productId": 7,
-      "userId": 67,
-      "rating": 3,
-      "comment": "API-TEST-2025-11-07-16-13-11-85 review comment",
-      "createdAt": 1762521191571,
-      "modifiedAt": 1762521191571,
-      "id": 68
-    },
-    {
       "productId": 33,
       "userId": 26,
       "rating": 3,
@@ -6483,15 +6394,6 @@
       "createdAt": 1762521192270,
       "modifiedAt": 1762521192270,
       "id": 80
-    },
-    {
-      "productId": 61,
-      "userId": 67,
-      "rating": 1,
-      "comment": "API-TEST-2025-11-07-16-13-12-149 review comment",
-      "createdAt": 1762521192272,
-      "modifiedAt": 1762521192272,
-      "id": 81
     },
     {
       "productId": 59,
@@ -6620,15 +6522,6 @@
       "id": 95
     },
     {
-      "productId": 45,
-      "userId": 67,
-      "rating": 2,
-      "comment": "API-TEST-2025-11-07-16-13-12-599 review comment",
-      "createdAt": 1762521192330,
-      "modifiedAt": 1762521192330,
-      "id": 96
-    },
-    {
       "productId": 32,
       "userId": 65,
       "rating": 3,
@@ -6645,15 +6538,6 @@
       "createdAt": 1762521192334,
       "modifiedAt": 1762521192334,
       "id": 98
-    },
-    {
-      "productId": 58,
-      "userId": 67,
-      "rating": 3,
-      "comment": "API-TEST-2025-11-07-16-13-12-75 review comment",
-      "createdAt": 1762521192336,
-      "modifiedAt": 1762521192336,
-      "id": 99
     },
     {
       "productId": 61,

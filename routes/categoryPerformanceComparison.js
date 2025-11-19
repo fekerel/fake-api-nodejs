@@ -78,9 +78,11 @@ export default (app, router) => {
 };
 
 export const openapi = {
+    
     paths: {
         "/categories/performance-comparison": {
             get: {
+                isSelect:true,
                 summary: "Compare performance metrics across categories",
                 parameters: [
                     { in: "query", name: "limit", schema: { type: "integer" }, description: "Number of categories to return", example: 10 },

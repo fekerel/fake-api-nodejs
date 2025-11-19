@@ -13,9 +13,9 @@ export default async function generateSwaggerDocs() {
   Object.entries(entitySchemas).forEach(([collection, entitySpec]) => {
     schemas[collection] = entityToOpenApiSchema(entitySpec);
     const { requestExample, itemExample, listExample } = buildExamples(collection, entitySpec);
-
     // Generate CRUD endpoints
     paths[`/${collection}`] = {
+      ...(collection === "products" && { isSelect: true }),
       get: {
         summary: `Get all ${collection}`,
         parameters: generateQueryParamsFromSchema(collection, entitySpec),
@@ -35,6 +35,7 @@ export default async function generateSwaggerDocs() {
         }
       },
       post: {
+        ...(collection === "products" && { isSelect: true }),
         summary: `Create new ${collection}`,
         requestBody: {
           content: {
@@ -57,14 +58,16 @@ export default async function generateSwaggerDocs() {
         }
       }
     };
-
+    
     paths[`/${collection}/{id}`] = {
       get: {
+        ...(collection === "products" && { isSelect: true }),
         summary: `Get ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
         responses: { '200': { description: `${collection} found`, content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` }, example: itemExample } } } }
       },
       put: {
+        ...(collection === "products" && { isSelect: true }),
         summary: `Update ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
         requestBody: { content: { 'application/json': { schema: { $ref: `#/components/schemas/${collection}` }, example: requestExample } } },
@@ -74,6 +77,7 @@ export default async function generateSwaggerDocs() {
         }
       },
       delete: {
+        ...((collection === "products" || collection === "reviews") && { isSelect: true }),
         summary: `Delete ${collection} by id`,
         parameters: [{ in: 'path', name: 'id', required: true, schema: { type: 'integer' } }],
         responses: {
@@ -95,6 +99,93 @@ export default async function generateSwaggerDocs() {
     paths: finalPaths,
     components: { schemas: finalSchemas }
   };
+}
+
+// Filter swagger docs to only include endpoints with isSelect: true
+export function filterIsSelectOnly(swaggerSpec) {
+  const filteredPaths = {};
+  const usedSchemas = new Set();
+  
+  // First pass: filter paths and collect used schema references
+  for (const [path, pathSpec] of Object.entries(swaggerSpec.paths || {})) {
+    const filteredMethods = {};
+    
+    // Check each HTTP method (get, post, put, delete, etc.)
+    for (const [method, methodSpec] of Object.entries(pathSpec)) {
+      // Skip non-method properties like isSelect at path level
+      if (['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method.toLowerCase())) {
+        // Only include methods that have isSelect: true (strict boolean check)
+        if (methodSpec && methodSpec.isSelect === true) {
+          filteredMethods[method] = methodSpec;
+          
+          // Collect schema references from this method
+          collectSchemaRefs(methodSpec, usedSchemas);
+        }
+      }
+    }
+    
+    // Only add path if it has at least one method with isSelect: true
+    if (Object.keys(filteredMethods).length > 0) {
+      filteredPaths[path] = filteredMethods;
+    }
+  }
+  
+  // Filter schemas to only include used ones
+  const filteredSchemas = {};
+  if (swaggerSpec.components && swaggerSpec.components.schemas) {
+    for (const [schemaName, schema] of Object.entries(swaggerSpec.components.schemas)) {
+      if (usedSchemas.has(schemaName)) {
+        filteredSchemas[schemaName] = schema;
+      }
+    }
+  }
+  
+  return {
+    ...swaggerSpec,
+    paths: filteredPaths,
+    components: {
+      ...swaggerSpec.components,
+      schemas: filteredSchemas
+    },
+    info: {
+      ...swaggerSpec.info,
+      title: swaggerSpec.info.title + ' (isSelect Only)',
+      description: 'Only endpoints with isSelect: true are shown'
+    }
+  };
+}
+
+// Helper function to collect schema references from a method spec
+function collectSchemaRefs(obj, usedSchemas) {
+  if (!obj || typeof obj !== 'object') return;
+  
+  if (Array.isArray(obj)) {
+    obj.forEach(item => collectSchemaRefs(item, usedSchemas));
+    return;
+  }
+  
+  // Check for $ref
+  if (obj.$ref && typeof obj.$ref === 'string') {
+    const match = obj.$ref.match(/#\/components\/schemas\/(.+)/);
+    if (match) {
+      usedSchemas.add(match[1]);
+    }
+  }
+  
+  // Check for items with $ref (arrays)
+  if (obj.items && obj.items.$ref) {
+    const match = obj.items.$ref.match(/#\/components\/schemas\/(.+)/);
+    if (match) {
+      usedSchemas.add(match[1]);
+    }
+  }
+  
+  // Recursively check all properties
+  for (const value of Object.values(obj)) {
+    if (value && typeof value === 'object') {
+      collectSchemaRefs(value, usedSchemas);
+    }
+  }
 }
 
 // Convert entities spec -> OpenAPI Schema
