@@ -143,6 +143,7 @@ export const openapi = {
     paths: {
         "/products/flexible-search": {
             post: {
+                isSelect:true,
                 summary: "Flexible product search with alternative case scenarios",
                 description: `
                     Search products with different behaviors based on provided fields:

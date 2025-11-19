@@ -147,6 +147,7 @@ export const openapi = {
     paths: {
         "/orders/flexible-search": {
             post: {
+                isSelect:true,
                 summary: "Flexible order search with alternative case scenarios",
                 description: `
                     Search orders with different behaviors based on provided fields:

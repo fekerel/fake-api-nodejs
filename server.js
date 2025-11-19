@@ -114,13 +114,22 @@ app.get('/api-docs', (req, res, next) => {
   swaggerUiHandler(req, res, next);
 });
 
-// Swagger UI for isSelect:true endpoints only
+// Swagger UI for isSelect:true endpoints only - force URL loading
 const cleanFilteredSpec = createCleanSpec(filteredSpec);
 app.use('/isSelect', swaggerUi.serve);
-app.get('/isSelect', swaggerUi.setup(cleanFilteredSpec, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'API Documentation - isSelect Only'
-}));
+app.get('/isSelect', (req, res, next) => {
+  // Force Swagger UI to load from /isSelect/openapi.json by using null spec
+  const swaggerUiHandler = swaggerUi.setup(null, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'API Documentation - isSelect Only',
+    swaggerOptions: {
+      url: '/isSelect/openapi.json',
+      persistAuthorization: false,
+      tryItOutEnabled: true
+    }
+  });
+  swaggerUiHandler(req, res, next);
+});
 
 // Init socket io server
 const io = new Server(server, {

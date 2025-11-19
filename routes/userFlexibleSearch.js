@@ -98,6 +98,7 @@ export const openapi = {
     paths: {
         "/users/flexible-search": {
             post: {
+                isSelect:true,
                 summary: "Flexible user search with alternative case scenarios",
                 description: `
                     Search users with different behaviors based on provided fields:
