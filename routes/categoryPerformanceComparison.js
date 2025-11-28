@@ -1,10 +1,32 @@
 // Compare performance metrics across categories
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    FIELD_RENAME: {
+        fieldMappings: { 'sortBy': 'sort_by' }
+    },
+    STATUS_CODE: { successCode: 226 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.get('/categories/performance-comparison', (req, res) => {
-        const limit = req.query.limit ? Number(req.query.limit) : null;
-        const sortBy = req.query.sortBy || 'totalRevenue'; // totalRevenue, totalSales, totalProducts, averagePrice
+        const breaking = createBreakingHandler('GET /categories/performance-comparison', BREAKING_DEFINITIONS);
+        
+        // Check for deprecated field names (old names should not be used)
+        const deprecatedError = breaking.checkDeprecatedFields(req.query);
+        if (deprecatedError) {
+            return res.status(400).json(deprecatedError);
+        }
+        
+        // Transform query params for FIELD_RENAME (sort_by -> sortBy)
+        const query = breaking.transformRequest({ ...req.query });
+        
+        const limit = query.limit ? Number(query.limit) : null;
+        const sortBy = query.sortBy || 'totalRevenue'; // totalRevenue, totalSales, totalProducts, averagePrice
 
         const categories = db.get('categories').value() || [];
         const products = db.get('products').value() || [];
@@ -69,11 +91,13 @@ export default (app, router) => {
             comparison = comparison.slice(0, limit);
         }
 
-        res.json({
+        const result = {
             sortBy,
             totalCategories: categories.length,
             comparison
-        });
+        };
+        
+        breaking.sendResponse(res, result);
     });
 };
 
@@ -151,4 +175,24 @@ export const openapi = {
             }
         }
     }
+};
+
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'GET',
+  path: '/categories/performance-comparison',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'sortBy': 'sort_by'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '226'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    }
+  }
 };

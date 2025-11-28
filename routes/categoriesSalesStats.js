@@ -1,8 +1,18 @@
 // Get category sales statistics with total sales, revenue, top selling products and sales trend
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    STATUS_CODE: { successCode: 218 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.get('/categories/:id/sales-stats', (req, res) => {
+        const breaking = createBreakingHandler('GET /categories/{id}/sales-stats', BREAKING_DEFINITIONS);
+        
         const categoryId = Number(req.params.id);
         
         if (!Number.isFinite(categoryId)) return res.status(400).json({ error: 'invalid id' });
@@ -54,7 +64,7 @@ export default (app, router) => {
         
         const averageOrderValue = orders.length > 0 ? Number((totalRevenue / orders.length).toFixed(2)) : 0;
         
-        res.json({
+        const result = {
             categoryId,
             categoryName: category.name,
             totalProducts: products.length,
@@ -62,7 +72,9 @@ export default (app, router) => {
             totalRevenue: Number(totalRevenue.toFixed(2)),
             averageOrderValue,
             topSellingProducts
-        });
+        };
+        
+        breaking.sendResponse(res, result);
     });
 };
 
@@ -133,4 +145,19 @@ export const openapi = {
             }
         }
     }
+};
+
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'GET',
+  path: '/categories/{id}/sales-stats',
+  availableCategories: ['STATUS_CODE', 'RESPONSE_STRUCTURE'],
+  definitions: {
+    STATUS_CODE: {
+      successCode: '218'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    }
+  }
 };

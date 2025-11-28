@@ -6,10 +6,31 @@
 // - status: returns array of all orders with that status
 // - totalAmountMin + totalAmountMax: returns array of orders in amount range
 // - dateFrom + dateTo: returns array of orders in date range
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    FIELD_RENAME: {
+        fieldMappings: {
+            'orderId': 'order_id',
+            'userId': 'user_id',
+            'totalAmountMin': 'total_amount_min',
+            'totalAmountMax': 'total_amount_max',
+            'dateFrom': 'date_from',
+            'dateTo': 'date_to'
+        }
+    },
+    STATUS_CODE: { successCode: 202 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' },
+    REQUIRED_FIELD: { field: 'limit', type: 'integer' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.post('/orders/flexible-search', (req, res) => {
+        const breaking = createBreakingHandler('POST /orders/flexible-search', BREAKING_DEFINITIONS);
+        
         // Validate request body exists
         if (!req.body || typeof req.body !== 'object') {
             return res.status(400).json({ 
@@ -18,7 +39,22 @@ export default (app, router) => {
             });
         }
 
-        const { orderId, userId, status, totalAmountMin, totalAmountMax, dateFrom, dateTo } = req.body;
+        // Check for deprecated field names (old names should not be used)
+        const deprecatedError = breaking.checkDeprecatedFields(req.body);
+        if (deprecatedError) {
+            return res.status(400).json(deprecatedError);
+        }
+
+        // Transform request body for FIELD_RENAME
+        const body = breaking.transformRequest({ ...req.body });
+
+        // Check REQUIRED_FIELD
+        const requiredError = breaking.checkRequiredField(body);
+        if (requiredError) {
+            return res.status(400).json(requiredError);
+        }
+
+        const { orderId, userId, status, totalAmountMin, totalAmountMax, dateFrom, dateTo } = body;
 
         // Validate at least one field is provided
         if (orderId === undefined && userId === undefined && !status && 
@@ -147,7 +183,7 @@ export default (app, router) => {
                 totalAmountMax === undefined && dateFrom === undefined && dateTo === undefined) {
                 const found = orders.find(o => Number(o.id) === Number(orderId));
                 if (found) {
-                    return res.json(found); // Single object
+                    return breaking.sendResponse(res, found); // Single object
                 }
                 return res.status(404).json({ error: 'Order not found with provided orderId', code: 'NOT_FOUND' });
             }
@@ -160,7 +196,7 @@ export default (app, router) => {
                 if (orders.length === 0) {
                     return res.status(404).json({ error: 'No orders found for provided userId', code: 'NOT_FOUND' });
                 }
-                return res.json(orders); // Array
+                return breaking.sendResponse(res, orders); // Array
             }
 
             // Case 3: userId + status combination
@@ -174,7 +210,7 @@ export default (app, router) => {
                 if (orders.length === 0) {
                     return res.status(404).json({ error: 'No orders found with provided userId and status', code: 'NOT_FOUND' });
                 }
-                return res.json(orders); // Array
+                return breaking.sendResponse(res, orders); // Array
             }
 
             // Case 4: Only status
@@ -185,7 +221,7 @@ export default (app, router) => {
                 if (orders.length === 0) {
                     return res.status(404).json({ error: 'No orders found with provided status', code: 'NOT_FOUND' });
                 }
-                return res.json(orders); // Array
+                return breaking.sendResponse(res, orders); // Array
             }
 
             // Case 5: totalAmountMin + totalAmountMax (amount range)
@@ -201,7 +237,7 @@ export default (app, router) => {
                 if (orders.length === 0) {
                     return res.status(404).json({ error: 'No orders found in provided amount range', code: 'NOT_FOUND' });
                 }
-                return res.json(orders); // Array
+                return breaking.sendResponse(res, orders); // Array
             }
 
             // Case 6: dateFrom + dateTo (date range)
@@ -217,7 +253,7 @@ export default (app, router) => {
                 if (orders.length === 0) {
                     return res.status(404).json({ error: 'No orders found in provided date range', code: 'NOT_FOUND' });
                 }
-                return res.json(orders); // Array
+                return breaking.sendResponse(res, orders); // Array
             }
 
             // Case 7: Complex combinations
@@ -225,7 +261,7 @@ export default (app, router) => {
                 // If orderId is provided with other fields, still return single object if found
                 const found = orders.find(o => Number(o.id) === Number(orderId));
                 if (found) {
-                    return res.json(found); // Single object
+                    return breaking.sendResponse(res, found); // Single object
                 }
                 return res.status(404).json({ error: 'Order not found with provided orderId', code: 'NOT_FOUND' });
             }
@@ -257,7 +293,7 @@ export default (app, router) => {
             if (orders.length === 0) {
                 return res.status(404).json({ error: 'No orders found with provided criteria', code: 'NOT_FOUND' });
             }
-            return res.json(orders); // Array
+            return breaking.sendResponse(res, orders); // Array
         } catch (error) {
             console.error('Error in order flexible search:', error);
             res.status(500).json({ 
@@ -587,3 +623,31 @@ export const openapi = {
     }
 };
 
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'POST',
+  path: '/orders/flexible-search',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE', 'REQUIRED_FIELD'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'orderId': 'order_id',
+        'userId': 'user_id',
+        'totalAmountMin': 'total_amount_min',
+        'totalAmountMax': 'total_amount_max',
+        'dateFrom': 'date_from',
+        'dateTo': 'date_to'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '202'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    },
+    REQUIRED_FIELD: {
+      field: 'limit',
+      type: 'integer'
+    }
+  }
+};

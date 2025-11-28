@@ -24,3 +24,6 @@ Thumbs.db
 
 # Upload files
 /public/uploads/*
+
+# Runtime generated files
+active-breakings.json

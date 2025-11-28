@@ -5,10 +5,30 @@
 // - sellerId: returns array of all products by that seller
 // - priceMin + priceMax: returns array of products in price range
 // - categoryId + priceMin + priceMax: returns array filtered by category and price
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    FIELD_RENAME: {
+        fieldMappings: {
+            'categoryId': 'category_id',
+            'sellerId': 'seller_id',
+            'priceMin': 'price_min',
+            'priceMax': 'price_max',
+            'stockMin': 'stock_min'
+        }
+    },
+    STATUS_CODE: { successCode: 203 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' },
+    REQUIRED_FIELD: { field: 'limit', type: 'integer' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.post('/products/flexible-search', (req, res) => {
+        const breaking = createBreakingHandler('POST /products/flexible-search', BREAKING_DEFINITIONS);
+        
         // Validate request body exists
         if (!req.body || typeof req.body !== 'object') {
             return res.status(400).json({ 
@@ -17,7 +37,22 @@ export default (app, router) => {
             });
         }
 
-        const { name, categoryId, sellerId, priceMin, priceMax, stockMin } = req.body;
+        // Check for deprecated field names (old names should not be used)
+        const deprecatedError = breaking.checkDeprecatedFields(req.body);
+        if (deprecatedError) {
+            return res.status(400).json(deprecatedError);
+        }
+
+        // Transform request body for FIELD_RENAME
+        const body = breaking.transformRequest({ ...req.body });
+
+        // Check REQUIRED_FIELD
+        const requiredError = breaking.checkRequiredField(body);
+        if (requiredError) {
+            return res.status(400).json(requiredError);
+        }
+
+        const { name, categoryId, sellerId, priceMin, priceMax, stockMin } = body;
 
         // Validate at least one field is provided
         if (!name && categoryId === undefined && sellerId === undefined && 
@@ -117,7 +152,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found with provided name', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 2: name + categoryId combination
@@ -129,7 +164,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found with provided name and categoryId', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 3: Only sellerId - returns all products by that seller
@@ -139,7 +174,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found for provided sellerId', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 4: priceMin + priceMax (price range)
@@ -154,7 +189,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found in provided price range', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 5: categoryId + priceMin + priceMax
@@ -170,7 +205,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found with provided categoryId and price range', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 6: stockMin (minimum stock filter)
@@ -183,7 +218,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found with minimum stock', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             // Case 7: Complex combinations (sellerId + categoryId, etc.)
@@ -219,7 +254,7 @@ export default (app, router) => {
                 if (products.length === 0) {
                     return res.status(404).json({ error: 'No products found with provided criteria', code: 'NOT_FOUND' });
                 }
-                return res.json(products); // Array
+                return breaking.sendResponse(res, products); // Array
             }
 
             res.status(400).json({ error: 'Invalid search combination', code: 'INVALID_COMBINATION' });
@@ -511,3 +546,30 @@ export const openapi = {
     }
 };
 
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'POST',
+  path: '/products/flexible-search',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE', 'REQUIRED_FIELD'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'categoryId': 'category_id',
+        'sellerId': 'seller_id',
+        'priceMin': 'price_min',
+        'priceMax': 'price_max',
+        'stockMin': 'stock_min'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '203'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    },
+    REQUIRED_FIELD: {
+      field: 'limit',
+      type: 'integer'
+    }
+  }
+};

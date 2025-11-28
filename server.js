@@ -11,7 +11,7 @@ import { Server } from 'socket.io';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import generateSwaggerDocs, { filterIsSelectOnly } from './utils/swagger-generator.js';
+import generateSwaggerDocs, { filterIsSelectOnly, applyBreakingChanges, initBreakingDefinitions } from './utils/swagger-generator.js';
 
 import { CONFIG } from './config.js';
 import { isAuthenticated } from './utils/jwt-authenticate.js';
@@ -41,6 +41,8 @@ const server = http.createServer(app);
 
 // load route handlers without passing db explicitly
 const handlersDir = join(process.cwd(), 'routes');
+const breakingMetaRegistry = []; // Collect breakingMeta from all routes
+
 if (fs.existsSync(handlersDir)) {
   const files = fs.readdirSync(handlersDir).filter((f) => f.endsWith('.js'));
   for (const file of files) {
@@ -50,14 +52,87 @@ if (fs.existsSync(handlersDir)) {
         // pass only app and router (handlers can use router.db or req.app.locals.db)
         mod.default(app, router);
       }
+      // Collect breakingMeta if exists
+      if (mod && mod.breakingMeta) {
+        breakingMetaRegistry.push(mod.breakingMeta);
+      }
     } catch (err) {
       console.error('Failed to load route', file, err);
     }
   }
 }
 
+// Initialize breaking changes if enabled
+if (CONFIG.breakingChanges.enabled && breakingMetaRegistry.length > 0) {
+  // Filter endpoints that have isSelect:true in their openapi
+  const eligibleEndpoints = breakingMetaRegistry.filter(meta => 
+    meta.availableCategories && meta.availableCategories.length > 0
+  );
+  
+  // ALL MODE: Activate ALL categories on ALL endpoints
+  if (CONFIG.breakingChanges.allMode) {
+    for (const endpoint of eligibleEndpoints) {
+      const key = `${endpoint.method} ${endpoint.path}`;
+      CONFIG.breakingChanges.activeBreakings[key] = [...endpoint.availableCategories];
+    }
+    console.log('🔥💥 ALL BREAKING MODE - Every endpoint has ALL its breaking changes active!');
+  } else {
+    // NORMAL MODE: Random selection
+    // Select at least floor(length/2) endpoints
+    const minCount = Math.floor(eligibleEndpoints.length / 2);
+    const shuffled = [...eligibleEndpoints].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, Math.max(minCount, 1));
+    
+    // Assign MULTIPLE breaking categories to each selected endpoint
+    // Formula: Math.floor(availableCategories.length / 2) + 1
+    for (const endpoint of selected) {
+      const available = [...endpoint.availableCategories];
+      const breakingCount = Math.floor(available.length / 2) + 1;
+      
+      // Shuffle and pick breakingCount categories
+      const shuffledCategories = available.sort(() => Math.random() - 0.5);
+      const selectedCategories = shuffledCategories.slice(0, breakingCount);
+      
+      const key = `${endpoint.method} ${endpoint.path}`;
+      CONFIG.breakingChanges.activeBreakings[key] = selectedCategories;
+    }
+  }
+  
+  // Write active breakings to file
+  const activeBreakingsFile = join(process.cwd(), 'active-breakings.json');
+  const breakingsData = {
+    generatedAt: new Date().toISOString(),
+    enabled: true,
+    allMode: CONFIG.breakingChanges.allMode,
+    activeBreakings: CONFIG.breakingChanges.activeBreakings
+  };
+  fs.writeFileSync(activeBreakingsFile, JSON.stringify(breakingsData, null, 2));
+  
+  console.log('🔥 Breaking Changes Active:', CONFIG.breakingChanges.activeBreakings);
+  console.log('📄 Written to:', activeBreakingsFile);
+} else if (CONFIG.breakingChanges.enabled) {
+  console.log('⚠️ Breaking changes enabled but no endpoints with breakingMeta found');
+} else {
+  // Clear the file if breaking changes disabled
+  const activeBreakingsFile = join(process.cwd(), 'active-breakings.json');
+  if (fs.existsSync(activeBreakingsFile)) {
+    const breakingsData = {
+      generatedAt: new Date().toISOString(),
+      enabled: false,
+      activeBreakings: {}
+    };
+    fs.writeFileSync(activeBreakingsFile, JSON.stringify(breakingsData, null, 2));
+  }
+}
+
+// Initialize breaking definitions from route files before generating swagger
+await initBreakingDefinitions();
+
 const swaggerSpec = await generateSwaggerDocs();
 const filteredSpec = filterIsSelectOnly(swaggerSpec);
+
+// Apply breaking changes to the filtered spec if enabled
+const breakingSpec = applyBreakingChanges(filteredSpec);
 
 // Debug: Log path counts
 console.log(`Total paths in swaggerSpec: ${Object.keys(swaggerSpec.paths || {}).length}`);
@@ -71,8 +146,9 @@ app.get('/openapi.json', (req, res) => {
 });
 
 // OpenAPI JSON for isSelect:true endpoints only (must be before /isSelect Swagger UI)
+// Returns spec with breaking changes applied when enabled
 app.get('/isSelect/openapi.json', (req, res) => {
-  res.json(filteredSpec);
+  res.json(breakingSpec);
 });
 
 // Helper function to create a clean copy of spec without isSelect flags

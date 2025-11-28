@@ -1,13 +1,40 @@
 // Filter and analyze orders by userId, status, date range with variable parameters
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    FIELD_RENAME: {
+        fieldMappings: {
+            'orderId': 'order_id',
+            'userId': 'user_id',
+            'startDate': 'start_date',
+            'endDate': 'end_date'
+        }
+    },
+    STATUS_CODE: { successCode: 206 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.get('/orders/filter', (req, res) => {
-        const userId = req.query.userId ? Number(req.query.userId) : null;
-        const status = req.query.status || null;
-        const startDate = req.query.startDate ? Number(req.query.startDate) : null;
-        const endDate = req.query.endDate ? Number(req.query.endDate) : null;
-        const orderId = req.query.orderId ? Number(req.query.orderId) : null;
+        const breaking = createBreakingHandler('GET /orders/filter', BREAKING_DEFINITIONS);
+        
+        // Check for deprecated field names (old names should not be used)
+        const deprecatedError = breaking.checkDeprecatedFields(req.query);
+        if (deprecatedError) {
+            return res.status(400).json(deprecatedError);
+        }
+        
+        // Transform query params for FIELD_RENAME
+        const query = breaking.transformRequest({ ...req.query });
+        
+        const userId = query.userId ? Number(query.userId) : null;
+        const status = query.status || null;
+        const startDate = query.startDate ? Number(query.startDate) : null;
+        const endDate = query.endDate ? Number(query.endDate) : null;
+        const orderId = query.orderId ? Number(query.orderId) : null;
 
         if (userId !== null && !Number.isFinite(userId)) {
             return res.status(400).json({ error: 'invalid userId' });
@@ -32,7 +59,7 @@ export default (app, router) => {
 
             const user = users.find(u => Number(u.id) === Number(order.userId));
 
-            return res.json({
+            return breaking.sendResponse(res, {
                 type: 'single_order',
                 order: {
                     id: order.id,
@@ -54,7 +81,7 @@ export default (app, router) => {
 
             const userOrders = orders.filter(o => Number(o.userId) === userId);
 
-            return res.json({
+            return breaking.sendResponse(res, {
                 type: 'user_orders',
                 userId,
                 userName: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email,
@@ -73,7 +100,7 @@ export default (app, router) => {
         if (status !== null && orderId === null && userId === null && startDate === null && endDate === null) {
             const statusOrders = orders.filter(o => o.status === status);
 
-            return res.json({
+            return breaking.sendResponse(res, {
                 type: 'status_orders',
                 status,
                 totalOrders: statusOrders.length,
@@ -96,7 +123,7 @@ export default (app, router) => {
                 Number(o.userId) === userId && o.status === status
             );
 
-            return res.json({
+            return breaking.sendResponse(res, {
                 type: 'user_status_orders',
                 userId,
                 userName: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email,
@@ -128,7 +155,7 @@ export default (app, router) => {
                 filteredOrders = filteredOrders.filter(o => o.createdAt && o.createdAt <= endDate);
             }
 
-            return res.json({
+            return breaking.sendResponse(res, {
                 type: 'date_range_orders',
                 filters: {
                     userId: userId || null,
@@ -149,7 +176,7 @@ export default (app, router) => {
         }
 
         // Senaryo 6: Hiç parametre yoksa - tüm siparişler
-        return res.json({
+        return breaking.sendResponse(res, {
             type: 'all_orders',
             totalOrders: orders.length,
             totalAmount: Number(orders.reduce((sum, o) => sum + (parseFloat(o.totalAmount) || 0), 0).toFixed(2)),
@@ -387,6 +414,29 @@ export const openapi = {
           { $ref: "#/components/schemas/AllOrdersResult" }
         ]
       }
+    }
+  }
+};
+
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'GET',
+  path: '/orders/filter',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'orderId': 'order_id',
+        'userId': 'user_id',
+        'startDate': 'start_date',
+        'endDate': 'end_date'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '206'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
     }
   }
 };

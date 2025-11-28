@@ -4,10 +4,24 @@
 // - firstName + lastName: returns array of users matching both
 // - email (unique): returns single user object
 // - phone (unique): returns single user object
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    FIELD_RENAME: {
+        fieldMappings: { 'firstName': 'first_name', 'lastName': 'last_name' }
+    },
+    STATUS_CODE: { successCode: 250 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' },
+    REQUIRED_FIELD: { field: 'limit', type: 'integer' }
+};
+
 export default (app, router) => {
     const db = router.db;
 
     app.post('/users/flexible-search', (req, res) => {
+        const breaking = createBreakingHandler('POST /users/flexible-search', BREAKING_DEFINITIONS);
+
         // Validate request body exists
         if (!req.body || typeof req.body !== 'object') {
             return res.status(400).json({ 
@@ -16,7 +30,22 @@ export default (app, router) => {
             });
         }
 
-        const { firstName, lastName, email, phone } = req.body;
+        // Check for deprecated field names (old names should not be used)
+        const deprecatedError = breaking.checkDeprecatedFields(req.body);
+        if (deprecatedError) {
+            return res.status(400).json(deprecatedError);
+        }
+
+        // Transform request body for FIELD_RENAME
+        const body = breaking.transformRequest({ ...req.body });
+
+        // Check REQUIRED_FIELD
+        const requiredError = breaking.checkRequiredField(body);
+        if (requiredError) {
+            return res.status(400).json(requiredError);
+        }
+
+        const { firstName, lastName, email, phone } = body;
 
         // Validate at least one field is provided
         if (!firstName && !lastName && !email && !phone) {
@@ -84,7 +113,7 @@ export default (app, router) => {
             if (email) {
                 const found = users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase());
                 if (found) {
-                    return res.json(found); // Single object
+                    return breaking.sendResponse(res, found); // Single object
                 }
                 return res.status(404).json({ error: 'User not found with provided email', code: 'NOT_FOUND' });
             }
@@ -93,7 +122,7 @@ export default (app, router) => {
             if (phone && !firstName && !lastName) {
                 const found = users.find(u => u.phone && u.phone === phone);
                 if (found) {
-                    return res.json(found); // Single object
+                    return breaking.sendResponse(res, found); // Single object
                 }
                 return res.status(404).json({ error: 'User not found with provided phone', code: 'NOT_FOUND' });
             }
@@ -107,7 +136,7 @@ export default (app, router) => {
                 if (users.length === 0) {
                     return res.status(404).json({ error: 'No users found with provided firstName and lastName', code: 'NOT_FOUND' });
                 }
-                return res.json(users); // Array
+                return breaking.sendResponse(res, users); // Array
             }
 
             // Priority 4: Only firstName
@@ -118,7 +147,7 @@ export default (app, router) => {
                 if (users.length === 0) {
                     return res.status(404).json({ error: 'No users found with provided firstName', code: 'NOT_FOUND' });
                 }
-                return res.json(users); // Array
+                return breaking.sendResponse(res, users); // Array
             }
 
             // Priority 5: Only lastName
@@ -129,7 +158,7 @@ export default (app, router) => {
                 if (users.length === 0) {
                     return res.status(404).json({ error: 'No users found with provided lastName', code: 'NOT_FOUND' });
                 }
-                return res.json(users); // Array
+                return breaking.sendResponse(res, users); // Array
             }
 
             // Priority 6: phone with firstName or lastName (filter by phone first, then by name)
@@ -148,7 +177,7 @@ export default (app, router) => {
                 if (users.length === 0) {
                     return res.status(404).json({ error: 'No users found with provided criteria', code: 'NOT_FOUND' });
                 }
-                return res.json(users); // Array
+                return breaking.sendResponse(res, users); // Array
             }
 
             res.status(400).json({ error: 'Invalid search combination', code: 'INVALID_COMBINATION' });
@@ -405,3 +434,27 @@ export const openapi = {
     }
 };
 
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'POST',
+  path: '/users/flexible-search',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE', 'REQUIRED_FIELD'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'firstName': 'first_name',
+        'lastName': 'last_name'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '250'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    },
+    REQUIRED_FIELD: {
+      field: 'limit',
+      type: 'integer'
+    }
+  }
+};

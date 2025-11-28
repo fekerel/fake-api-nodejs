@@ -1,9 +1,18 @@
 // Bir ürünün tüm review'larının özetini getirir: ortalama rating, toplam review sayısı, rating dağılımı ve en son review'lar
+import { createBreakingHandler } from '../utils/breaking-handler.js';
+
+// Breaking change definitions for this endpoint
+const BREAKING_DEFINITIONS = {
+    STATUS_CODE: { successCode: 210 },
+    RESPONSE_STRUCTURE: { wrapKey: 'data' }
+};
 
 export default (app, router) => {
     const db = router.db;
 
     app.get('/products/:id/reviews-summary', (req, res) => {
+        const breaking = createBreakingHandler('GET /products/{id}/reviews-summary', BREAKING_DEFINITIONS);
+        
         const productId = Number(req.params.id);
         
         if (!Number.isFinite(productId)) return res.status(400).json({ error: 'invalid id' });
@@ -42,14 +51,16 @@ export default (app, router) => {
                 };
             });
         
-        res.json({
+        const result = {
             productId,
             productName: product.name,
             totalReviews,
             averageRating,
             ratingDistribution,
             recentReviews
-        });
+        };
+        
+        breaking.sendResponse(res, result);
     });
 };
 
@@ -136,4 +147,19 @@ export const openapi = {
             }
         }
     }
+};
+
+// Breaking changes metadata
+export const breakingMeta = {
+  method: 'GET',
+  path: '/products/{id}/reviews-summary',
+  availableCategories: ['STATUS_CODE', 'RESPONSE_STRUCTURE'],
+  definitions: {
+    STATUS_CODE: {
+      successCode: '210'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    }
+  }
 };

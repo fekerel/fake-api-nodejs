@@ -1,10 +1,14 @@
 // Bulk update product inventory (only stock). Supports update | subtract
+import { CONFIG } from '../config.js';
+
 export default (app, router) => {
   const db = router.db;
   const MAX_BATCH = 200;
   const VALID_OPERATIONS = ['update', 'subtract'];
 
   app.post('/products/bulk-update', (req, res) => {
+    const activeBreaking = CONFIG.breakingChanges.activeBreakings['POST /products/bulk-update'];
+
     const { updates, operation } = req.body || {};
 
     // Validate updates array
@@ -22,6 +26,28 @@ export default (app, router) => {
         errors: [{ code: 'UPDATES_EMPTY', message: 'no items provided' }]
       });
     }
+
+    if (activeBreaking === 'FIELD_RENAME') {
+      // product_id zorunlu, yoksa hata
+      const missingNewField = updates.filter(u => !('product_id' in u));
+      if (missingNewField.length > 0) {
+        return res.status(400).json({
+          mode: 'failed',
+          error: 'product_id is required',
+          errors: [{ 
+            code: 'PRODUCT_ID_MISSING', 
+            message: 'product_id is required' 
+          }]
+        });
+      }
+      
+      // Yeni adı internal ada çevir
+      updates = updates.map(u => ({
+        productId: u.product_id,
+        stock: u.stock
+      }));
+    }
+
     if (updates.length > MAX_BATCH) {
       return res.status(413).json({
         mode: 'failed',
@@ -168,7 +194,8 @@ export default (app, router) => {
     }
 
     // Determine response status & mode
-    let statusCode = 200;
+    // STATUS_CODE breaking: success returns 238 instead of 200
+    let statusCode = activeBreaking === 'STATUS_CODE' ? 238 : 200;
     let mode = 'full';
     if (errors.length > 0 && results.length === 0) {
       statusCode = 400;
@@ -181,7 +208,8 @@ export default (app, router) => {
     // success: ancak tüm item'lar başarıyla işlendiğinde true
     const success = errors.length === 0 && results.length === updates.length && updates.length > 0;
 
-    return res.status(statusCode).json({
+    // Build the response body
+    let responseBody = {
       success,
       mode,
       operation: operationType,
@@ -196,7 +224,14 @@ export default (app, router) => {
       results,
       errors: errors.length ? errors : undefined,
       warnings: warnings.length ? warnings : undefined
-    });
+    };
+
+    // RESPONSE_STRUCTURE breaking: wrap response in { data: ... }
+    if (activeBreaking === 'RESPONSE_STRUCTURE') {
+      responseBody = { data: responseBody };
+    }
+
+    return res.status(statusCode).json(responseBody);
   });
 };
 
@@ -444,4 +479,24 @@ export const openapi = {
     "PRODUCT_NOT_FOUND",
     "EXTRA_FIELDS_NOT_ALLOWED"
   ]
+};
+
+// Breaking changes metadata: defines which breaking categories are available for this endpoint
+export const breakingMeta = {
+  method: 'POST',
+  path: '/products/bulk-update',
+  availableCategories: ['FIELD_RENAME', 'STATUS_CODE', 'RESPONSE_STRUCTURE'],
+  definitions: {
+    FIELD_RENAME: {
+      fieldMappings: {
+        'productId': 'product_id'
+      }
+    },
+    STATUS_CODE: {
+      successCode: '222'
+    },
+    RESPONSE_STRUCTURE: {
+      wrapKey: 'data'
+    }
+  }
 };

@@ -4,6 +4,7 @@ import { pathToFileURL } from 'url';
 import { entitySchemas } from '../schema/entities.mjs';
 import { filterConfig } from '../schema/filter-config.mjs';
 import { generateRecord, buildHelpers } from '../schema/generator.mjs';
+import { CONFIG } from '../config.js';
 
 export default async function generateSwaggerDocs() {
   const paths = {};
@@ -130,7 +131,20 @@ export function filterIsSelectOnly(swaggerSpec) {
     }
   }
   
-  // Filter schemas to only include used ones
+  // Recursively collect all nested schema references
+  if (swaggerSpec.components && swaggerSpec.components.schemas) {
+    let previousSize = 0;
+    while (usedSchemas.size > previousSize) {
+      previousSize = usedSchemas.size;
+      for (const schemaName of [...usedSchemas]) {
+        if (swaggerSpec.components.schemas[schemaName]) {
+          collectSchemaRefs(swaggerSpec.components.schemas[schemaName], usedSchemas);
+        }
+      }
+    }
+  }
+  
+  // Filter schemas to only include used ones (now includes nested refs)
   const filteredSchemas = {};
   if (swaggerSpec.components && swaggerSpec.components.schemas) {
     for (const [schemaName, schema] of Object.entries(swaggerSpec.components.schemas)) {
@@ -153,6 +167,289 @@ export function filterIsSelectOnly(swaggerSpec) {
       description: 'Only endpoints with isSelect: true are shown'
     }
   };
+}
+
+// Transform swagger spec based on active breaking changes
+export function applyBreakingChanges(swaggerSpec) {
+  if (!CONFIG.breakingChanges.enabled) return swaggerSpec;
+  
+  const activeBreakings = CONFIG.breakingChanges.activeBreakings;
+  if (!activeBreakings || Object.keys(activeBreakings).length === 0) return swaggerSpec;
+  
+  // Deep clone to avoid mutating original
+  const spec = JSON.parse(JSON.stringify(swaggerSpec));
+  
+  // Load breakingMeta from route files to get field mappings
+  const breakingDefinitions = getBreakingDefinitions();
+  
+  for (const [endpointKey, breakingTypes] of Object.entries(activeBreakings)) {
+    const [method, path] = endpointKey.split(' ');
+    const methodLower = method.toLowerCase();
+    
+    if (!spec.paths[path] || !spec.paths[path][methodLower]) continue;
+    
+    const methodSpec = spec.paths[path][methodLower];
+    const definitions = breakingDefinitions[endpointKey];
+    
+    // breakingTypes is now an array, e.g., ['FIELD_RENAME', 'STATUS_CODE']
+    const types = Array.isArray(breakingTypes) ? breakingTypes : [breakingTypes];
+    
+    // Add breaking change metadata to spec (now shows all active types)
+    methodSpec['x-breaking-changes'] = types.map(type => ({
+      type: type,
+      description: getBreakingDescription(type)
+    }));
+    
+    // Apply each breaking change type
+    for (const breakingType of types) {
+      switch (breakingType) {
+        case 'FIELD_RENAME':
+          applyFieldRenameToSpec(methodSpec, spec.components?.schemas, definitions);
+          break;
+        case 'STATUS_CODE':
+          applyStatusCodeToSpec(methodSpec, definitions);
+          break;
+        case 'REQUIRED_FIELD':
+          applyRequiredFieldToSpec(methodSpec, definitions);
+          break;
+        case 'RESPONSE_STRUCTURE':
+          applyResponseStructureToSpec(methodSpec, definitions);
+          break;
+      }
+    }
+  }
+  
+  // Re-collect all schema refs after breaking changes applied
+  // This ensures schemas used in new response codes are included
+  const usedSchemas = new Set();
+  for (const pathSpec of Object.values(spec.paths || {})) {
+    for (const methodSpec of Object.values(pathSpec)) {
+      if (typeof methodSpec === 'object') {
+        collectSchemaRefs(methodSpec, usedSchemas);
+      }
+    }
+  }
+  
+  // Ensure all used schemas are in components
+  // Also recursively collect nested schema references
+  if (swaggerSpec.components?.schemas) {
+    // Keep adding schemas until no new ones are found
+    let previousSize = 0;
+    while (usedSchemas.size > previousSize) {
+      previousSize = usedSchemas.size;
+      for (const schemaName of [...usedSchemas]) {
+        // Copy schema if missing
+        if (!spec.components.schemas[schemaName] && swaggerSpec.components.schemas[schemaName]) {
+          spec.components.schemas[schemaName] = JSON.parse(JSON.stringify(swaggerSpec.components.schemas[schemaName]));
+        }
+        // Collect nested refs from this schema
+        if (swaggerSpec.components.schemas[schemaName]) {
+          collectSchemaRefs(swaggerSpec.components.schemas[schemaName], usedSchemas);
+        }
+      }
+    }
+  }
+  
+  return spec;
+}
+
+function getBreakingDescription(type) {
+  const descriptions = {
+    'FIELD_RENAME': 'Field names have been changed (e.g., productId → product_id)',
+    'STATUS_CODE': 'Success status code has been changed (e.g., 200 → 201)',
+    'REQUIRED_FIELD': 'New required field has been added',
+    'RESPONSE_STRUCTURE': 'Response is wrapped in a different structure',
+    'ENUM_VALUE_CHANGE': 'Enum values have been changed',
+    'TYPE_CHANGE': 'Field types have been changed'
+  };
+  return descriptions[type] || 'Breaking change applied';
+}
+
+// Get breaking definitions from route files (cached)
+let _breakingDefinitionsCache = null;
+async function loadBreakingDefinitionsFromRoutes() {
+  const handlersDir = join(process.cwd(), 'routes');
+  const definitions = {};
+  
+  if (!existsSync(handlersDir)) return definitions;
+  
+  const files = readdirSync(handlersDir);
+  for (const f of files) {
+    if (!f.endsWith('.js')) continue;
+    
+    const full = join(handlersDir, f);
+    try {
+      const mod = await import(pathToFileURL(full).href);
+      const meta = mod.breakingMeta;
+      
+      if (meta && meta.method && meta.path && meta.definitions) {
+        const endpointKey = `${meta.method} ${meta.path}`;
+        definitions[endpointKey] = meta.definitions;
+      }
+    } catch (err) {
+      // Ignore errors - file might not have breakingMeta
+    }
+  }
+  
+  return definitions;
+}
+
+function getBreakingDefinitions() {
+  // Return cached if available (sync access after initial load)
+  return _breakingDefinitionsCache || {};
+}
+
+// Initialize breaking definitions cache (call this at startup)
+export async function initBreakingDefinitions() {
+  _breakingDefinitionsCache = await loadBreakingDefinitionsFromRoutes();
+  return _breakingDefinitionsCache;
+}
+
+// Apply FIELD_RENAME to spec (REQUEST ONLY - not response)
+function applyFieldRenameToSpec(methodSpec, schemas, definitions) {
+  if (!definitions?.FIELD_RENAME?.fieldMappings) return;
+  
+  const mappings = definitions.FIELD_RENAME.fieldMappings;
+  
+  // Transform query/path parameters
+  if (methodSpec.parameters && Array.isArray(methodSpec.parameters)) {
+    methodSpec.parameters = methodSpec.parameters.map(param => {
+      if (mappings[param.name]) {
+        return { ...param, name: mappings[param.name] };
+      }
+      return param;
+    });
+  }
+  
+  // Transform request body schema
+  if (methodSpec.requestBody?.content?.['application/json']?.schema) {
+    transformSchemaFields(methodSpec.requestBody.content['application/json'].schema, mappings, schemas);
+  }
+  
+  // Transform request body examples
+  if (methodSpec.requestBody?.content?.['application/json']?.examples) {
+    for (const example of Object.values(methodSpec.requestBody.content['application/json'].examples)) {
+      if (example.value) {
+        example.value = transformObjectFields(example.value, mappings);
+      }
+    }
+  }
+  
+  // NOTE: Response is NOT transformed - only request fields are renamed
+}
+
+function transformSchemaFields(schema, mappings, allSchemas) {
+  if (!schema) return;
+  
+  // Handle $ref - need to transform the referenced schema
+  if (schema.$ref) {
+    const refName = schema.$ref.replace('#/components/schemas/', '');
+    if (allSchemas && allSchemas[refName]) {
+      transformSchemaFields(allSchemas[refName], mappings, allSchemas);
+    }
+    return;
+  }
+  
+  // Transform properties
+  if (schema.properties) {
+    const newProps = {};
+    for (const [key, value] of Object.entries(schema.properties)) {
+      const newKey = mappings[key] || key;
+      newProps[newKey] = value;
+      // Recursively transform nested objects
+      transformSchemaFields(value, mappings, allSchemas);
+    }
+    schema.properties = newProps;
+  }
+  
+  // Transform required array
+  if (schema.required && Array.isArray(schema.required)) {
+    schema.required = schema.required.map(field => mappings[field] || field);
+  }
+  
+  // Transform array items
+  if (schema.items) {
+    transformSchemaFields(schema.items, mappings, allSchemas);
+  }
+}
+
+function transformObjectFields(obj, mappings) {
+  if (!obj || typeof obj !== 'object') return obj;
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => transformObjectFields(item, mappings));
+  }
+  
+  const result = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const newKey = mappings[key] || key;
+    result[newKey] = transformObjectFields(value, mappings);
+  }
+  return result;
+}
+
+// Apply STATUS_CODE to spec
+function applyStatusCodeToSpec(methodSpec, definitions) {
+  const newCode = definitions?.STATUS_CODE?.successCode || '201';
+  const responses = methodSpec.responses;
+  
+  if (responses && responses['200']) {
+    // Move 200 response to new code
+    responses[newCode] = {
+      ...responses['200'],
+      description: responses['200'].description
+    };
+    delete responses['200'];
+  }
+}
+
+// Apply REQUIRED_FIELD to spec
+function applyRequiredFieldToSpec(methodSpec, definitions) {
+  if (!definitions?.REQUIRED_FIELD) return;
+  
+  const { field, type = 'string' } = definitions.REQUIRED_FIELD;
+  if (!field) return;
+  
+  // Add to request body schema
+  if (methodSpec.requestBody?.content?.['application/json']?.schema?.properties) {
+    const schema = methodSpec.requestBody.content['application/json'].schema;
+    
+    // Handle nested field (e.g., updates[].reason)
+    const parts = field.split('[].');
+    if (parts.length === 2) {
+      // Array item field
+      const [arrayProp, itemField] = parts;
+      if (schema.properties[arrayProp]?.items?.properties) {
+        schema.properties[arrayProp].items.properties[itemField] = { type };
+        if (!schema.properties[arrayProp].items.required) {
+          schema.properties[arrayProp].items.required = [];
+        }
+        schema.properties[arrayProp].items.required.push(itemField);
+      }
+    } else {
+      // Top-level field
+      schema.properties[field] = { type };
+      if (!schema.required) schema.required = [];
+      schema.required.push(field);
+    }
+  }
+}
+
+// Apply RESPONSE_STRUCTURE to spec
+function applyResponseStructureToSpec(methodSpec, definitions) {
+  const wrapKey = definitions?.RESPONSE_STRUCTURE?.wrapKey || 'data';
+  
+  for (const [code, response] of Object.entries(methodSpec.responses || {})) {
+    if (response.content?.['application/json']?.schema) {
+      const originalSchema = response.content['application/json'].schema;
+      response.content['application/json'].schema = {
+        type: 'object',
+        properties: {
+          [wrapKey]: originalSchema
+        }
+      };
+    }
+  }
 }
 
 // Helper function to collect schema references from a method spec
